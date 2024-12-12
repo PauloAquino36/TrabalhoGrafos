@@ -1,32 +1,68 @@
+#include "../headers/GrafoMatriz.h"
 #include <iostream>
-#include "./headers/Grafo.h"
+#include <cmath>  // Para cálculos matemáticos
+#include <cstdlib>  // Para manipulação de números aleatórios (se necessário)
 
+using namespace std;
 
+// Construtor
+GrafoMatriz::GrafoMatriz(int nVertices, bool direcionado) {
+    this->numVertices = nVertices;
+    this->direcionado = direcionado;
 
-class GrafoMatriz : public Grafo {
-private:
-    int **matrizAdj;
-    int numVertices;
-    bool direcionado;
+    // Aloca a matriz de adjacência
+    matrizAdj = new int*[numVertices];
+    for (int i = 0; i < numVertices; ++i) {
+        matrizAdj[i] = new int[numVertices];
+        for (int j = 0; j < numVertices; ++j) {
+            matrizAdj[i][j] = (direcionado) ? 0 : -1;  // Inicializa com 0 (se for direcionado) ou -1 (não direcionado)
+        }
+    }
+}
 
-public:
-    GrafoMatriz(int nVertices, bool direcionado);
-    ~GrafoMatriz();
+// Destruidor
+GrafoMatriz::~GrafoMatriz() {
+    for (int i = 0; i < numVertices; ++i) {
+        delete[] matrizAdj[i];
+    }
+    delete[] matrizAdj;
+}
 
-    bool eh_bipartido();
-    int n_conexo();
-    int get_grau();
-    int get_ordem();
-    bool eh_direcionado();
-    bool vertice_ponderado();
-    bool aresta_ponderada();
-    bool eh_completo();
-    bool eh_arvore();
-    bool possui_articulacao();
-    bool possui_ponte();
+// Função para adicionar uma aresta
+void GrafoMatriz::adicionar_aresta(int vertice1, int vertice2, int peso) {
+    if (vertice1 >= 0 && vertice1 < numVertices && vertice2 >= 0 && vertice2 < numVertices) {
+        matrizAdj[vertice1][vertice2] = peso;
+        if (!direcionado) {
+            matrizAdj[vertice2][vertice1] = peso; // Se o grafo não for direcionado
+        }
+    }
+}
 
-    // Funções auxiliares para manipulação da matriz
-    void adicionar_aresta(int verticeInicial, int verticeFim, int peso);
-    void remover_aresta(int verticeInicial, int verticeFim);
-    void imprimir();
-};
+void GrafoMatriz::remover_aresta(int vertice1, int vertice2) {
+    if (vertice1 >= 0 && vertice1 < numVertices && vertice2 >= 0 && vertice2 < numVertices) {
+        matrizAdj[vertice1][vertice2] = 0;
+        if (!direcionado) {
+            matrizAdj[vertice2][vertice1] = 0;
+        }
+    }
+}
+
+void GrafoMatriz::imprimir() const {
+    for (int i = 0; i < numVertices; ++i) {
+        for (int j = 0; j < numVertices; ++j) {
+            cout << matrizAdj[i][j] << " ";
+        }
+        cout << endl;
+    }
+}
+bool GrafoMatriz::eh_direcionado() {
+    return this->direcionado;
+}
+
+bool GrafoMatriz::eh_bipartido() {
+    return true;  // Temporário, para compilar sem erro
+}
+
+int GrafoMatriz::n_conexo() {
+    return 1;  // Temporário, para compilar sem erro
+}

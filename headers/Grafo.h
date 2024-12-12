@@ -18,6 +18,7 @@ public:
      bool possui_ponte();
 
     //  destruidor
+     Grafo();
      ~Grafo() = default;
 };
 

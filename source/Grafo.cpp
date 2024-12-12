@@ -5,6 +5,8 @@
 #include <cmath>
 #include <string>
 
+using namespace std;
+
 class Grafo
 {
 private:
@@ -28,6 +30,7 @@ public:
 
 Grafo::Grafo()
 {
+    cout << "Teste rodando" << endl;
 }
 
 Grafo::~Grafo()
