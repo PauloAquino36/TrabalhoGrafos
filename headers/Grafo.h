@@ -17,7 +17,6 @@ public:
      bool possui_articulacao();
      bool possui_ponte();
 
-    //  destruidor
      Grafo();
      ~Grafo() = default;
 };

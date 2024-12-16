@@ -10,7 +10,6 @@ private:
     bool direcionado; // Flag para indicar se o grafo é direcionado ou não
 
 public:
-    // Construtor e destruidor
     GrafoMatriz(int nVertices, bool direcionado);
     ~GrafoMatriz();
 

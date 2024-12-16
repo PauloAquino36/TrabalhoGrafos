@@ -1,4 +1,4 @@
-#include "../headers/GrafoMatriz.h"
+#include "GrafoMatriz.h"
 #include <iostream>
 #include <cmath>  // Para cálculos matemáticos
 #include <cstdlib>  // Para manipulação de números aleatórios (se necessário)
