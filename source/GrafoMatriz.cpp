@@ -55,14 +55,3 @@ void GrafoMatriz::imprimir() const {
         cout << endl;
     }
 }
-bool GrafoMatriz::eh_direcionado() {
-    return this->direcionado;
-}
-
-bool GrafoMatriz::eh_bipartido() {
-    return true;  // Temporário, para compilar sem erro
-}
-
-int GrafoMatriz::n_conexo() {
-    return 1;  // Temporário, para compilar sem erro
-}
