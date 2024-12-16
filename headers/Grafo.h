@@ -4,6 +4,9 @@
 #include <iostream>
 
 class Grafo {
+private:
+    int numVertices;                               // Número de vértices no grafo
+    bool direcionado;                              // Flag para indicar se o grafo é direcionado ou não
 public:
      bool eh_bipartido();
      int n_conexo();
@@ -19,6 +22,10 @@ public:
 
      Grafo();
      ~Grafo();
+
+     //Funções auxiliares
+     int get_numVertices();
+     bool get_direcionado();
 };
 
 #endif

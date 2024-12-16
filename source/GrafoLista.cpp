@@ -4,8 +4,8 @@
 using namespace std;
 
 GrafoLista::GrafoLista(int nVertices, bool direcionado) {
-    this->numVertices = nVertices;
-    this->direcionado = direcionado;
+    this->set_numVertices(nVertices);
+    this->set_direcionado(direcionado);
 
     // Aloca a matriz de adjacência (lista de adjacência)
     listaAdj = new Aresta**[numVertices];
