@@ -1,6 +1,7 @@
-#include "Aresta.h"
+#include "../headers/Aresta.h"
 
 Aresta::Aresta(int destino, int peso) : destino(destino), peso(peso) {}
+Aresta::~Aresta() {}
 
 int Aresta::getDestino() const {
     return destino;

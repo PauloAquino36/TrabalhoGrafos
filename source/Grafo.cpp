@@ -4,7 +4,7 @@
 #include <list>
 #include <cmath>
 #include <string>
-#include "Grafo.h"
+#include "../headers/Grafo.h"
 
 using namespace std;
 

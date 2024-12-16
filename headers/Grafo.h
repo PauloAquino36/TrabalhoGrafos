@@ -18,7 +18,7 @@ public:
      bool possui_ponte();
 
      Grafo();
-     ~Grafo() = default;
+     ~Grafo();
 };
 
 #endif
