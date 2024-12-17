@@ -9,11 +9,12 @@ private:
     int peso;
 
 public:
-    Aresta(int destino, int peso = 1);
+    Aresta(); // Construtor padrão
+    Aresta(int destino, int peso = 0); // Construtor parametrizado
     ~Aresta();
 
     int getDestino() const;
-    int getPeso() const;
+    int getPeso() const; 
 
     void setDestino(int destino);
     void setPeso(int peso);

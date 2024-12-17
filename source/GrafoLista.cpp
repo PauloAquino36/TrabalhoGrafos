@@ -3,90 +3,100 @@
 
 using namespace std;
 
-GrafoLista::GrafoLista(int nVertices, bool direcionado) {
-    this->numVertices = nVertices;
-    this->direcionado = direcionado;
-
-    // Aloca a matriz de adjacência (lista de adjacência)
-    listaAdj = new Aresta**[numVertices];
-    for (int i = 0; i < numVertices; ++i) {
-        listaAdj[i] = new Aresta*[numVertices];
-        for (int j = 0; j < numVertices; ++j) {
-            listaAdj[i][j] = nullptr; // Inicializa os ponteiros como nulos
-        }
+GrafoLista::GrafoLista(int nVertices, bool direcionado)
+    : numVertices(nVertices), direcionado(direcionado)
+{
+    cout << "0" << endl;
+    vertices = new Vertice[numVertices];
+    for (int i = 0; i < numVertices; ++i)
+    {
+        cout << "Inicializando vertice: " << i << endl;
+        vertices[i] = Vertice(i);
     }
+    cout << "1" << endl;
 }
 
-GrafoLista::~GrafoLista() {
-    for (int i = 0; i < numVertices; ++i) {
-        for (int j = 0; j < numVertices; ++j) {
-            delete listaAdj[i][j]; // Libera as arestas alocadas
-        }
-        delete[] listaAdj[i]; // Libera as listas individuais
-    }
-    delete[] listaAdj; // Libera a matriz de ponteiros
+GrafoLista::~GrafoLista()
+{
+    delete[] vertices; // Libera a memória alocada para os vértices
 }
 
-void GrafoLista::adicionarAresta(int origem, int destino, int peso) {
-    if (origem < 0 || origem >= numVertices || destino < 0 || destino >= numVertices) {
+void GrafoLista::adicionarAresta(int origem, int destino, int peso)
+{
+    if (origem < 0 || origem >= numVertices || destino < 0 || destino >= numVertices)
+    {
         cout << "Erro: Vértices fora do intervalo válido." << endl;
         return;
     }
 
-    delete listaAdj[origem][destino];
+    vertices[origem].adicionarAresta(destino, peso);
 
-    listaAdj[origem][destino] = new Aresta(destino, peso);
-
-    if (!direcionado) {
-        delete listaAdj[destino][origem];
-        listaAdj[destino][origem] = new Aresta(origem, peso);
+    if (!direcionado)
+    {
+        vertices[destino].adicionarAresta(origem, peso);
     }
 }
 
-void GrafoLista::removerAresta(int origem, int destino) {
-    if (origem < 0 || origem >= numVertices || destino < 0 || destino >= numVertices) {
+void GrafoLista::removerAresta(int origem, int destino)
+{
+    if (origem < 0 || origem >= numVertices || destino < 0 || destino >= numVertices)
+    {
         cout << "Erro: Vértices fora do intervalo válido." << endl;
         return;
     }
 
-    delete listaAdj[origem][destino];
-    listaAdj[origem][destino] = nullptr;
+    vertices[origem].removerAresta(destino);
 
-    if (!direcionado) {
-        delete listaAdj[destino][origem];
-        listaAdj[destino][origem] = nullptr;
+    if (!direcionado)
+    {
+        vertices[destino].removerAresta(origem);
     }
 }
 
-void GrafoLista::imprimir() const {
-    for (int i = 0; i < numVertices; ++i) {
+void GrafoLista::imprimir() const
+{
+    for (int i = 0; i < numVertices; ++i)
+    {
         cout << "Vertice " << i << ": ";
-        for (int j = 0; j < numVertices; ++j) {
-            if (listaAdj[i][j] != nullptr) {
-                cout << "(" << listaAdj[i][j]->getDestino() << ", " << listaAdj[i][j]->getPeso() << ") ";
-            }
-        }
-        cout << endl;
+        vertices[i].imprimirArestas();
     }
 }
 
-bool GrafoLista::existeAresta(int origem, int destino) const {
-    if (origem < 0 || origem >= numVertices || destino < 0 || destino >= numVertices) {
+bool GrafoLista::existeAresta(int origem, int destino) const
+{
+    if (origem < 0 || origem >= numVertices || destino < 0 || destino >= numVertices)
+    {
         cout << "Erro: Vértices fora do intervalo válido." << endl;
         return false;
     }
 
-    return listaAdj[origem][destino] != nullptr;
+    return vertices[origem].existeAresta(destino);
 }
 
-int GrafoLista::obterPeso(int origem, int destino) const {
-    if (origem < 0 || origem >= numVertices || destino < 0 || destino >= numVertices) {
+int GrafoLista::obterPeso(int origem, int destino) const
+{
+    if (origem < 0 || origem >= numVertices || destino < 0 || destino >= numVertices)
+    {
         cout << "Erro: Vértices fora do intervalo válido." << endl;
         return 0;
     }
 
-    if (listaAdj[origem][destino] != nullptr) {
-        return listaAdj[origem][destino]->getPeso();
+    for (int i = 0; i < numVertices; ++i)
+    {
+        if (vertices[origem].existeAresta(destino))
+        {
+            return vertices[origem].getPeso();
+        }
     }
     return 0;
+}
+
+int GrafoLista::getNumVertices() const
+{
+    return numVertices;
+}
+
+bool GrafoLista::ehDirecionado() const
+{
+    return direcionado;
 }

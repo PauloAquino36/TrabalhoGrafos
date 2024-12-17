@@ -1,7 +1,18 @@
 #include "../headers/Aresta.h"
 
-Aresta::Aresta(int destino, int peso) : destino(destino), peso(peso) {}
-Aresta::~Aresta() {}
+// Construtor padrão
+Aresta::Aresta() : destino(-1), peso(0) {
+}
+
+// Construtor parametrizad
+Aresta::Aresta(int destino, int peso) : destino(destino), peso(peso) {
+    // Inicializa os atributos com os valores fornecidos
+}
+
+// Destrutor
+Aresta::~Aresta() {
+    // Não há recursos dinâmicos para liberar
+}
 
 int Aresta::getDestino() const {
     return destino;
@@ -17,9 +28,4 @@ void Aresta::setDestino(int destino) {
 
 void Aresta::setPeso(int peso) {
     this->peso = peso;
-}
-
-std::ostream& operator<<(std::ostream& os, const Aresta& aresta) {
-    os << "(" << aresta.getDestino() << ", peso: " << aresta.getPeso() << ")";
-    return os;
 }

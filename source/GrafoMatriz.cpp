@@ -3,89 +3,92 @@
 
 using namespace std;
 
-GrafoMatriz::GrafoMatriz(int nVertices, bool direcionado) {
-    this->numVertices = nVertices;
-    this->direcionado = direcionado;
-
-    matrizAdj = new Aresta**[numVertices];
+GrafoMatriz::GrafoMatriz(int nVertices, bool direcionado) 
+    : numVertices(nVertices), direcionado(direcionado) {
+    vertices = new Vertice[numVertices];
     for (int i = 0; i < numVertices; ++i) {
-        matrizAdj[i] = new Aresta*[numVertices];
-        for (int j = 0; j < numVertices; ++j) {
-            matrizAdj[i][j] = nullptr; // Inicializa todos os ponteiros como nulos
-        }
+        vertices[i] = Vertice(i); // Inicializa cada vértice com seu ID
     }
 }
 
 GrafoMatriz::~GrafoMatriz() {
-    for (int i = 0; i < numVertices; ++i) {
-        for (int j = 0; j < numVertices; ++j) {
-            delete matrizAdj[i][j]; // Libera as instâncias de Aresta
-        }
-        delete[] matrizAdj[i]; // Libera as linhas da matriz
-    }
-    delete[] matrizAdj; // Libera a matriz de ponteiros
+    delete[] vertices; // Libera a memória alocada para os vértices
 }
 
-void GrafoMatriz::adicionarAresta(int vertice1, int vertice2, int peso) {
-    if (vertice1 < 0 || vertice1 >= numVertices || vertice2 < 0 || vertice2 >= numVertices) {
+void GrafoMatriz::adicionarAresta(int origem, int destino, int peso) {
+    if (origem < 0 || origem >= numVertices || destino < 0 || destino >= numVertices) {
         cout << "Erro: Vértices fora do intervalo válido." << endl;
         return;
     }
 
-    delete matrizAdj[vertice1][vertice2]; // Libera a aresta anterior, se existir
-    matrizAdj[vertice1][vertice2] = new Aresta(vertice2, peso);
+    vertices[origem].adicionarAresta(destino, peso);
 
     if (!direcionado) {
-        delete matrizAdj[vertice2][vertice1]; // Libera a aresta anterior, se existir
-        matrizAdj[vertice2][vertice1] = new Aresta(vertice1, peso);
+        vertices[destino].adicionarAresta(origem, peso);
     }
 }
 
-void GrafoMatriz::removerAresta(int vertice1, int vertice2) {
-    if (vertice1 < 0 || vertice1 >= numVertices || vertice2 < 0 || vertice2 >= numVertices) {
+void GrafoMatriz::removerAresta(int origem, int destino) {
+    if (origem < 0 || origem >= numVertices || destino < 0 || destino >= numVertices) {
         cout << "Erro: Vértices fora do intervalo válido." << endl;
         return;
     }
 
-    delete matrizAdj[vertice1][vertice2];
-    matrizAdj[vertice1][vertice2] = nullptr;
+    vertices[origem].removerAresta(destino);
 
     if (!direcionado) {
-        delete matrizAdj[vertice2][vertice1];
-        matrizAdj[vertice2][vertice1] = nullptr;
+        vertices[destino].removerAresta(origem);
     }
 }
 
-void GrafoMatriz::imprimir() const {
+void GrafoMatriz::imprimir() {
+    cout << "Matriz de Adjacencia:" << endl;
+
+    // Imprime o cabeçalho com os índices das colunas
+    cout << "    ";
     for (int i = 0; i < numVertices; ++i) {
+        cout << i << " ";
+    }
+    cout << endl;
+
+    // Imprime a matriz linha por linha
+    for (int i = 0; i < numVertices; ++i) {
+        cout << i << " | "; // Índice da linha
         for (int j = 0; j < numVertices; ++j) {
-            if (matrizAdj[i][j] != nullptr) {
-            cout <<  matrizAdj[i][j]->getPeso() << " "; 
+            // Verifica se existe uma aresta entre i e j
+            if (vertices[i].existeAresta(j)) {
+                cout << vertices[i].getPesoAresta(j) << " "; // Peso da aresta
             } else {
-                cout << "0 "; // Representa ausência de aresta
+                cout << "0 "; // Sem aresta
             }
         }
         cout << endl;
     }
 }
 
-int GrafoMatriz::obterPeso(int vertice1, int vertice2) const {
-    if (vertice1 < 0 || vertice1 >= numVertices || vertice2 < 0 || vertice2 >= numVertices) {
+
+int GrafoMatriz::obterPeso(int origem, int destino) {
+    if (origem < 0 || origem >= numVertices || destino < 0 || destino >= numVertices) {
         cout << "Erro: Vértices fora do intervalo válido." << endl;
         return 0;
     }
 
-    if (matrizAdj[vertice1][vertice2] != nullptr) {
-        return matrizAdj[vertice1][vertice2]->getPeso();
-    }
-    return 0; // Retorna 0 se não existir aresta
+    return vertices[origem].getPeso();
 }
 
-bool GrafoMatriz::existeAresta(int vertice1, int vertice2) const {
-    if (vertice1 < 0 || vertice1 >= numVertices || vertice2 < 0 || vertice2 >= numVertices) {
+bool GrafoMatriz::existeAresta(int origem, int destino) {
+    if (origem < 0 || origem >= numVertices || destino < 0 || destino >= numVertices) {
         cout << "Erro: Vértices fora do intervalo válido." << endl;
         return false;
     }
 
-    return matrizAdj[vertice1][vertice2] != nullptr;
+    return vertices[origem].existeAresta(destino);
+}
+
+int GrafoMatriz::getNumVertices() {
+    return numVertices;
+}
+
+bool GrafoMatriz::ehDirecionado() {
+    return direcionado;
 }
