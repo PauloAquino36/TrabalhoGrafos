@@ -3,17 +3,13 @@
 
 using namespace std;
 
-GrafoLista::GrafoLista(int nVertices, bool direcionado)
-    : numVertices(nVertices), direcionado(direcionado)
-{
-    cout << "0" << endl;
+GrafoLista::GrafoLista(int nVertices, bool direcionado) 
+    : numVertices(nVertices), direcionado(direcionado) {
     vertices = new Vertice[numVertices];
-    for (int i = 0; i < numVertices; ++i)
-    {
+    for (int i = 0; i < numVertices; ++i) {
         cout << "Inicializando vertice: " << i << endl;
-        vertices[i] = Vertice(i);
+        vertices[i] = Vertice(i); // Inicializa cada vértice com seu ID
     }
-    cout << "1" << endl;
 }
 
 GrafoLista::~GrafoLista()

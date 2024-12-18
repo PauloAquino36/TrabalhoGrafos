@@ -5,30 +5,34 @@
 
 class Vertice {
 private:
-    int id;          
-    int peso;        
-    Aresta* arestas; // Lista dinâmica de arestas
-    int numArestas;  
-    int capacidade;  // Capacidade máxima da lista de arestas
-    void redimensionarArestas(); // Função auxiliar para redimensionar a lista de arestas
+    int id;
+    int peso;
+    Aresta* arestas; // Array dinâmico de arestas
+    int numArestas;
+    int capacidade;
+
+    void redimensionarArestas();
 
 public:
-    Vertice();                   // Construtor padrão
-    Vertice(int id, int peso = 0);   // Construtor com ID e peso (peso padrão = 0)
-    ~Vertice();                  // Destrutor
+    Vertice();
+    Vertice(int id, int peso = 0);
+    Vertice(const Vertice& other); // Construtor de cópia
+    Vertice& operator=(const Vertice& other); // Operador de atribuição
+    ~Vertice();
 
-    int getId();
+    int getId() const;
     void setId(int id);
 
-    int getPeso();
+    int getPeso() const;
     void setPeso(int peso);
+
+    int getPesoAresta(int destino) const;
 
     void adicionarAresta(int destino, int peso = 0);
     void removerAresta(int destino);
-    bool existeAresta(int destino);
-    int getPesoAresta(int destino);
+    bool existeAresta(int destino) const;
 
-    void imprimirArestas();
+    void imprimirArestas() const;
 };
 
 #endif
