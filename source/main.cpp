@@ -46,25 +46,55 @@ void carrega_grafo(string nomeArquivo, int vet[], int tamanhoVet, Grafo &grafo) 
 
     while (getline(arquivo, linha) && index < tamanhoVet) {
         sscanf(linha.c_str(), "%d", &valor);
-        cout << valor << endl; // Apaga essa linha depois
+        //cout << valor << endl; // Apaga essa linha depois, Printa o valor lido para debug
         vet[index++] = valor; // Adiciona o valor ao array e incrementa o índice
     }
 
     grafo = Grafo(vet[1], vet[2], vet[4], vet[5]);
     arquivo.close();
-    cout << "Leitura concluida!" << endl;
+}
+
+void novo_grafo(string nomeArquivo, string nomeArquivoSaida, int vet[], int tamanho, Grafo &grafo) {
+
+    carrega_grafo(nomeArquivoSaida, vet, tamanho, grafo);
+    ofstream arquivo(nomeArquivo);
+
+    if (!arquivo.is_open()) {
+        cerr << "Erro ao abrir o arquivo para escrita: " << nomeArquivo << endl;
+        return;
+    }
+
+    cout << "Escrevendo no arquivo '" << nomeArquivo << "':" << endl;
+
+    arquivo << grafo.getNVertices() << " " << grafo.eh_direcionado() << " " << grafo.vertice_ponderado() << " " << grafo.aresta_ponderada() <<  "    // numero de nos, direcionado, ponderado vertices, ponderado arestas" << endl;
+    
+    arquivo.close();
+    cout << "Escrita concluida!" << endl;
 }
 
 int main() {
     const int tamanho = 10;
     int vet[tamanho] = {0}; // Array inicializado com zeros
+
     Grafo grafo(0, false, false, false); // Inicialização com valores default
+    
+    ////codigo -d
     carrega_grafo("descricao.txt", vet, tamanho, grafo);
-
-
-    cout << "----------------------------" << endl << endl;
     imprime(&grafo);
-    /*
+
+    cout << "--------------------------------------------------------" << endl;
+
+    ////codigo -c
+    novo_grafo("grafo.txt", "descricao.txt", vet, tamanho, grafo);
+
+    cout << "--------------------------------------------------------" << endl;
+    cout << endl << "Fim" << endl;
+   
+    return 0;
+}
+
+
+/*
     GrafoMatriz grafoMatriz(3, true, true, true);
     grafoMatriz.getVertices()[0].setPeso(2);
     grafoMatriz.getVertices()[1].setPeso(3);
@@ -106,7 +136,4 @@ int main() {
     cout << "Grafo Lista" << endl;
     imprime(&grafoLista);
     */
-    cout << endl << "Fim" << endl;
-   
-    return 0;
-}
+    
