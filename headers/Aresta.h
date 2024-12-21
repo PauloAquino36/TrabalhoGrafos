@@ -5,17 +5,20 @@
 
 class Aresta {
 private:
+    int origem;
     int destino;
     int peso;
 
 public:
     Aresta(); // Construtor padrão
-    Aresta(int destino, int peso = 0); // Construtor parametrizado
+    Aresta(int origem, int destino, int peso = 0); // Construtor parametrizado
     ~Aresta();
 
-    int getDestino() const;
-    int getPeso() const; 
+    int getOrigem();
+    int getDestino();
+    int getPeso(); 
 
+    void setOrigem(int origem);
     void setDestino(int destino);
     void setPeso(int peso);
 };

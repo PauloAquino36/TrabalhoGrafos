@@ -2,26 +2,13 @@
 #define GRAFO_LISTA_H
 
 #include "Vertice.h"
+#include "Grafo.h"
 
-class GrafoLista {
-private:
-    Vertice* vertices; // Lista de vértices
-    int numVertices;   // Número de vértices
-    bool direcionado;  // Indica se o grafo é direcionado
+class GrafoLista : public Grafo {
 
 public:
-    GrafoLista(int nVertices, bool direcionado);
+    GrafoLista(int nVertices, bool direcionado, bool ponderadoVertices, bool ponderadoArestas);
     ~GrafoLista();
-
-    void adicionarAresta(int origem, int destino, int peso = 0);
-    void removerAresta(int origem, int destino);
-    void imprimir() const;
-
-    bool existeAresta(int origem, int destino) const;
-    int obterPeso(int origem, int destino) const;
-
-    int getNumVertices() const;
-    bool ehDirecionado() const;
 };
 
 #endif

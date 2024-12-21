@@ -2,30 +2,34 @@
 #define GRAFO_H
 
 #include <iostream>
+#include "Vertice.h"
 
 class Grafo {
-private:
-    int numVertices;                               // Número de vértices no grafo
-    bool direcionado;                              // Flag para indicar se o grafo é direcionado ou não
-public:
-     bool eh_bipartido();
-     int n_conexo();
-     int get_grau();
-     int get_ordem();
-     bool eh_direcionado();
-     bool vertice_ponderado();
-     bool aresta_ponderada();
-     bool eh_completo();
-     bool eh_arvore();
-     bool possui_articulacao();
-     bool possui_ponte();
+protected:
+    Vertice* vertices; // Lista de vértices
+    int nVertices;   // Número de vértices
+    bool direcionado;  // Indica se o grafo é direcionado
+    bool ponderadoVertices;
+    bool ponderadoArestas;
 
-     Grafo();
+public:
+     bool eh_bipartido();                   //  Lucas
+     int n_conexo();                        //  Lucas
+     int get_grau();                        //  Leandro
+     int get_ordem();                       //  Leandro
+     bool eh_direcionado();                 //  Paulo
+     bool vertice_ponderado();              //  Paulo
+     bool aresta_ponderada();               //  Paulo
+     bool eh_completo();                    //  Leticia
+     bool eh_arvore();                      //  Leticia
+     bool possui_articulacao();             //  Favio
+     bool possui_ponte();                   //  Favio
+
+     Grafo(int numVertices, bool direcionado, bool ponderadoVertices, bool ponderadoArestas);
      ~Grafo();
 
-     //Funções auxiliares
-     int get_numVertices();
-     bool get_direcionado();
+     //funçoes auxiliares
+     Vertice* getVertices();
 };
 
 #endif

@@ -8,11 +8,12 @@
 
 using namespace std;
 
-Grafo::Grafo()
+Grafo::Grafo(int numVertices, bool direcionado, bool ponderadoVertices, bool ponderadoArestas)
 {
-    this->numVertices = numVertices;
+    this->nVertices = numVertices;
     this->direcionado = direcionado;
-    cout << "Teste rodando" << endl;
+    this->ponderadoVertices = ponderadoVertices;
+    this->ponderadoArestas = ponderadoArestas;
 }
 
 Grafo::~Grafo()
@@ -24,7 +25,8 @@ bool Grafo::eh_direcionado()
 {
     return direcionado;
 }
-int Grafo::get_numVertices()
+
+Vertice* Grafo::getVertices()
 {
-    return numVertices;
+    return vertices;
 }
