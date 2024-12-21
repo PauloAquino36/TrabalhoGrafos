@@ -26,6 +26,16 @@ bool Grafo::eh_direcionado()
     return direcionado;
 }
 
+bool Grafo::vertice_ponderado()
+{
+    return ponderadoVertices;
+}
+
+bool Grafo::aresta_ponderada()
+{
+    return ponderadoArestas;
+}
+
 Vertice* Grafo::getVertices()
 {
     return vertices;

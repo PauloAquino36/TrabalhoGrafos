@@ -11,6 +11,19 @@ using namespace std;
 
     //  CADA VEZ QUE RODAR USE O COMANDO ABAIXO  PARA COMPILAR
     // g++ -Wall -Wextra -g3 main.cpp Grafo.cpp GrafoMatriz.cpp GrafoLista.cpp Vertice.cpp Aresta.cpp -o main.exe; .\main.exe
+void imprime(Grafo* grafo) {
+    cout << "grau: " << endl;
+    cout << "Ordem: " << endl;
+    cout << "Direcionado " << grafo->eh_direcionado() << endl;
+    cout << "Componentes conexas " << endl;
+    cout << "Vertices ponderados " << grafo->vertice_ponderado() << endl;
+    cout << "Arestas ponderadas: " << grafo->aresta_ponderada() << endl;
+    cout << "Completo: " << endl;
+    cout << "Bipartido: " << endl;
+    cout << "Arvore: " << endl;
+    cout << "Aresta Ponte: " << endl;
+    cout << "Vertice de Articulacao: " << endl;
+}
 
 int main() {
 
@@ -32,6 +45,8 @@ int main() {
     grafoMatriz.getVertices()[2].getArestas()[2].setPeso(-5);
 
     cout << "Grafo Matriz" << endl;
+    imprime(&grafoMatriz);
+    cout << endl;
     
     GrafoLista grafoLista(3, true, true, true);
     grafoLista.getVertices()[0].setPeso(2);
@@ -51,6 +66,8 @@ int main() {
     grafoLista.getVertices()[2].getArestas()[2].setPeso(-5);
 
     cout << "Grafo Lista" << endl;
+    imprime(&grafoLista);
+    cout << "Fim" << endl;
    
     return 0;
 }
