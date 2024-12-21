@@ -30,6 +30,7 @@ public:
 
      //funçoes auxiliares
      Vertice* getVertices();
+     int getNVertices();
 };
 
 #endif

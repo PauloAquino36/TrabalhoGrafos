@@ -40,3 +40,9 @@ Vertice* Grafo::getVertices()
 {
     return vertices;
 }
+
+//Funçoes auxiliares
+int Grafo::getNVertices()
+{
+    return nVertices;
+}
