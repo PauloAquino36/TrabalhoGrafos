@@ -26,7 +26,7 @@ void imprime(Grafo *grafo, string tipo)
     cout << "Vertices ponderados " << grafo->vertice_ponderado() << endl;
     cout << "Arestas ponderadas: " << grafo->aresta_ponderada() << endl;
     cout << "Completo: " << endl;
-    cout << "Bipartido: " << endl;
+    cout << "Bipartido: " << (grafo->eh_bipartido() ? "Sim" : "Nao") << endl;
     cout << "Arvore: " << endl;
     cout << "Aresta Ponte: " << endl;
     cout << "Vertice de Articulacao: " << endl;
