@@ -74,7 +74,7 @@ bool Grafo::eh_bipartido() {
                         delete[] fila;
                         return false;
                     }
-                    //aresta = aresta->getProx(); achar um jeito de implementar
+                    aresta = aresta->getProx();
                 }
             }
         }
@@ -93,4 +93,11 @@ int Grafo::get_ordem()
 int Grafo::get_grau()
 {
     return grau;
+}
+
+void Grafo::adicionarAresta(int origem, int destino) {
+    vertices[origem].adicionarAresta(destino);
+    if (!direcionado) {
+        vertices[destino].adicionarAresta(origem);
+    }
 }
