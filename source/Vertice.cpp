@@ -4,6 +4,7 @@
 using namespace std;
 
 Vertice::Vertice(){
+    nArestas = 0; //Valor Padrao
     id = 0; //Valor Padrao
     peso = 0; //Valor Padrao
     arestas = new Aresta[100]; //Valor Padrao
@@ -44,4 +45,8 @@ bool Vertice::existeAresta(int destino) {
         if (arestas[i].getDestino() == destino) return true;
     }
     return false;
+}
+
+int Vertice::getNArestas() {
+    return nArestas;
 }

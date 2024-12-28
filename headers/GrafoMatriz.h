@@ -8,7 +8,7 @@ class GrafoMatriz  : public Grafo {
 private:
 
 public:
-    GrafoMatriz(int nVertices, bool direcionado, bool ponderadoVertices, bool ponderadoArestas);
+    GrafoMatriz(int nVertices, bool direcionado, bool ponderadoVertices, bool ponderadoArestas, int grau);
     ~GrafoMatriz();
     void imprimir();
 };

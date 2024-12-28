@@ -1,1 +1,11 @@
 3 1 1 1    // numero de nos, direcionado, ponderado vertices, ponderado arestas
+1 9 2     // pesos dos nos
+0 0 7     // origem, destino, peso
+0 1 4     // origem, destino, peso
+0 2 0     // origem, destino, peso
+1 0 4     // origem, destino, peso
+1 1 8     // origem, destino, peso
+1 2 8     // origem, destino, peso
+2 0 4     // origem, destino, peso
+2 1 5     // origem, destino, peso
+2 2 5     // origem, destino, peso

@@ -3,7 +3,7 @@
 
 using namespace std;
 
-GrafoLista::GrafoLista(int nVertices, bool direcionado, bool ponderadoVertices, bool ponderadoArestas) : Grafo(nVertices, direcionado, ponderadoVertices, ponderadoArestas)
+GrafoLista::GrafoLista(int nVertices, bool direcionado, bool ponderadoVertices, bool ponderadoArestas, int grau) : Grafo(nVertices, direcionado, ponderadoVertices, ponderadoArestas, grau)
 {
 
     // Inicializa os vértices com base nos atributos herdados
