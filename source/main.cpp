@@ -14,22 +14,41 @@ using namespace std;
 // CADA VEZ QUE RODAR USE O COMANDO ABAIXO  PARA COMPILAR
 // g++ -Wall -Wextra -g3 main.cpp Grafo.cpp GrafoMatriz.cpp GrafoLista.cpp Vertice.cpp Aresta.cpp -o main.exe; .\main.exe
 
+void grafoAleatorio(Grafo *grafo)
+{
+   int numVertices = grafo->get_ordem();
+   int numArestas = grafo->get_grau();
+
+   //ediçao por vertice
+   for (int i = 0; i < numVertices; i++)
+   {
+      grafo->getVertices()[i].setPeso(rand() % 10);
+      //ediçao por aresta
+      for(int j = 0; j < numArestas; j++){
+         grafo->getVertices()[i].getArestas()[j].setPeso(rand() % 10);
+         grafo->getVertices()[i].getArestas()[j].setOrigem(i);
+         grafo->getVertices()[i].getArestas()[j].setDestino(j);
+      }
+   }
+   cout << "sai func " << endl;
+}
+
 void imprime(Grafo *grafo, string tipo)
 {
     cout << "__________________________________________________________________" << endl;
     cout << endl << "Grafo Impresso Tipo: " << (tipo == "m" ? "Matriz" : "Lista Encadeada") << endl;
     cout << "__________________________________________________________________" << endl << endl;
-    cout << "grau: " << endl;
-    cout << "Ordem: " << grafo->getNVertices() << endl;
-    cout << "Direcionado " << grafo->eh_direcionado() << endl;
-    cout << "Componentes conexas " << endl;
-    cout << "Vertices ponderados " << grafo->vertice_ponderado() << endl;
+    cout << "grau: " << grafo->get_grau() << endl;
+    cout << "Ordem: " << grafo->get_ordem() << endl;
+    cout << "Direcionado: " << grafo->eh_direcionado() << endl;
+    cout << "Componentes conexas: Nao esta Feita!" << endl;
+    cout << "Vertices ponderados: " << grafo->vertice_ponderado() << endl;
     cout << "Arestas ponderadas: " << grafo->aresta_ponderada() << endl;
-    cout << "Completo: " << endl;
-    cout << "Bipartido: " << endl;
-    cout << "Arvore: " << endl;
-    cout << "Aresta Ponte: " << endl;
-    cout << "Vertice de Articulacao: " << endl;
+    cout << "Completo:  Nao esta Feita!" << endl;
+    cout << "Bipartido:  Nao esta Feita!" << endl;
+    cout << "Arvore:  Nao esta Feita!" << endl;
+    cout << "Aresta Ponte:  Nao esta Feita!" << endl;
+    cout << "Vertice de Articulacao:  Nao esta Feita!" << endl;
     cout << "__________________________________________________________________" << endl << endl;
 }
 
@@ -50,7 +69,7 @@ void carrega_grafo(string nomeArquivo, int vet[], int tamanhoVet, Grafo &grafo, 
     string linha;
     int valor;
     int index = 0;
-
+ 
     while (getline(arquivo, linha) && index < tamanhoVet)
     {
         sscanf(linha.c_str(), "%d", &valor);
@@ -59,9 +78,9 @@ void carrega_grafo(string nomeArquivo, int vet[], int tamanhoVet, Grafo &grafo, 
     }
 
     if(tipo == "m"){
-        grafo = GrafoMatriz(vet[1], vet[2], vet[4], vet[5]);
+        grafo = GrafoMatriz(vet[1], vet[2], vet[4], vet[5], vet[0]);
     } else if(tipo == "l"){
-        grafo = GrafoLista(vet[1], vet[2], vet[4], vet[5]);
+        grafo = GrafoLista(vet[1], vet[2], vet[4], vet[5], vet[0]);
     } else {
         cerr << "Tipo de grafo inválido" << endl;
         return;
@@ -76,6 +95,8 @@ void novo_grafo(string nomeArquivo, string nomeArquivoSaida, int vet[], int tama
     carrega_grafo(nomeArquivoSaida, vet, tamanho, grafo, tipo);
     ofstream arquivo(nomeArquivo);
 
+    grafoAleatorio(&grafo);
+
     if (!arquivo.is_open())
     {
         cerr << "Erro ao abrir o arquivo para escrita: " << nomeArquivo << endl;
@@ -84,9 +105,35 @@ void novo_grafo(string nomeArquivo, string nomeArquivoSaida, int vet[], int tama
 
     cout << "Escrevendo no arquivo '" << nomeArquivo << "':" << endl;
 
-    arquivo << grafo.getNVertices() << " " << grafo.eh_direcionado() << " " << grafo.vertice_ponderado() << " " << grafo.aresta_ponderada() << "    // numero de nos, direcionado, ponderado vertices, ponderado arestas" << endl;
+    arquivo << grafo.get_ordem() << " " << grafo.eh_direcionado() << " " << grafo.vertice_ponderado() << " " << grafo.aresta_ponderada() << "    // numero de nos, direcionado, ponderado vertices, ponderado arestas" << endl;
+    if(grafo.vertice_ponderado()){
+        for (int i = 0; i < grafo.get_ordem(); i++)
+        {
+            arquivo << grafo.getVertices()[i].getPeso() << " ";
+        }
+        arquivo << "    // pesos dos nos" << endl;
+    }
+    for(int i = 0; i < grafo.get_ordem(); i++){
+        
+        for(int j = 0; j < grafo.get_grau(); j++){
+            arquivo << grafo.getVertices()[i].getArestas()[j].getOrigem() << " " << grafo.getVertices()[i].getArestas()[j].getDestino() << " " << grafo.getVertices()[i].getArestas()[j].getPeso() << " " << "    // origem, destino, peso" << endl;
+        }
+    }
 
-    arquivo.close();
+
+    // testar se o arquivo está em um estado válido pois o close() está quebrando o código
+
+    if (arquivo.bad()) {
+        cerr << "Erro grave no fluxo do arquivo antes de fechar." << endl;
+    } else if (arquivo.fail()) {
+        cerr << "Falha no fluxo do arquivo antes de fechar." << endl;
+    } else {
+        cout << "O fluxo do arquivo esta em estado valido antes de fechar." << endl;
+    }
+
+    arquivo.flush();
+    //arquivo.close(); esta quebrando o codigo
+
     cout << "Escrita concluida!" << endl;
 }
 
@@ -96,7 +143,7 @@ int main() {
 
     string tipo = "m"; //Trocar para "l" para grafo de lista e "m" para grafo de matriz
 
-    Grafo grafo(0, false, false, false); // Inicialização com valores default
+    Grafo grafo(0, false, false, false, 0); // Inicialização com valores default
     
     ////codigo -d
     carrega_grafo("descricao.txt", vet, tamanho, grafo, tipo);

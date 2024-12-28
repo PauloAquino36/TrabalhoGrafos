@@ -8,12 +8,13 @@
 
 using namespace std;
 
-Grafo::Grafo(int numVertices, bool direcionado, bool ponderadoVertices, bool ponderadoArestas)
+Grafo::Grafo(int numVertices, bool direcionado, bool ponderadoVertices, bool ponderadoArestas, int grau)
 {
     this->nVertices = numVertices;
     this->direcionado = direcionado;
     this->ponderadoVertices = ponderadoVertices;
     this->ponderadoArestas = ponderadoArestas;
+    this->grau = grau;
 }
 
 Grafo::~Grafo()
@@ -41,8 +42,12 @@ Vertice* Grafo::getVertices()
     return vertices;
 }
 
-//Funçoes auxiliares
-int Grafo::getNVertices()
+int Grafo::get_ordem()
 {
     return nVertices;
+}
+
+int Grafo::get_grau()
+{
+    return grau;
 }
