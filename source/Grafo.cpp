@@ -94,10 +94,3 @@ int Grafo::get_grau()
 {
     return grau;
 }
-
-void Grafo::adicionarAresta(int origem, int destino) {
-    vertices[origem].adicionarAresta(destino);
-    if (!direcionado) {
-        vertices[destino].adicionarAresta(origem);
-    }
-}

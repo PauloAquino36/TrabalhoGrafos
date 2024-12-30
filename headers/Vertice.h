@@ -22,8 +22,9 @@ public:
     void setPeso(int peso);
 
     Aresta* getArestas();
-    int getNArestas();
+    int getGrau();
     bool existeAresta(int destino);
+    void adicionaAresta(int destino, int peso);
 };
 
 #endif

@@ -8,6 +8,7 @@ private:
     int origem;
     int destino;
     int peso;
+    Aresta* prox; // Ponteiro para a próxima aresta
 
 public:
     Aresta(); // Construtor padrão
@@ -17,10 +18,12 @@ public:
     int getOrigem();
     int getDestino();
     int getPeso(); 
+    Aresta* getProx();
 
     void setOrigem(int origem);
     void setDestino(int destino);
     void setPeso(int peso);
+    void setProx(Aresta* prox);
 };
 
 #endif

@@ -12,6 +12,7 @@ Aresta::Aresta(int origem, int destino, int peso){
     this->destino = destino;
     this->peso = peso;
     this->origem = origem;
+    prox = nullptr;
 }
 
 // Destrutor
@@ -31,6 +32,10 @@ int Aresta::getOrigem() {
     return origem;
 }
 
+Aresta* Aresta::getProx() {
+    return prox;
+}
+
 void Aresta::setDestino(int destino) {
     this->destino = destino;
 }
@@ -41,4 +46,8 @@ void Aresta::setPeso(int peso) {
 
 void Aresta::setOrigem(int origem) {
     this->origem = origem;
+}
+
+void Aresta::setProx(Aresta* prox) {
+    this->prox = prox;
 }

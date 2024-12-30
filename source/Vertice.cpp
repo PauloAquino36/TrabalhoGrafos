@@ -47,6 +47,12 @@ bool Vertice::existeAresta(int destino) {
     return false;
 }
 
-int Vertice::getNArestas() {
+int Vertice::getGrau() {
     return nArestas;
+}
+
+void Vertice::adicionaAresta(int destino, int peso) {
+        Aresta* novaAresta = new Aresta(id, destino, peso);
+        novaAresta->setProx(arestas);
+        arestas = novaAresta;
 }
