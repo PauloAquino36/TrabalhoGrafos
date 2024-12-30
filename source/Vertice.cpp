@@ -47,6 +47,6 @@ bool Vertice::existeAresta(int destino) {
     return false;
 }
 
-int Vertice::getNArestas() {
+int Vertice::getGrau() {
     return nArestas;
 }

@@ -42,3 +42,4 @@ void Aresta::setPeso(int peso) {
 void Aresta::setOrigem(int origem) {
     this->origem = origem;
 }
+

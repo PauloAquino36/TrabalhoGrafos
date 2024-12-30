@@ -1,7 +1,5 @@
 #include <iostream>
 #include <fstream>
-#include <vector>
-#include <list>
 #include <cmath>
 #include <string>
 #include "../headers/Grafo.h"
@@ -42,49 +40,6 @@ Vertice* Grafo::getVertices()
     return vertices;
 }
 
-bool Grafo::eh_bipartido() {
-    int *color = new int[nVertices];
-    for (int i = 0; i < nVertices; i++) {
-        color[i] = -1; // Inicializa todos os elementos com -1
-    }
-
-    int *fila = new int[nVertices];
-    int inicioFila = 0, fimFila = 0;
-
-    for (int i = 0; i < nVertices; i++) {
-        if (color[i] == -1) { // Vértice ainda não visitado
-            fila[fimFila++] = i;
-            color[i] = 0; // Começa colorindo com 0
-
-            while (inicioFila < fimFila) {
-                int v = fila[inicioFila++];
-                //cout << "Visitando vertice: " << v << endl;
-                
-                // Iterar sobre todos os vizinhos de v
-                Aresta* aresta = vertices[v].getArestas();
-                while (aresta != nullptr) {
-                    int j = aresta->getDestino();
-                    //cout << "  Vertice vizinho: " << j << endl;
-                    if (color[j] == -1) { // Se não foi colorido
-                        color[j] = 1 - color[v]; // Colore com a cor oposta
-                        fila[fimFila++] = j;
-                    } else if (color[j] == color[v]) {
-                        //cout << "  Conflito de cores encontrado entre " << v << " e " << j << endl;
-                        delete[] color;
-                        delete[] fila;
-                        return false;
-                    }
-                    aresta = aresta->getProx();
-                }
-            }
-        }
-    }
-
-    delete[] color;
-    delete[] fila;
-    return true; // Se passou por todos os vértices sem conflitos, é bipartido
-}
-
 int Grafo::get_ordem()
 {
     return nVertices;
@@ -95,9 +50,43 @@ int Grafo::get_grau()
     return grau;
 }
 
-void Grafo::adicionarAresta(int origem, int destino) {
-    vertices[origem].adicionarAresta(destino);
-    if (!direcionado) {
-        vertices[destino].adicionarAresta(origem);
+bool Grafo::eh_bipartido() {
+    int ordem = this->get_ordem(); // Número de vértices no grafo
+    int cor[ordem]; // Array para armazenar a cor dos vértices (-1: não colorido, 0 ou 1)
+    int fila[ordem]; // Fila para BFS
+    int inicio = 0, fim = 0; // Índices da fila
+
+    // Inicializa todas as cores como não coloridas (-1)
+    for (int i = 0; i < ordem; i++) {
+        cor[i] = -1;
     }
+
+    // Verificar todos os componentes do grafo
+    for (int start = 0; start < ordem; start++) {
+        if (cor[start] == -1) { // Se o vértice não foi visitado
+            cor[start] = 0; // Colorir com 0
+            fila[fim++] = start; // Adicionar o vértice à fila
+
+            // BFS
+            while (inicio < fim) {
+                int u = fila[inicio++]; // Remove da fila
+
+                // Iterar sobre as arestas do vértice u
+                Vertice* vertices = this->getVertices();
+                for (int i = 0; i < vertices[u].getGrau(); i++) {
+                    int v = vertices[u].getArestas()[i].getDestino(); // Destino da aresta
+
+                    if (cor[v] == -1) { // Se v não foi colorido
+                        cor[v] = 1 - cor[u]; // Colorir com a cor oposta
+                        fila[fim++] = v; // Adicionar à fila
+                    } else if (cor[v] == cor[u]) {
+                        // Dois vértices adjacentes com a mesma cor
+                        return false;
+                    }
+                }
+            }
+        }
+    }
+
+    return true; // O grafo é bipartido
 }
