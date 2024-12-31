@@ -34,7 +34,8 @@ void imprime(Grafo *grafo, string tipo)
 
 int main() {
    cout << "--------------------------------------------------------" << endl;
-   Grafo* grafo = Grafo::gera_grafo("grafo.txt");
+   Grafo::novo_grafo("descricao.txt", "grafo.txt");
+   Grafo* grafo = Grafo::carrega_grafo("grafo.txt");
 
    imprime(grafo, "m");
    
