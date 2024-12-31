@@ -15,6 +15,11 @@ Grafo::Grafo(int numVertices, bool direcionado, bool ponderadoVertices, bool pon
     this->ponderadoVertices = ponderadoVertices;
     this->ponderadoArestas = ponderadoArestas;
     this->grau = grau;
+
+    vertices = new Vertice[nVertices];
+    for (int i = 0; i < nVertices; ++i) {
+        vertices[i] = Vertice(i, 0);
+    }
 }
 
 Grafo::~Grafo()
@@ -43,9 +48,10 @@ Vertice* Grafo::getVertices()
 }
 
 bool Grafo::eh_bipartido() {
-    int *color = new int[nVertices];
+    // Inicializa o array de cores com -1 (não colorido)
+    int *color = new int [nVertices];
     for (int i = 0; i < nVertices; i++) {
-        color[i] = -1; // Inicializa todos os elementos com -1
+        color[i] = -1;
     }
 
     int *fila = new int[nVertices];
@@ -58,18 +64,18 @@ bool Grafo::eh_bipartido() {
 
             while (inicioFila < fimFila) {
                 int v = fila[inicioFila++];
-                //cout << "Visitando vertice: " << v << endl;
+                cout << "Visitando vertice: " << v << endl;
                 
                 // Iterar sobre todos os vizinhos de v
                 Aresta* aresta = vertices[v].getArestas();
                 while (aresta != nullptr) {
                     int j = aresta->getDestino();
-                    //cout << "  Vertice vizinho: " << j << endl;
+                    cout << "  Vertice vizinho: " << j << endl;
                     if (color[j] == -1) { // Se não foi colorido
                         color[j] = 1 - color[v]; // Colore com a cor oposta
                         fila[fimFila++] = j;
                     } else if (color[j] == color[v]) {
-                        //cout << "  Conflito de cores encontrado entre " << v << " e " << j << endl;
+                        //Conflito de cores
                         delete[] color;
                         delete[] fila;
                         return false;
@@ -93,4 +99,16 @@ int Grafo::get_ordem()
 int Grafo::get_grau()
 {
     return grau;
+}
+
+void Grafo::adicionarAresta(int origem, int destino, int peso) {
+    if (vertices[origem].getArestas() == nullptr) {
+        vertices[origem].setArestas(new Aresta(origem, destino, peso));
+    } else {
+        Aresta* aresta = vertices[origem].getArestas();
+        while (aresta->getProx() != nullptr) {
+            aresta = aresta->getProx();
+        }
+        aresta->setProx(new Aresta(origem, destino, peso));
+    }
 }

@@ -31,7 +31,7 @@ public:
 
      //funçoes auxiliares
      Vertice* getVertices();
-     void adicionarAresta(int origem, int destino);
+     void adicionarAresta(int origem, int destino, int peso);
 };
 
 #endif
