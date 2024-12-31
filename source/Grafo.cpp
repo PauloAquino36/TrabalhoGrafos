@@ -64,13 +64,11 @@ bool Grafo::eh_bipartido() {
 
             while (inicioFila < fimFila) {
                 int v = fila[inicioFila++];
-                cout << "Visitando vertice: " << v << endl;
                 
                 // Iterar sobre todos os vizinhos de v
                 Aresta* aresta = vertices[v].getArestas();
                 while (aresta != nullptr) {
                     int j = aresta->getDestino();
-                    cout << "  Vertice vizinho: " << j << endl;
                     if (color[j] == -1) { // Se não foi colorido
                         color[j] = 1 - color[v]; // Colore com a cor oposta
                         fila[fimFila++] = j;
@@ -113,8 +111,7 @@ void Grafo::adicionarAresta(int origem, int destino, int peso) {
     }
 }
 
-Grafo* Grafo::gera_grafo(const string& nomeArquivo) {
-
+Grafo* Grafo::carrega_grafo(const string& nomeArquivo) {
     ifstream arquivo(nomeArquivo);
     if (!arquivo.is_open()) {
         cerr << "Erro ao abrir o arquivo: " << nomeArquivo << endl;
@@ -147,4 +144,89 @@ Grafo* Grafo::gera_grafo(const string& nomeArquivo) {
     
     arquivo.close();
     return grafo;
+}
+
+void Grafo::novo_grafo(const string& nomeArquivoEntrada, const string& nomeArquivoSaida)
+{
+    ifstream arquivoEntrada(nomeArquivoEntrada);
+    if (!arquivoEntrada.is_open()) {
+        cerr << "Erro ao abrir o arquivo: " << nomeArquivoEntrada << endl;
+        return;
+    }
+
+    int grau, ordem, direcionado, compConexas, ponderadoVertices, ponderadoArestas, completo, bipartido, arvore, arestaPonte, verticeArticulacao;
+    arquivoEntrada >> grau >> ordem >> direcionado >> ponderadoVertices >> ponderadoArestas >> grau >> compConexas >> completo >> bipartido >> arvore >> arestaPonte >> verticeArticulacao;
+    arquivoEntrada.close();
+
+    Grafo* grafo = new Grafo(ordem, direcionado, ponderadoVertices, ponderadoArestas, grau);
+    grafo->geraGrafoAleatorio(grau, ordem, direcionado, compConexas, ponderadoVertices, ponderadoArestas, completo, bipartido, arvore, arestaPonte, verticeArticulacao);
+
+    ofstream arquivoSaida(nomeArquivoSaida);
+    if (!arquivoSaida.is_open()) {
+        cerr << "Erro ao abrir o arquivo: " << nomeArquivoSaida << endl;
+        delete grafo;
+        return;
+    }
+
+    arquivoSaida << ordem << " " << direcionado << " " << ponderadoVertices << " " << ponderadoArestas << endl;
+    if (ponderadoVertices) {
+        for (int i = 0; i < ordem; ++i) {
+            arquivoSaida << grafo->getVertices()[i].getPeso() << " ";
+        }
+        arquivoSaida << endl;
+    }
+
+    for (int i = 0; i < ordem; ++i) {
+        Aresta* aresta = grafo->getVertices()[i].getArestas();
+        while (aresta != nullptr) {
+            arquivoSaida << i << " " << aresta->getDestino();
+            if (ponderadoArestas) {
+                arquivoSaida << " " << aresta->getPeso();
+            }
+            arquivoSaida << endl;
+            aresta = aresta->getProx();
+        }
+    }
+
+    arquivoSaida.close();
+    delete grafo;
+}
+
+void Grafo::geraGrafoAleatorio(int grau, int nVertices, bool direcionado, int compConexas, bool ponderadoVertices, bool ponderadoArestas, bool completo, bool bipartido, bool arvore, bool arestaPonte, bool verticeArticulacao) {
+    // Adiciona arestas aleatórias
+    for (int i = 0; i < nVertices; ++i) {
+        for (int j = 0; j < nVertices; ++j) {
+            if (i != j && (rand() % 2 == 0)) { // 50% de chance de adicionar uma aresta
+                int peso = ponderadoArestas ? (rand() % 10 + 1) : 0; // Peso entre 1 e 10 se ponderado
+                adicionarAresta(i, j, peso);
+                if (!direcionado) {
+                    adicionarAresta(j, i, peso);
+                }
+            }
+        }
+    }
+
+    // Define pesos aleatórios para os vértices, se necessário
+    if (ponderadoVertices) {
+        for (int i = 0; i < nVertices; ++i) {
+            int peso = rand() % 10 + 1; // Peso entre 1 e 10
+            getVertices()[i].setPeso(peso);
+        }
+    }
+
+    if (bipartido) {
+        // Gera um grafo bipartido
+        int metade = nVertices / 2;
+        for (int i = 0; i < metade; ++i) {
+            for (int j = metade; j < nVertices; ++j) {
+                if (rand() % 2 == 0) { // 50% de chance de adicionar uma aresta
+                    int peso = ponderadoArestas ? (rand() % 10 + 1) : 0; // Peso entre 1 e 10 se ponderado
+                    adicionarAresta(i, j, peso);
+                    if (!direcionado) {
+                        adicionarAresta(j, i, peso);
+                    }
+                }
+            }
+        }
+    }
 }

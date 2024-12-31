@@ -25,7 +25,9 @@ public:
     bool eh_arvore();                      //  Leticia
     bool possui_articulacao();             //  Favio
     bool possui_ponte();                   //  Favio
-    static Grafo* gera_grafo(const std::string& nomeArquivo); //  Lucas
+
+    static Grafo* carrega_grafo(const std::string& nomeArquivo); //  Lucas
+    static void novo_grafo(const std::string& nomeArquivoEntrada, const std::string& nomeArquivoSaida); //  Lucas
 
     Grafo(int numVertices, bool direcionado, bool ponderadoVertices, bool ponderadoArestas, int grau);
     ~Grafo();
@@ -33,6 +35,7 @@ public:
     //funçoes auxiliares
     Vertice* getVertices();
     void adicionarAresta(int origem, int destino, int peso);
+    void geraGrafoAleatorio(int grau, int nVertices, bool direcionado, int compConexas, bool ponderadoVertices, bool ponderadoArestas, bool completo, bool bipartido, bool arvore, bool arestaPonte, bool verticeArticulacao);
 };
 
 #endif
