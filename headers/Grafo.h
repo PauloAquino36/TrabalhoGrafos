@@ -14,20 +14,17 @@ protected:
     bool ponderadoArestas;
 
 public:
-    bool eh_bipartido();                   //  Lucas
-    int n_conexo();                        //  Lucas
-    int get_grau();                        //  Leandro // Ja esta Feita :)
-    int get_ordem();                       //  Leandro // Ja esta Feita :)
-    bool eh_direcionado();                 //  Paulo // Ja esta Feita :)
-    bool vertice_ponderado();              //  Paulo // Ja esta Feita :)
-    bool aresta_ponderada();               //  Paulo // Ja esta Feita :)
-    bool eh_completo();                    //  Leticia
-    bool eh_arvore();                      //  Leticia
+    bool eh_bipartido();                   //  Lucas    // Ja esta Feita :)
+    int n_conexo();                        //  Lucas    // Ja esta Feita :)
+    int get_grau();                        //  Leandro  // Ja esta Feita :)
+    int get_ordem();                       //  Leandro  // Ja esta Feita :)
+    bool eh_direcionado();                 //  Paulo    // Ja esta Feita :)
+    bool vertice_ponderado();              //  Paulo    // Ja esta Feita :)
+    bool aresta_ponderada();               //  Paulo    // Ja esta Feita :)
+    bool eh_completo();                    //  Leticia  // Ja esta Feita :)
+    bool eh_arvore();                      //  Leticia  // Ja esta Feita :)
     bool possui_articulacao();             //  Favio
-    bool possui_ponte();                   //  Favio
-    void dfs(int v, bool visitado[]);
-    bool ehConexo();
-    bool temCicloDFS(int v, bool visitado[], int pai);
+    bool possui_ponte();                   //  Favio    
 
     static Grafo* carrega_grafo(const std::string& nomeArquivo); //  Lucas
     static void novo_grafo(const std::string& nomeArquivoEntrada, const std::string& nomeArquivoSaida); //  Lucas
@@ -39,9 +36,11 @@ public:
     Vertice* getVertices();
     void adicionarAresta(int origem, int destino, int peso);
     void geraGrafoAleatorio(int grau, int nVertices, bool direcionado, int compConexas, bool ponderadoVertices, bool ponderadoArestas, bool completo, bool bipartido, bool arvore, bool arestaPonte, bool verticeArticulacao);
+    bool ehConexo();
+    bool temCicloDFS(int v, bool visitado[], int pai);
 
     private:
-        void DFS(int v, bool visited[]);
+    void DFS(int v, bool visited[]);
 };
 
 #endif

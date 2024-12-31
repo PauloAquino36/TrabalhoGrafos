@@ -9,9 +9,12 @@
 #include "../../headers/Vertice.h"
 
 using namespace std;
-// Para compilar e executar o programa, utilize os seguintes comandos:
-// cd source/main
-// ./main.exe
+//  Para compilar e executar o programa:
+//  1 - Com qualquer arquivo do proejto aberto, tecle: CTRL + SHIFT + B
+//  2 - Digite no termianl: cd source/main
+//  3 - Digite no terminal: ./main.exe
+
+//  OBS: no arquivo "grafo.txt" não use barra de comentarios, pois o programa não irá ler devidamente o arquivo
 
 void imprime(Grafo *grafo, string tipo)
 {
@@ -34,7 +37,7 @@ void imprime(Grafo *grafo, string tipo)
 
 int main() {
    cout << "--------------------------------------------------------" << endl;
-   Grafo::novo_grafo("descricao.txt", "grafo.txt");
+   //Grafo::novo_grafo("descricao.txt", "grafo.txt");
    Grafo* grafo = Grafo::carrega_grafo("grafo.txt");
 
    imprime(grafo, "m");

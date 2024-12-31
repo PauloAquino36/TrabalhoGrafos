@@ -114,6 +114,48 @@ int Grafo::get_grau()
     return grauMaior;
 }
 
+bool Grafo::eh_completo(){
+    for (int i = 0; i < nVertices; i++){
+        for (int j = 0; j< nVertices; j++){
+            if (i != j)
+            {
+                if(!vertices[i].existeAresta(j)) //verificar implementação da matriz
+                {
+                    return false; //se não exite aresta o grafo não é completo
+                }
+                if (!direcionado && !vertices[j].existeAresta(i))
+                {
+                    return false; 
+                }
+            }
+        }
+    }
+    return true;
+}
+
+bool Grafo::eh_arvore() {
+if (nVertices == 0) return false; 
+
+    bool *visitado = new bool[nVertices]; //cria um vetor de visitados
+
+    for (int i = 0; i < nVertices; i++){
+        visitado [i] = false; //inicializa o vetor de visitados com false
+    }
+    
+    if (temCicloDFS (0, visitado, - 1)){ //Verifica se o grafo possui ciclo
+        delete [] visitado;
+        return false;
+    }
+
+    if(!ehConexo()){ //Verifica se o grafo é conexo
+        delete [] visitado;
+        return false;
+    }
+
+    delete [] visitado;
+    return true;
+}
+
 Grafo* Grafo::carrega_grafo(const string& nomeArquivo) {
     ifstream arquivo(nomeArquivo);
     if (!arquivo.is_open()) {
@@ -264,25 +306,6 @@ void Grafo::DFS(int v, bool visited[]) {
     }
 }
 
-bool Grafo::eh_completo(){
-    for (int i = 0; i < nVertices; i++){
-        for (int j = 0; j< nVertices; j++){
-            if (i != j)
-            {
-                if(!vertices[i].existeAresta(j)) //verificar implementação da matriz
-                {
-                    return false; //se não exite aresta o grafo não é completo
-                }
-                if (!direcionado && !vertices[j].existeAresta(i))
-                {
-                    return false; 
-                }
-            }
-        }
-    }
-    return true;
-}
-
 bool Grafo::temCicloDFS (int v, bool visitado[], int pai){
     visitado[v] = true;
 
@@ -303,23 +326,13 @@ bool Grafo::temCicloDFS (int v, bool visitado[], int pai){
     return false;
 }
 
-void Grafo::dfs(int v, bool visitado[]){
-    visitado[v]=true;
-    for (int i = 0; i < nVertices; i++){
-        if (vertices[v].existeAresta(i) && !visitado[i])
-        {
-            dfs(i, visitado);
-        }
-    }
-}
-
 bool Grafo::ehConexo(){
     bool *visitado = new bool[nVertices]; //cria um vetor de visitados
 
      for (int i = 0; i < nVertices; i++){
         visitado [i] = false; //inicializa o vetor de visitados com false
 
-        dfs (0, visitado); //inicia uma busca em profundidade
+        DFS(0, visitado); //inicia uma busca em profundidade
     }
 
     for (int i =0; i < nVertices; i++){
@@ -332,27 +345,4 @@ bool Grafo::ehConexo(){
     delete [] visitado;
     return true;
 
-}
-
-bool Grafo::eh_arvore() {
-if (nVertices == 0) return false; 
-
-    bool *visitado = new bool[nVertices]; //cria um vetor de visitados
-
-    for (int i = 0; i < nVertices; i++){
-        visitado [i] = false; //inicializa o vetor de visitados com false
-    }
-    
-    if (temCicloDFS (0, visitado, - 1)){ //Verifica se o grafo possui ciclo
-        delete [] visitado;
-        return false;
-    }
-
-    if(!ehConexo()){ //Verifica se o grafo é conexo
-        delete [] visitado;
-        return false;
-    }
-
-    delete [] visitado;
-    return true;
 }
