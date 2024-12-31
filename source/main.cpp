@@ -38,12 +38,12 @@ void imprime(Grafo *grafo, string tipo)
     cout << "__________________________________________________________________" << endl;
     cout << endl << "Grafo Impresso Tipo: " << (tipo == "m" ? "Matriz" : "Lista Encadeada") << endl;
     cout << "__________________________________________________________________" << endl << endl;
-    cout << "grau: " << grafo->get_grau() << endl;
+    cout << "Grau: " << grafo->get_grau() << endl;
     cout << "Ordem: " << grafo->get_ordem() << endl;
-    cout << "Direcionado: " << grafo->eh_direcionado() << endl;
+    cout << "Direcionado: " << (grafo->eh_direcionado() ? "Sim" : "Nao") << endl;
     cout << "Componentes conexas: Nao esta Feita!" << endl;
-    cout << "Vertices ponderados: " << grafo->vertice_ponderado() << endl;
-    cout << "Arestas ponderadas: " << grafo->aresta_ponderada() << endl;
+    cout << "Vertices ponderados: " << (grafo->vertice_ponderado() ? "Sim" : "Nao") << endl;
+    cout << "Arestas ponderadas: " << (grafo->aresta_ponderada() ? "Sim" : "Nao") << endl;
     cout << "Completo:  Nao esta Feita!" << endl;
     cout << "Bipartido: " << (grafo->eh_bipartido() ? "Sim" : "Nao") << endl;
     cout << "Arvore:  Nao esta Feita!" << endl;
@@ -137,25 +137,72 @@ void novo_grafo(string nomeArquivo, string nomeArquivoSaida, int vet[], int tama
     cout << "Escrita concluida!" << endl;
 }
 
-int main() {
-    const int tamanho = 10;
-    int vet[tamanho] = {0}; // Array inicializado com zeros
+Grafo* gera_grafo(const string& nomeArquivo) {
 
-    string tipo = "m"; //Trocar para "l" para grafo de lista e "m" para grafo de matriz
+    ifstream arquivo(nomeArquivo);
+    if (!arquivo.is_open()) {
+        cerr << "Erro ao abrir o arquivo: " << nomeArquivo << endl;
+        return nullptr;
+    }
 
-    Grafo grafo(0, false, false, false, 0); // Inicialização com valores default
+    int nVertices, direcionado, ponderadoVertices, ponderadoArestas;
+    arquivo >> nVertices >> direcionado >> ponderadoVertices >> ponderadoArestas;
+
+    Grafo* grafo = new Grafo(nVertices, direcionado, ponderadoVertices, ponderadoArestas, 0);
+
+    if (ponderadoVertices == 1) {
+        for (int i = 0; i < nVertices; ++i) {
+            int peso;
+            arquivo >> peso;
+            grafo->getVertices()[i].setPeso(peso);
+        }
+    }
+
+    int origem, destino;
+    while (arquivo >> origem >> destino) {
+        if (ponderadoArestas == 1) {
+            int peso;
+            arquivo >> peso;
+            grafo->adicionarAresta(origem, destino, peso);
+        } else {
+            grafo->adicionarAresta(origem, destino, 0);
+        }
+    }
     
-    ////codigo -d
-    carrega_grafo("descricao.txt", vet, tamanho, grafo, tipo);
-    imprime(&grafo, tipo);
+    arquivo.close();
+    return grafo;
+}
 
+int main() {
+    // const int tamanho = 10;
+    // int vet[tamanho] = {0}; // Array inicializado com zeros
+
+    // string tipo = "m"; //Trocar para "l" para grafo de lista e "m" para grafo de matriz
+
+    // Grafo grafo(0, false, false, false, 0); // Inicialização com valores default
+    
+    // ////codigo -d
+    // carrega_grafo("descricao.txt", vet, tamanho, grafo, tipo);
+    // imprime(&grafo, tipo);
+
+    // cout << "--------------------------------------------------------" << endl;
+
+    // ////codigo -c
+    // novo_grafo("grafo.txt", "descricao.txt", vet, tamanho, grafo, tipo);
+
+    // cout << "--------------------------------------------------------" << endl;
+    // cout << endl << "Fim" << endl;
     cout << "--------------------------------------------------------" << endl;
 
-    ////codigo -c
-    novo_grafo("grafo.txt", "descricao.txt", vet, tamanho, grafo, tipo);
+    // Gerar o grafo a partir do arquivo grafo.txt
+    Grafo* grafoGerado = gera_grafo("grafo.txt");
+    if (grafoGerado) {
+        imprime(grafoGerado, "m");
+        delete grafoGerado;
+    }
 
-    cout << "--------------------------------------------------------" << endl;
     cout << endl << "Fim" << endl;
+    cout << "--------------------------------------------------------" << endl;
    
     return 0;
 }
