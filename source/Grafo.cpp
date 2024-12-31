@@ -1,7 +1,5 @@
 #include <iostream>
 #include <fstream>
-#include <vector>
-#include <list>
 #include <cmath>
 #include <string>
 #include "../headers/Grafo.h"
@@ -86,6 +84,24 @@ bool Grafo::eh_bipartido() {
     delete[] color;
     delete[] fila;
     return true; // Se passou por todos os vértices sem conflitos, é bipartido
+}
+
+int Grafo::n_conexo() {
+    bool* visited = new bool[nVertices];
+    for (int i = 0; i < nVertices; i++) {
+        visited[i] = false; // Inicializa todos os vértices como não visitados
+    }
+
+    int count = 0;
+    for (int v = 0; v < nVertices; v++) {
+        if (!visited[v]) {
+            DFS(v, visited); // Realiza uma DFS a partir do vértice não visitado
+            count++; // Incrementa o contador de componentes conexas
+        }
+    }
+
+    delete[] visited; // Libera a memória alocada para o array visited
+    return count;
 }
 
 int Grafo::get_grau()
@@ -233,5 +249,17 @@ void Grafo::geraGrafoAleatorio(int grau, int nVertices, bool direcionado, int co
                 }
             }
         }
+    }
+}
+
+void Grafo::DFS(int v, bool visited[]) {
+    visited[v] = true; // Marca o vértice como visitado
+    Aresta* aresta = vertices[v].getArestas();
+    while (aresta != nullptr) {
+        int destino = aresta->getDestino();
+        if (!visited[destino]) {
+            DFS(destino, visited); // Chama recursivamente para o vértice de destino
+        }
+        aresta = aresta->getProx();
     }
 }
