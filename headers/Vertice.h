@@ -20,11 +20,11 @@ public:
 
     int getPeso();
     void setPeso(int peso);
+    void setArestas(Aresta* arestas);
 
     Aresta* getArestas();
     int getGrau();
     bool existeAresta(int destino);
-    void adicionaAresta(int destino, int peso);
 };
 
 #endif
