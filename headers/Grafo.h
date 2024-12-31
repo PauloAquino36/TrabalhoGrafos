@@ -36,6 +36,9 @@ public:
     Vertice* getVertices();
     void adicionarAresta(int origem, int destino, int peso);
     void geraGrafoAleatorio(int grau, int nVertices, bool direcionado, int compConexas, bool ponderadoVertices, bool ponderadoArestas, bool completo, bool bipartido, bool arvore, bool arestaPonte, bool verticeArticulacao);
+
+    private:
+        void DFS(int v, bool visited[]);
 };
 
 #endif

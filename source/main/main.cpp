@@ -21,7 +21,7 @@ void imprime(Grafo *grafo, string tipo)
    cout << "Grau: " << grafo->get_grau() << endl;
    cout << "Ordem: " << grafo->get_ordem() << endl;
    cout << "Direcionado: " << (grafo->eh_direcionado() ? "Sim" : "Nao") << endl;
-   cout << "Componentes conexas: Nao esta Feita!" << endl;
+   cout << "Componentes conexas: " << grafo->n_conexo() << endl;
    cout << "Vertices ponderados: " << (grafo->vertice_ponderado() ? "Sim" : "Nao") << endl;
    cout << "Arestas ponderadas: " << (grafo->aresta_ponderada() ? "Sim" : "Nao") << endl;
    cout << "Completo:  Nao esta Feita!" << endl;
