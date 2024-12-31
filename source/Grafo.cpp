@@ -112,3 +112,39 @@ void Grafo::adicionarAresta(int origem, int destino, int peso) {
         aresta->setProx(new Aresta(origem, destino, peso));
     }
 }
+
+Grafo* Grafo::gera_grafo(const string& nomeArquivo) {
+
+    ifstream arquivo(nomeArquivo);
+    if (!arquivo.is_open()) {
+        cerr << "Erro ao abrir o arquivo: " << nomeArquivo << endl;
+        return nullptr;
+    }
+
+    int nVertices, direcionado, ponderadoVertices, ponderadoArestas;
+    arquivo >> nVertices >> direcionado >> ponderadoVertices >> ponderadoArestas;
+
+    Grafo* grafo = new Grafo(nVertices, direcionado, ponderadoVertices, ponderadoArestas, 0);
+
+    if (ponderadoVertices == 1) {
+        for (int i = 0; i < nVertices; ++i) {
+            int peso;
+            arquivo >> peso;
+            grafo->getVertices()[i].setPeso(peso);
+        }
+    }
+
+    int origem, destino;
+    while (arquivo >> origem >> destino) {
+        if (ponderadoArestas == 1) {
+            int peso;
+            arquivo >> peso;
+            grafo->adicionarAresta(origem, destino, peso);
+        } else {
+            grafo->adicionarAresta(origem, destino, 0);
+        }
+    }
+    
+    arquivo.close();
+    return grafo;
+}
