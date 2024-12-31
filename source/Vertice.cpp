@@ -7,17 +7,22 @@ Vertice::Vertice(){
     nArestas = 0; //Valor Padrao
     id = 0; //Valor Padrao
     peso = 0; //Valor Padrao
-    arestas = new Aresta[100]; //Valor Padrao
+    arestas = nullptr; //Valor Padrao
 }
 
 Vertice::Vertice(int id, int peso){
     this->id = id;
     this->peso = peso;
-    arestas = new Aresta[100]; //Valor Padrao
+    arestas = nullptr; //Valor Padrao
 }
 
 Vertice::~Vertice() {
-    delete[] arestas;
+    Aresta* atual = arestas;
+    while (atual != nullptr) {
+        Aresta* prox = atual->getProx();
+        delete atual;
+        atual = prox;
+    }
 }
 
 int Vertice::getId() {
@@ -41,18 +46,24 @@ Aresta* Vertice::getArestas() {
 }
 
 bool Vertice::existeAresta(int destino) {
-    for (int i = 0; i < nArestas; ++i) {
-        if (arestas[i].getDestino() == destino) return true;
+    Aresta* atual = arestas;
+    while (atual != nullptr) {
+        if (atual->getDestino() == destino) return true;
+        atual = atual->getProx();
     }
     return false;
 }
 
 int Vertice::getGrau() {
-    return nArestas;
+    int grau = 0;
+    Aresta* atual = arestas;
+    while (atual != nullptr) {
+        grau++;
+        atual = atual->getProx();
+    }
+    return grau;
 }
 
-void Vertice::adicionaAresta(int destino, int peso) {
-        Aresta* novaAresta = new Aresta(id, destino, peso);
-        novaAresta->setProx(arestas);
-        arestas = novaAresta;
+void Vertice::setArestas(Aresta* arestas) {
+    this->arestas = arestas;
 }
