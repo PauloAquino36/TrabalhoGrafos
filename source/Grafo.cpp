@@ -119,7 +119,7 @@ bool Grafo::eh_completo(){
         for (int j = 0; j< nVertices; j++){
             if (i != j)
             {
-                if(!vertices[i].existeAresta(j)) //verificar implementação da matriz
+                if(direcionado && !vertices[i].existeAresta(j) && !vertices[j].existeAresta(i)) //verificar implementação da matriz
                 {
                     return false; //se não exite aresta o grafo não é completo
                 }
@@ -134,25 +134,34 @@ bool Grafo::eh_completo(){
 }
 
 bool Grafo::eh_arvore() {
-if (nVertices == 0) return false; 
+    if (nVertices == 0) return false;
 
-    bool *visitado = new bool[nVertices]; //cria um vetor de visitados
+    bool *visitado = new bool[nVertices]; // Cria um vetor de visitados
 
-    for (int i = 0; i < nVertices; i++){
-        visitado [i] = false; //inicializa o vetor de visitados com false
+    for (int i = 0; i < nVertices; i++) {
+        visitado[i] = false; // Inicializa o vetor de visitados com false
     }
-    
-    if (temCicloDFS (0, visitado, - 1)){ //Verifica se o grafo possui ciclo
-        delete [] visitado;
+
+    // Verifica se o grafo possui ciclo
+    if (temCicloDFS(0, visitado, -1)) {
+        delete[] visitado;
         return false;
     }
 
-    if(!ehConexo()){ //Verifica se o grafo é conexo
-        delete [] visitado;
-        return false;
+    // Verifica se o grafo é conexo
+    for (int i = 0; i < nVertices; i++) {
+        visitado[i] = false; // Reinicializa o vetor de visitados com false
+    }
+    DFS(0, visitado);
+
+    for (int i = 0; i < nVertices; i++) {
+        if (!visitado[i]) { // Se algum vértice não foi visitado, o grafo não é conexo
+            delete[] visitado;
+            return false;
+        }
     }
 
-    delete [] visitado;
+    delete[] visitado;
     return true;
 }
 
@@ -184,6 +193,7 @@ Grafo* Grafo::carrega_grafo(const string& nomeArquivo) {
             grafo->adicionarAresta(origem, destino, peso);
         } else {
             grafo->adicionarAresta(origem, destino, 0);
+            cout << "Aresta: Origem: " << origem << " Destino: " << destino << endl;
         }
     }
     
@@ -306,22 +316,20 @@ void Grafo::DFS(int v, bool visited[]) {
     }
 }
 
-bool Grafo::temCicloDFS (int v, bool visitado[], int pai){
+bool Grafo::temCicloDFS(int v, bool visitado[], int pai) {
     visitado[v] = true;
 
-    for(int i=0; i< nVertices; i++){
-        if (vertices[v].existeAresta(i)){
-            if(!visitado[i]){
-                if(temCicloDFS(i, visitado, v))
-                {
-                    return true;
-                }
-            }
-            else if ( i != pai) // Se o vértice i já foi visitado e não é o pai exite um ciclo
-            {
+    Aresta* aresta = vertices[v].getArestas();
+    while (aresta != nullptr) {
+        int destino = aresta->getDestino();
+        if (!visitado[destino]) {
+            if (temCicloDFS(destino, visitado, v)) {
                 return true;
             }
+        } else if (destino != pai) {
+            return true;
         }
+        aresta = aresta->getProx();
     }
     return false;
 }
