@@ -24,9 +24,9 @@ void imprime(Grafo *grafo, string tipo)
    cout << "Componentes conexas: " << grafo->n_conexo() << endl;
    cout << "Vertices ponderados: " << (grafo->vertice_ponderado() ? "Sim" : "Nao") << endl;
    cout << "Arestas ponderadas: " << (grafo->aresta_ponderada() ? "Sim" : "Nao") << endl;
-   cout << "Completo:  Nao esta Feita!" << endl;
+   cout << "Completo: " << (grafo->eh_completo() ? "Sim" : "Nao") << endl;
    cout << "Bipartido: " << (grafo->eh_bipartido() ? "Sim" : "Nao") << endl;
-   cout << "Arvore:  Nao esta Feita!" << endl;
+   cout << "Arvore: "<< (grafo->eh_arvore() ? "Sim" : "Nao") << endl;
    cout << "Aresta Ponte:  Nao esta Feita!" << endl;
    cout << "Vertice de Articulacao:  Nao esta Feita!" << endl;
    cout << "__________________________________________________________________" << endl << endl;

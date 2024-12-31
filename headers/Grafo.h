@@ -25,6 +25,9 @@ public:
     bool eh_arvore();                      //  Leticia
     bool possui_articulacao();             //  Favio
     bool possui_ponte();                   //  Favio
+    void dfs(int v, bool visitado[]);
+    bool ehConexo();
+    bool temCicloDFS(int v, bool visitado[], int pai);
 
     static Grafo* carrega_grafo(const std::string& nomeArquivo); //  Lucas
     static void novo_grafo(const std::string& nomeArquivoEntrada, const std::string& nomeArquivoSaida); //  Lucas
