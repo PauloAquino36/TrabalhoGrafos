@@ -8,13 +8,12 @@
 
 using namespace std;
 
-Grafo::Grafo(int numVertices, bool direcionado, bool ponderadoVertices, bool ponderadoArestas, int grau)
+Grafo::Grafo(int numVertices, bool direcionado, bool ponderadoVertices, bool ponderadoArestas)
 {
     this->nVertices = numVertices;
     this->direcionado = direcionado;
     this->ponderadoVertices = ponderadoVertices;
     this->ponderadoArestas = ponderadoArestas;
-    this->grau = grau;
 
     vertices = new Vertice[nVertices];
     for (int i = 0; i < nVertices; ++i) {
@@ -25,6 +24,11 @@ Grafo::Grafo(int numVertices, bool direcionado, bool ponderadoVertices, bool pon
 Grafo::~Grafo()
 {
     
+}
+
+int Grafo::get_ordem()
+{
+    return nVertices;
 }
 
 bool Grafo::eh_direcionado()
@@ -40,11 +44,6 @@ bool Grafo::vertice_ponderado()
 bool Grafo::aresta_ponderada()
 {
     return ponderadoArestas;
-}
-
-Vertice* Grafo::getVertices()
-{
-    return vertices;
 }
 
 bool Grafo::eh_bipartido() {
@@ -89,26 +88,14 @@ bool Grafo::eh_bipartido() {
     return true; // Se passou por todos os vértices sem conflitos, é bipartido
 }
 
-int Grafo::get_ordem()
-{
-    return nVertices;
-}
-
 int Grafo::get_grau()
 {
-    return grau;
-}
-
-void Grafo::adicionarAresta(int origem, int destino, int peso) {
-    if (vertices[origem].getArestas() == nullptr) {
-        vertices[origem].setArestas(new Aresta(origem, destino, peso));
-    } else {
-        Aresta* aresta = vertices[origem].getArestas();
-        while (aresta->getProx() != nullptr) {
-            aresta = aresta->getProx();
-        }
-        aresta->setProx(new Aresta(origem, destino, peso));
+    int grauMaior = 0;
+    for (int i = 0; i < nVertices; ++i) {
+        if(grauMaior < vertices[i].getGrauVertice())
+            grauMaior = vertices[i].getGrauVertice();
     }
+    return grauMaior;
 }
 
 Grafo* Grafo::carrega_grafo(const string& nomeArquivo) {
@@ -121,7 +108,7 @@ Grafo* Grafo::carrega_grafo(const string& nomeArquivo) {
     int nVertices, direcionado, ponderadoVertices, ponderadoArestas;
     arquivo >> nVertices >> direcionado >> ponderadoVertices >> ponderadoArestas;
 
-    Grafo* grafo = new Grafo(nVertices, direcionado, ponderadoVertices, ponderadoArestas, 0);
+    Grafo* grafo = new Grafo(nVertices, direcionado, ponderadoVertices, ponderadoArestas);
 
     if (ponderadoVertices == 1) {
         for (int i = 0; i < nVertices; ++i) {
@@ -158,7 +145,7 @@ void Grafo::novo_grafo(const string& nomeArquivoEntrada, const string& nomeArqui
     arquivoEntrada >> grau >> ordem >> direcionado >> ponderadoVertices >> ponderadoArestas >> grau >> compConexas >> completo >> bipartido >> arvore >> arestaPonte >> verticeArticulacao;
     arquivoEntrada.close();
 
-    Grafo* grafo = new Grafo(ordem, direcionado, ponderadoVertices, ponderadoArestas, grau);
+    Grafo* grafo = new Grafo(ordem, direcionado, ponderadoVertices, ponderadoArestas);
     grafo->geraGrafoAleatorio(grau, ordem, direcionado, compConexas, ponderadoVertices, ponderadoArestas, completo, bipartido, arvore, arestaPonte, verticeArticulacao);
 
     ofstream arquivoSaida(nomeArquivoSaida);
@@ -190,6 +177,24 @@ void Grafo::novo_grafo(const string& nomeArquivoEntrada, const string& nomeArqui
 
     arquivoSaida.close();
     delete grafo;
+}
+
+//Funcoes auxiliares
+Vertice* Grafo::getVertices()
+{
+    return vertices;
+}
+
+void Grafo::adicionarAresta(int origem, int destino, int peso) {
+    if (vertices[origem].getArestas() == nullptr) {
+        vertices[origem].setArestas(new Aresta(origem, destino, peso));
+    } else {
+        Aresta* aresta = vertices[origem].getArestas();
+        while (aresta->getProx() != nullptr) {
+            aresta = aresta->getProx();
+        }
+        aresta->setProx(new Aresta(origem, destino, peso));
+    }
 }
 
 void Grafo::geraGrafoAleatorio(int grau, int nVertices, bool direcionado, int compConexas, bool ponderadoVertices, bool ponderadoArestas, bool completo, bool bipartido, bool arvore, bool arestaPonte, bool verticeArticulacao) {

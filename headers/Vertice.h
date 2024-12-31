@@ -23,7 +23,7 @@ public:
     void setArestas(Aresta* arestas);
 
     Aresta* getArestas();
-    int getGrau();
+    int getGrauVertice();
     bool existeAresta(int destino);
 };
 

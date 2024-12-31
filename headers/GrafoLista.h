@@ -7,7 +7,7 @@
 class GrafoLista : public Grafo {
 
 public:
-    GrafoLista(int nVertices, bool direcionado, bool ponderadoVertices, bool ponderadoArestas, int grau);
+    GrafoLista(int nVertices, bool direcionado, bool ponderadoVertices, bool ponderadoArestas);
     ~GrafoLista();
 };
 

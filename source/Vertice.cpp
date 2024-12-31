@@ -54,7 +54,7 @@ bool Vertice::existeAresta(int destino) {
     return false;
 }
 
-int Vertice::getGrau() {
+int Vertice::getGrauVertice() {
     int grau = 0;
     Aresta* atual = arestas;
     while (atual != nullptr) {

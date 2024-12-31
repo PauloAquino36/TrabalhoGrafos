@@ -29,7 +29,7 @@ public:
     static Grafo* carrega_grafo(const std::string& nomeArquivo); //  Lucas
     static void novo_grafo(const std::string& nomeArquivoEntrada, const std::string& nomeArquivoSaida); //  Lucas
 
-    Grafo(int numVertices, bool direcionado, bool ponderadoVertices, bool ponderadoArestas, int grau);
+    Grafo(int numVertices, bool direcionado, bool ponderadoVertices, bool ponderadoArestas);
     ~Grafo();
 
     //funçoes auxiliares
