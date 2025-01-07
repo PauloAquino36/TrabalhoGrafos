@@ -3,7 +3,6 @@
 #include <cmath>
 #include <string>
 #include "../headers/Grafo.h"
-
 using namespace std;
 
 Grafo::Grafo(int numVertices, bool direcionado, bool ponderadoVertices, bool ponderadoArestas)
@@ -353,4 +352,55 @@ bool Grafo::ehConexo(){
     delete [] visitado;
     return true;
 
+}
+
+// Função que verifica se o grafo tem ponto de articulação
+bool Grafo::possui_articulacao() {
+    bool *visitado = new bool[nVertices];
+    int *low = new int[nVertices];
+    int *parent = new int[nVertices];
+    bool articulacao = false;
+
+    for (int i = 0; i < nVertices; i++) {
+        visitado[i] = false;
+        parent[i] = -1;
+    }
+
+    for (int i = 0; i < nVertices; i++) {
+        if (!visitado[i]) {
+            DFSArticulacao(i, visitado, low, parent, articulacao);
+        }
+    }
+
+    delete[] visitado;
+    delete[] low;
+    delete[] parent;
+    return articulacao;
+}
+
+void Grafo::DFSArticulacao(int v, bool visited[], int low[], int parent[], bool &articulacao) {
+    int children = 0;
+    visited[v] = true;
+    low[v] = v; // Inicializa low com o índice do vértice
+
+    Aresta* aresta = vertices[v].getArestas();
+    while (aresta != nullptr) {
+        int destino = aresta->getDestino();
+        if (!visited[destino]) {
+            children++;
+            parent[destino] = v;
+            DFSArticulacao(destino, visited, low, parent, articulacao);
+
+            low[v] = (low[v] < low[destino]) ? low[v] : low[destino];
+
+            if (parent[v] == -1 && children > 1)
+                articulacao = true;
+
+            if (parent[v] != -1 && low[destino] >= v)
+                articulacao = true;
+        } else if (destino != parent[v]) {
+            low[v] = (low[v] < destino) ? low[v] : destino;
+        }
+        aresta = aresta->getProx();
+    }
 }
