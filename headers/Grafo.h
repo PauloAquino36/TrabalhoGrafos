@@ -25,7 +25,8 @@ public:
     bool eh_arvore();                      //  Leticia  // Ja esta Feita :)
     bool possui_articulacao();             //  Favio
     void DFSArticulacao(int v, bool visited[], int low[], int parent[], bool &articulacao);
-    bool possui_ponte(); //  Favio
+    bool possui_ponte();                   //  Favio
+    void DFS_Ponte(int v, bool visited[], int discovery[], int low[], int parent[], bool& ponteEncontrada);
 
     static Grafo* carrega_grafo(const std::string& nomeArquivo); //  Lucas
     static void novo_grafo(const std::string& nomeArquivoEntrada, const std::string& nomeArquivoSaida); //  Lucas

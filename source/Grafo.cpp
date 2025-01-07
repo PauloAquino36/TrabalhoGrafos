@@ -404,3 +404,63 @@ void Grafo::DFSArticulacao(int v, bool visited[], int low[], int parent[], bool 
         aresta = aresta->getProx();
     }
 }
+
+//Função que diz se existe ao menos uma aresta ponte:
+bool Grafo::possui_ponte() {
+    bool *visited = new bool[nVertices];
+    int *disc = new int[nVertices];
+    int *low = new int[nVertices];
+    int *parent = new int[nVertices];
+    bool possuiPonte = false;
+
+    for (int i = 0; i < nVertices; i++) {
+        visited[i] = false;
+        disc[i] = -1;
+        low[i] = -1;
+        parent[i] = -1;
+    }
+
+    // Executa DFS a partir de cada vértice não visitado
+    for (int i = 0; i < nVertices; i++) {
+        if (!visited[i]) {
+            DFS_Ponte(i, visited, disc, low, parent, possuiPonte);
+        }
+    }
+
+    delete[] visited;
+    delete[] disc;
+    delete[] low;
+    delete[] parent;
+
+    return possuiPonte;
+}
+
+void Grafo::DFS_Ponte(int u, bool visited[], int disc[], int low[], int parent[], bool &possuiPonte) {
+    static int tempo = 0;
+
+    // Marca o vértice como visitado e define seus tempos de descoberta e low
+    visited[u] = true;
+    disc[u] = low[u] = ++tempo;
+
+    Aresta *aresta = vertices[u].getArestas();
+    while (aresta != nullptr) {
+        int v = aresta->getDestino();
+
+        if (!visited[v]) {
+            parent[v] = u;
+            DFS_Ponte(v, visited, disc, low, parent, possuiPonte);
+
+            // Atualiza low[u] considerando o retorno da DFS
+            low[u] = std::min(low[u], low[v]);
+
+            // Verifica condição de ponte
+            if (low[v] > disc[u]) {
+                possuiPonte = true;
+            }
+        } else if (v != parent[u]) {
+            low[u] = std::min(low[u], disc[v]);
+        }
+
+        aresta = aresta->getProx();
+    }
+}
