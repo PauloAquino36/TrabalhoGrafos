@@ -31,7 +31,7 @@ void imprime(Grafo *grafo, string tipo)
    cout << "Bipartido: " << (grafo->eh_bipartido() ? "Sim" : "Nao") << endl;
    cout << "Arvore: "<< (grafo->eh_arvore() ? "Sim" : "Nao") << endl;
    cout << "Aresta Ponte:  Nao esta Feita!" << endl;
-   cout << "Vertice de Articulacao:  Nao esta Feita!" << endl;
+   cout << "Vertice de Articulacao: " << (grafo->possui_articulacao()) << endl;
    cout << "__________________________________________________________________" << endl << endl;
 }
 
