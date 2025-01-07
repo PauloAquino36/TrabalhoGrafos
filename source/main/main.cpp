@@ -49,8 +49,8 @@ void imprimeGrafoLista(GrafoLista *grafo)
    cout << "Completo: " << (grafo->eh_completo() ? "Sim" : "Nao") << endl;
    cout << "Bipartido: " << (grafo->eh_bipartido() ? "Sim" : "Nao") << endl;
    cout << "Arvore: "<< (grafo->eh_arvore() ? "Sim" : "Nao") << endl;
-   cout << "Aresta Ponte: " << (grafo->possui_ponte() ? "Sim" : "Nao")<< endl;
-   cout << "Vertice de Articulacao: " << (grafo->possui_articulacao()) << endl;
+   cout << "Aresta Ponte:  Nao esta Feita!" << endl;
+   cout << "Vertice de Articulacao:  Nao esta Feita!" << endl;
    cout << "__________________________________________________________________" << endl << endl;
 }
 

@@ -24,11 +24,11 @@ public:
     bool aresta_ponderada();               //  Paulo    // Ja esta Feita :)
     bool eh_completo();                    //  Leticia  // Ja esta Feita :)
     bool eh_arvore();                      //  Leticia  // Ja esta Feita :)
-    bool possui_articulacao();             //  Favio
+    bool possui_articulacao();
     void DFSArticulacao(int v, bool visited[], int low[], int parent[], bool &articulacao);
-    bool possui_ponte();
+    bool possui_ponte();                   //  Favio
     void DFS_Ponte(int v, bool visited[], int discovery[], int low[], int parent[], bool& ponteEncontrada);
-    
+
     static Grafo* carrega_grafo(const std::string& nomeArquivo); //  Lucas
     static void novo_grafo(const std::string& nomeArquivoEntrada, const std::string& nomeArquivoSaida); //  Lucas
 
@@ -40,10 +40,10 @@ public:
     void adicionarAresta(int origem, int destino, int peso);
     void geraGrafoAleatorio(int grau, int nVertices, bool direcionado, int compConexas, bool ponderadoVertices, bool ponderadoArestas, bool completo, bool bipartido, bool arvore, bool arestaPonte, bool verticeArticulacao);
     bool ehConexo();
-    bool temCicloDFS(int v, bool visitado[], int pai);
     int conta_componentes_conexos_removido(int verticeRemovido);
+    bool temCicloDFS(int v, bool visitado[], int pai);
 
-    private:
+private:
     void DFS(int v, bool visited[]);
 };
 
