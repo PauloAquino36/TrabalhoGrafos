@@ -16,10 +16,10 @@ using namespace std;
 
 //  OBS: no arquivo "grafo.txt" não use barra de comentarios, pois o programa não irá ler devidamente o arquivo
 
-void imprime(Grafo *grafo, string tipo)
+void imprimeGrafoMatriz(GrafoMatriz *grafo)
 {
    cout << "__________________________________________________________________" << endl;
-   cout << endl << "Grafo Impresso Tipo: " << (tipo == "m" ? "Matriz" : "Lista Encadeada") << endl;
+   cout << endl << "Grafo Matriz" << endl;
    cout << "__________________________________________________________________" << endl << endl;
    cout << "Grau: " << grafo->get_grau() << endl;
    cout << "Ordem: " << grafo->get_ordem() << endl;
@@ -30,19 +30,48 @@ void imprime(Grafo *grafo, string tipo)
    cout << "Completo: " << (grafo->eh_completo() ? "Sim" : "Nao") << endl;
    cout << "Bipartido: " << (grafo->eh_bipartido() ? "Sim" : "Nao") << endl;
    cout << "Arvore: "<< (grafo->eh_arvore() ? "Sim" : "Nao") << endl;
-   cout << "Aresta Ponte:  Nao esta Feita!" << endl;
-   cout << "Vertice de Articulacao:  Nao esta Feita!" << endl;
+   cout << "Aresta Ponte: " << (grafo->possui_ponte() ? "Sim" : "Nao")<< endl;
+   cout << "Vertice de Articulacao: " << (grafo->possui_articulacao()) << endl;
    cout << "__________________________________________________________________" << endl << endl;
 }
+
+void imprimeGrafoLista(GrafoLista *grafo)
+{
+   cout << "__________________________________________________________________" << endl;
+   cout << endl << "Grafo Lista" << endl;
+   cout << "__________________________________________________________________" << endl << endl;
+   cout << "Grau: " << grafo->get_grau() << endl;
+   cout << "Ordem: " << grafo->get_ordem() << endl;
+   cout << "Direcionado: " << (grafo->eh_direcionado() ? "Sim" : "Nao") << endl;
+   cout << "Componentes conexas: " << grafo->n_conexo() << endl;
+   cout << "Vertices ponderados: " << (grafo->vertice_ponderado() ? "Sim" : "Nao") << endl;
+   cout << "Arestas ponderadas: " << (grafo->aresta_ponderada() ? "Sim" : "Nao") << endl;
+   cout << "Completo: " << (grafo->eh_completo() ? "Sim" : "Nao") << endl;
+   cout << "Bipartido: " << (grafo->eh_bipartido() ? "Sim" : "Nao") << endl;
+   cout << "Arvore: "<< (grafo->eh_arvore() ? "Sim" : "Nao") << endl;
+   cout << "Aresta Ponte: " << (grafo->possui_ponte() ? "Sim" : "Nao")<< endl;
+   cout << "Vertice de Articulacao: " << (grafo->possui_articulacao()) << endl;
+   cout << "__________________________________________________________________" << endl << endl;
+}
+
 
 int main() {
    cout << "--------------------------------------------------------" << endl;
    //Grafo::novo_grafo("descricao.txt", "grafo.txt");
-   Grafo* grafo = Grafo::carrega_grafo("grafo.txt");
 
-   imprime(grafo, "m");
+
+
+   //Grafo* grafo = Grafo::carrega_grafo("grafo.txt");
+   GrafoMatriz* grafo = GrafoMatriz::carrega_grafo("grafo.txt");
+   //GrafoLista* grafo = GrafoLista::carrega_grafo("grafo.txt");
+
+   //grafo->carrega_grafo("grafo.txt");
+    
+
+   imprimeGrafoMatriz(grafo);
+   //imprimeGrafoLista(grafo);
    
-   cout << "--------------------------------------------------------" << endl;
+   cout << "-----------------------FIM---------------------------------" << endl;
 
    delete grafo;
    return 0;

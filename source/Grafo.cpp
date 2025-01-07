@@ -354,3 +354,93 @@ bool Grafo::ehConexo(){
     return true;
 
 }
+
+bool Grafo::possui_articulacao() {
+    bool *visitado = new bool[nVertices];
+    int *low = new int[nVertices];
+    int *parent = new int[nVertices];
+    bool articulacao = false;
+    for (int i = 0; i < nVertices; i++) {
+        visitado[i] = false;
+        parent[i] = -1;
+    }
+    for (int i = 0; i < nVertices; i++) {
+        if (!visitado[i]) {
+            DFSArticulacao(i, visitado, low, parent, articulacao);
+        }
+    }
+    delete[] visitado;
+    delete[] low;
+    delete[] parent;
+    return articulacao;
+}
+void Grafo::DFSArticulacao(int v, bool visited[], int low[], int parent[], bool &articulacao) {
+    int children = 0;
+    visited[v] = true;
+    low[v] = v; // Inicializa low com o índice do vértice
+    Aresta* aresta = vertices[v].getArestas();
+    while (aresta != nullptr) {
+        int destino = aresta->getDestino();
+        if (!visited[destino]) {
+            children++;
+            parent[destino] = v;
+            DFSArticulacao(destino, visited, low, parent, articulacao);
+            low[v] = (low[v] < low[destino]) ? low[v] : low[destino];
+            if (parent[v] == -1 && children > 1)
+                articulacao = true;
+            if (parent[v] != -1 && low[destino] >= v)
+                articulacao = true;
+        } else if (destino != parent[v]) {
+            low[v] = (low[v] < destino) ? low[v] : destino;
+        }
+        aresta = aresta->getProx();
+    }
+}
+
+bool Grafo::possui_ponte() {
+    bool *visited = new bool[nVertices];
+    int *disc = new int[nVertices];
+    int *low = new int[nVertices];
+    int *parent = new int[nVertices];
+    bool possuiPonte = false;
+    for (int i = 0; i < nVertices; i++) {
+        visited[i] = false;
+        disc[i] = -1;
+        low[i] = -1;
+        parent[i] = -1;
+    }
+    // Executa DFS a partir de cada vértice não visitado
+    for (int i = 0; i < nVertices; i++) {
+        if (!visited[i]) {
+            DFS_Ponte(i, visited, disc, low, parent, possuiPonte);
+        }
+    }
+    delete[] visited;
+    delete[] disc;
+    delete[] low;
+    delete[] parent;
+    return possuiPonte;
+}
+void Grafo::DFS_Ponte(int u, bool visited[], int disc[], int low[], int parent[], bool &possuiPonte) {
+    static int tempo = 0;
+    // Marca o vértice como visitado e define seus tempos de descoberta e low
+    visited[u] = true;
+    disc[u] = low[u] = ++tempo;
+    Aresta *aresta = vertices[u].getArestas();
+    while (aresta != nullptr) {
+        int v = aresta->getDestino();
+        if (!visited[v]) {
+            parent[v] = u;
+            DFS_Ponte(v, visited, disc, low, parent, possuiPonte);
+            // Atualiza low[u] considerando o retorno da DFS
+            low[u] = std::min(low[u], low[v]);
+            // Verifica condição de ponte
+            if (low[v] > disc[u]) {
+                possuiPonte = true;
+            }
+        } else if (v != parent[u]) {
+            low[u] = std::min(low[u], disc[v]);
+        }
+        aresta = aresta->getProx();
+    }
+}
