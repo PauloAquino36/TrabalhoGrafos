@@ -373,3 +373,30 @@ GrafoMatriz *GrafoMatriz::novo_grafo()
     cout << "Escrita concluida!" << endl;
     return nullptr;
 }
+
+
+
+//Verifica funçao ponte
+void GrafoMatriz::DFSPonte(int v, bool visitado[], int discovery[], int low[], int parent[], bool& ponteEncontrada) {
+    static int tempo = 0;
+    visitado[v] = true;
+    discovery[v] = low[v] = ++tempo;
+
+    for (int i = 0; i < nVertices; i++) {
+        if (matrizAdj[v][i] != 0) {
+            int u = i;
+            if (!visitado[u]) {
+                parent[u] = v;
+                DFSPonte(u, visitado, discovery, low, parent, ponteEncontrada);
+
+                low[v] = min(low[v], low[u]);
+
+                if (low[u] > discovery[v]) {
+                    ponteEncontrada = true;
+                }
+            } else if (u != parent[v]) {
+                low[v] = min(low[v], discovery[u]);
+            }
+        }
+    }
+}

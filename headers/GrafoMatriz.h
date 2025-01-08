@@ -24,7 +24,7 @@ public:
     //bool eh_completo() override;
     //bool eh_arvore() override;
     //bool possui_articulacao() override;
-    //bool possui_ponte() override;
+    bool possui_ponte() override;
 
     //Funcoes gera grafo
     static GrafoMatriz* carrega_grafo(const std::string& nomeArquivo);
@@ -37,6 +37,7 @@ public:
     bool ehConexo();                                                    //Verifica se o grafo eh conexo ou nao
     void DFS(int v, bool visitado[]);                                   //Percorre o grafo em profundidade
     bool temCicloDFS(int v, bool visitado[], int pai);                  //Verifica se o grafo possui ciclo
+    void DFSPonte(int v, bool visitado[], int discovery[], int low[], int parent[], bool& ponteEncontrada); //Funcao auxiliar para a funcao possui_ponte
 
     //Funcoes de imprimir
     void imprimirMatrizAdj();                                           //Imprime a matriz de adjacência
