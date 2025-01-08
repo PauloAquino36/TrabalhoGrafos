@@ -14,8 +14,8 @@ public:
     ~GrafoMatriz();
 
     //Funcoes principais
-    //bool eh_bipartido() override;
-    //int n_conexo() override;
+    bool eh_bipartido() override;
+    int n_conexo() override;
     int get_grau() override;
     //int get_ordem() override;
     //bool eh_direcionado() override;
