@@ -17,9 +17,9 @@ using namespace std;
 //  OBS: no arquivo "grafo.txt" não use barra de comentarios, pois o programa não irá ler devidamente o arquivo
 
 int main() {
-   //GrafoMatriz* grafo = GrafoMatriz::carrega_grafo("grafo.txt"); 
-   //grafo->imprimeGrafoMatriz();
-   //delete grafo;
+   GrafoMatriz* grafo = GrafoMatriz::carrega_grafo("grafo.txt"); 
+   grafo->imprimeGrafoMatriz();
+   delete grafo;
 
    GrafoMatriz* grafo2 = GrafoMatriz::novo_grafo();
    delete grafo2;

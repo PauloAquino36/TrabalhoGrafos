@@ -383,11 +383,11 @@ GrafoMatriz *GrafoMatriz::novo_grafo()
                     if (grafo->aresta_ponderada())
                     {                                                                 // Verifica se existe uma aresta
                         int peso = grafo->matrizAdj[i][j];                            // Obtém o peso diretamente da matriz de adjacência
-                        arquivo2 << (i + 1) << " " << (j + 1) << " " << peso << endl; // Origem, Destino, Peso
+                        arquivo2 << (i) << " " << (j) << " " << peso << endl; // Origem, Destino, Peso
                     }
                     else
                     {
-                        arquivo2 << (i + 1) << " " << (j + 1) << endl; // Origem, Destino
+                        arquivo2 << (i) << " " << (j) << endl; // Origem, Destino
                     }
                 }
             }
