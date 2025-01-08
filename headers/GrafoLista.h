@@ -38,6 +38,7 @@ public:
     void DFSArticulacao(int v, bool visited[], int low[], int parent[], bool &articulacao);                     //Funcao auxiliar para a funcao possui_articulacao
     bool temCicloDFS(int v, bool visitado[], int pai);      //Verifica se o grafo possui ciclo
     void imprimeGrafoLista();
+    bool verificarParticaoBipartida(int v, int subconjunto[]);
 };
 
 #endif // GRAFOLISTA_H

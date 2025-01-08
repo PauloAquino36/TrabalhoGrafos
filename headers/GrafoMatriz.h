@@ -38,6 +38,7 @@ public:
     void imprimirMatrizAdj();
     void imprimeGrafoMatriz();
     Vertice& getVertice(int vertice);
+    bool verificarParticaoBipartida(int v, int subconjunto[]);
 };
 
 #endif // GRAFOMATRIZ_H

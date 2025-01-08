@@ -29,42 +29,15 @@ GrafoMatriz::~GrafoMatriz() {
 // #region Funcoes principais
 bool GrafoMatriz::eh_bipartido()
 {
-    int* color = new int[nVertices];
+   int* subconjunto = new int[nVertices];
     for (int i = 0; i < nVertices; i++) {
-        color[i] = -1; // Inicializa todos os vértices como não coloridos
+        subconjunto[i] = -1; // Inicializa todos os vértices como não atribuídos a um conjunto
     }
 
-    int* fila = new int[nVertices];
-    int inicioFila = 0, fimFila = 0;
+    bool resultado = verificarParticaoBipartida(0, subconjunto);
 
-    for (int i = 0; i < nVertices; i++) {
-        if (color[i] == -1) { // Vértice ainda não visitado
-            fila[fimFila++] = i;
-            color[i] = 0; // Começa colorindo com 0
-
-            while (inicioFila < fimFila) {
-                int v = fila[inicioFila++];
-
-                for (int j = 0; j < nVertices; j++) {
-                    if (matrizAdj[v][j] != 0) { // Existe uma aresta entre v e j
-                        if (color[j] == -1) { // Se não foi colorido
-                            color[j] = 1 - color[v]; // Colore com a cor oposta
-                            fila[fimFila++] = j;
-                        } else if (color[j] == color[v]) {
-                            // Conflito de cores
-                            delete[] color;
-                            delete[] fila;
-                            return false;
-                        }
-                    }
-                }
-            }
-        }
-    }
-
-    delete[] color;
-    delete[] fila;
-    return true; // Se passou por todos os vértices sem conflitos, é bipartido
+    delete[] subconjunto;
+    return resultado;
 }
 
 int GrafoMatriz::n_conexo() {
@@ -213,4 +186,34 @@ void GrafoMatriz::imprimeGrafoMatriz(){
     cout << endl << "--- Grafo Matriz ---" << endl;
     cout << "__________________________________________________________________" << endl << endl;
     imprime();
+}
+
+bool GrafoMatriz::verificarParticaoBipartida(int v, int subconjunto[]) {
+    if (v == nVertices) {
+        // Verifica se a partição atual é válida
+        for (int i = 0; i < nVertices; i++) {
+            for (int j = 0; j < nVertices; j++) {
+                if (matrizAdj[i][j] != 0 && subconjunto[i] == subconjunto[j]) {
+                    return false; // Encontrou uma aresta entre vértices do mesmo conjunto
+                }
+            }
+        }
+        return true; // Partição válida
+    }
+
+    // Tenta atribuir o vértice v ao conjunto 0
+    subconjunto[v] = 0;
+    if (verificarParticaoBipartida(v + 1, subconjunto)) {
+        return true;
+    }
+
+    // Tenta atribuir o vértice v ao conjunto 1
+    subconjunto[v] = 1;
+    if (verificarParticaoBipartida(v + 1, subconjunto)) {
+        return true;
+    }
+
+    // Nenhuma partição válida encontrada
+    subconjunto[v] = -1;
+    return false;
 }

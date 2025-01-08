@@ -23,45 +23,15 @@ GrafoLista::~GrafoLista()
 
 // #region Funcoes principais
 bool GrafoLista::eh_bipartido(){
-    // Inicializa o array de cores com -1 (não colorido)
-    int *color = new int [nVertices];
+    int* subconjunto = new int[nVertices];
     for (int i = 0; i < nVertices; i++) {
-        color[i] = -1;
+        subconjunto[i] = -1; // Inicializa todos os vértices como não atribuídos a um conjunto
     }
 
-    int *fila = new int[nVertices];
-    int inicioFila = 0, fimFila = 0;
+    bool resultado = verificarParticaoBipartida(0, subconjunto);
 
-    for (int i = 0; i < nVertices; i++) {
-        if (color[i] == -1) { // Vértice ainda não visitado
-            fila[fimFila++] = i;
-            color[i] = 0; // Começa colorindo com 0
-
-            while (inicioFila < fimFila) {
-                int v = fila[inicioFila++];
-                
-                // Iterar sobre todos os vizinhos de v
-                Aresta* aresta = vertices[v].getArestas();
-                while (aresta != nullptr) {
-                    int j = aresta->getDestino();
-                    if (color[j] == -1) { // Se não foi colorido
-                        color[j] = 1 - color[v]; // Colore com a cor oposta
-                        fila[fimFila++] = j;
-                    } else if (color[j] == color[v]) {
-                        //Conflito de cores
-                        delete[] color;
-                        delete[] fila;
-                        return false;
-                    }
-                    aresta = aresta->getProx();
-                }
-            }
-        }
-    }
-
-    delete[] color;
-    delete[] fila;
-    return true; // Se passou por todos os vértices sem conflitos, é bipartido  
+    delete[] subconjunto;
+    return resultado;
 }
 
 int GrafoLista::n_conexo() {
@@ -330,6 +300,39 @@ void GrafoLista::imprimeGrafoLista(){
     cout << endl << "--- Grafo Lista---" << endl;
     cout << "__________________________________________________________________" << endl << endl;
     imprime();
+}
+
+bool GrafoLista::verificarParticaoBipartida(int v, int subconjunto[]) {
+    if (v == nVertices) {
+        // Verifica se a partição atual é válida
+        for (int i = 0; i < nVertices; i++) {
+            Aresta* aresta = vertices[i].getArestas();
+            while (aresta != nullptr) {
+                int j = aresta->getDestino();
+                if (subconjunto[i] == subconjunto[j]) {
+                    return false; // Encontrou uma aresta entre vértices do mesmo conjunto
+                }
+                aresta = aresta->getProx();
+            }
+        }
+        return true; // Partição válida
+    }
+
+    // Tenta atribuir o vértice v ao conjunto 0
+    subconjunto[v] = 0;
+    if (verificarParticaoBipartida(v + 1, subconjunto)) {
+        return true;
+    }
+
+    // Tenta atribuir o vértice v ao conjunto 1
+    subconjunto[v] = 1;
+    if (verificarParticaoBipartida(v + 1, subconjunto)) {
+        return true;
+    }
+
+    // Nenhuma partição válida encontrada
+    subconjunto[v] = -1;
+    return false;
 }
 // #endregion
 
