@@ -39,6 +39,7 @@ public:
     void imprimirMatrizAdj();
     void imprimeGrafoMatriz();
     Vertice& getVertice(int vertice);
+    int grauVertice(int vertice);
 };
 
 #endif // GRAFOMATRIZ_H
