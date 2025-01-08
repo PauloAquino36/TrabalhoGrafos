@@ -133,7 +133,7 @@ void GrafoMatriz::adicionarAresta(int origem, int destino, int peso) {
     {
         matrizAdj[destino][origem] = peso;
     }
-    cout << "Aresta adicionada: Origem: " << origem << " Destino: " << destino << endl;
+    //cout << "Aresta adicionada: Origem: " << origem << " Destino: " << destino << endl;
 }
 
 bool GrafoMatriz::verificarParticaoBipartida(int v, int subconjunto[]) {
@@ -222,6 +222,10 @@ void GrafoMatriz::imprimirMatrizAdj() {
     }
 }
 void GrafoMatriz::imprimeGrafoMatriz(){
+    cout << "__________________________________________________________________" << endl;
+    cout << endl << "--- Grafo Matriz ---" << endl;
+    cout << "__________________________________________________________________" << endl << endl;
+    imprime();
 }
 // #endregion
 
@@ -298,7 +302,7 @@ GrafoMatriz *GrafoMatriz::novo_grafo()
     int grau, ordem, direcionado, componentesConexas, ponderadoVertices, ponderadoArestas, completo, bipartido, arvore, arestaPonte, verticeArticulacao;
     arquivo1 >> grau >> ordem >> direcionado >> componentesConexas >> ponderadoVertices >> ponderadoArestas >> completo >> bipartido >> arvore >> arestaPonte >> verticeArticulacao;
 
-    cout << "Grau: " << grau << " Ordem: " << ordem << " Direcionado: " << direcionado << " Componentes Conexas: " << componentesConexas << " Ponderado Vertices: " << ponderadoVertices << " Ponderado Arestas: " << ponderadoArestas << " Completo: " << completo << " Bipartido: " << bipartido << " Arvore: " << arvore << " Aresta Ponte: " << arestaPonte << " Vertice Articulacao: " << verticeArticulacao << endl;
+    //cout << "Grau: " << grau << " Ordem: " << ordem << " Direcionado: " << direcionado << " Componentes Conexas: " << componentesConexas << " Ponderado Vertices: " << ponderadoVertices << " Ponderado Arestas: " << ponderadoArestas << " Completo: " << completo << " Bipartido: " << bipartido << " Arvore: " << arvore << " Aresta Ponte: " << arestaPonte << " Vertice Articulacao: " << verticeArticulacao << endl;
     arquivo1.close();
 
     // Cria uma instância de GrafoMatriz
@@ -324,7 +328,7 @@ GrafoMatriz *GrafoMatriz::novo_grafo()
         while (arestaOrigem == arestaDestino)
         {
             arestaDestino = (rand() % ordem - 1) + 1;
-            cout << "evita self-loop" << endl;
+          //  cout << "evita self-loop" << endl;
         }
 
         if (grafo->matrizAdj[arestaOrigem][arestaDestino] == 0)
@@ -335,11 +339,11 @@ GrafoMatriz *GrafoMatriz::novo_grafo()
             }
             grafo->adicionarAresta(arestaOrigem, arestaDestino, novoPeso);
         }
-        cout << "Grau do vertice " << grafo->grauVertice(arestaOrigem) << endl;
+        //cout << "Grau do vertice " << grafo->grauVertice(arestaOrigem) << endl;
 
         if (grafo->grauVertice(arestaOrigem) == grau)
         {
-            cout << "Grau do vertice " << grafo->grauVertice(arestaOrigem) << " atingido!" << endl;
+            //cout << "Grau do vertice " << grafo->grauVertice(arestaOrigem) << " atingido!" << endl;
             break;
         }
     }
@@ -350,7 +354,8 @@ GrafoMatriz *GrafoMatriz::novo_grafo()
         grafo->getVertice(i).setPeso(pesoAleatorio); // Gera um número aleatório
     }
 
-    cout << "Grafo Matriz gerado aleatoriamente!" << endl;
+    cout << "Grafo Matriz gerado aleatoriamente em: " << nomeArquivoEscrito << endl;
+    cout << "__________________________________________________________________" << endl << endl;
     //
 
     ofstream arquivo2(nomeArquivoEscrito);
@@ -361,7 +366,7 @@ GrafoMatriz *GrafoMatriz::novo_grafo()
         return nullptr;
     }
 
-    cout << "Escrevendo no arquivo '" << nomeArquivoEscrito << "':" << endl;
+   // cout << "Escrevendo no arquivo '" << nomeArquivoEscrito << "':" << endl;
 
     arquivo2 << grafo->get_ordem() << " " << grafo->eh_direcionado() << " " << grafo->vertice_ponderado() << " " << grafo->aresta_ponderada() << endl;
     if (grafo->vertice_ponderado())
@@ -396,7 +401,7 @@ GrafoMatriz *GrafoMatriz::novo_grafo()
     }
 
     arquivo2.close(); // esta quebrando o codigo
-    cout << "Escrita concluida!" << endl;
+   // cout << "Escrita concluida!" << endl;
     return nullptr;
 }
 
