@@ -28,6 +28,7 @@ public:
 
     //Funcoes gera grafo
     static GrafoMatriz* carrega_grafo(const std::string& nomeArquivo);
+    static GrafoMatriz* novo_grafo();
 
     // Funções auxiliares
     Vertice& getVertice(int vertice);                                   //Retorna um vertice especifico do grafo
@@ -40,6 +41,7 @@ public:
     //Funcoes de imprimir
     void imprimirMatrizAdj();                                           //Imprime a matriz de adjacência
     void imprimeGrafoMatriz();                                          //Imprime os atributos do grafo
+    int grauVertice(int vertice);
 };
 
 #endif // GRAFOMATRIZ_H

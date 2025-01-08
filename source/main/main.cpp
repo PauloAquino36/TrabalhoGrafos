@@ -19,7 +19,10 @@ using namespace std;
 int main() {
    GrafoMatriz* grafo = GrafoMatriz::carrega_grafo("grafo.txt"); 
    grafo->imprimeGrafoMatriz();
-  
    delete grafo;
+
+   GrafoMatriz* grafo2 = GrafoMatriz::novo_grafo();
+   delete grafo2;
+   cout << "Programa finalizado!" << endl;
    return 0;
 }
