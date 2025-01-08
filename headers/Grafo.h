@@ -31,10 +31,11 @@ public:
     virtual bool possui_articulacao(); //Verifica se o grafo possui pelo menos 1 vertice de articulacao
     virtual bool possui_ponte();       //Verifica se o grafo possui pelo menos 1 aresta ponte
 
-
+    //Funcao gera Grafo
     static Grafo* carrega_grafo(const std::string& nomeArquivo);        //Gera um grafo a partir do arquivo grafo.txt
     static void novo_grafo(const std::string& nomeArquivoEntrada, const std::string& nomeArquivoSaida);         //Gera um novo grafo a partir do arquivo descricao.txt
 
+    //Funcao imprime
     void imprime();        //Imprime os atributos do grafo
 
 };

@@ -94,22 +94,22 @@ int GrafoLista::get_grau()
 
 int GrafoLista::get_ordem()
 {
-    return nVertices;
+    return this->nVertices;
 }
 
 bool GrafoLista::eh_direcionado()
 {
-    return direcionado;
+    return this->direcionado;
 }
 
 bool GrafoLista::vertice_ponderado()
 {
-    return ponderadoVertices;
+    return this->ponderadoVertices;
 }
 
 bool GrafoLista::aresta_ponderada()
 {
-    return ponderadoArestas;
+    return this->ponderadoArestas;
 }
 
 bool GrafoLista::eh_completo(){
