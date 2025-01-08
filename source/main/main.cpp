@@ -21,8 +21,8 @@ int main() {
    grafo->imprimeGrafoMatriz();
    delete grafo;
 
-   GrafoMatriz* grafo2 = GrafoMatriz::novo_grafo();
-   delete grafo2;
+   //GrafoMatriz* grafo2 = GrafoMatriz::novo_grafo();
+   //delete grafo2;
    cout << "Programa finalizado!" << endl;
    return 0;
 }

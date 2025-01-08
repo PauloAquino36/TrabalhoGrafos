@@ -32,6 +32,7 @@ public:
     //Funcoes auxiliares
     Vertice* getVertices();             //Retorna o vetor de vertices do grafo
     void adicionarAresta(int origem, int destino, int peso);    //Adiciona uma aresta no grafo
+    void removerAresta(int origem, int destino);                 //Remove uma aresta do grafo
     bool verificarParticaoBipartida(int v, int subconjunto[]);
     bool ehConexo();                    //Verifica se o grafo eh conexo ou nao
     void DFS(int v, bool visitado[]);   //Percorre o grafo em profundidade

@@ -186,14 +186,51 @@ Vertice* GrafoLista::getVertices()
 }
 
 void GrafoLista::adicionarAresta(int origem, int destino, int peso) {
+    // Verifica se é um self-loop
+    if (origem == destino) {
+        std::cerr << "Erro: Nao eh possivel adicionar uma aresta de self-loop." << std::endl;
+        return;
+    }
+
+    // Verifica se a aresta já existe
+    Aresta* aresta = vertices[origem].getArestas();
+    while (aresta != nullptr) {
+        if (aresta->getDestino() == destino) {
+            std::cerr << "Erro: Nao eh possivel adicionar uma multi-aresta." << std::endl;
+            return;
+        }
+        aresta = aresta->getProx();
+    }
+
+    // Adiciona a nova aresta
     if (vertices[origem].getArestas() == nullptr) {
         vertices[origem].setArestas(new Aresta(origem, destino, peso));
     } else {
-        Aresta* aresta = vertices[origem].getArestas();
+        aresta = vertices[origem].getArestas();
         while (aresta->getProx() != nullptr) {
             aresta = aresta->getProx();
         }
         aresta->setProx(new Aresta(origem, destino, peso));
+    }
+}
+
+void GrafoLista::removerAresta(int origem, int destino) {
+    Aresta* aresta = vertices[origem].getArestas();
+    Aresta* arestaAnterior = nullptr;
+
+    while (aresta != nullptr) {
+        if (aresta->getDestino() == destino) {
+            // Remove a aresta
+            if (arestaAnterior == nullptr) {
+                vertices[origem].setArestas(aresta->getProx());
+            } else {
+                arestaAnterior->setProx(aresta->getProx());
+            }
+            delete aresta;
+            break;
+        }
+        arestaAnterior = aresta;
+        aresta = aresta->getProx();
     }
 }
 
@@ -373,43 +410,127 @@ GrafoLista* GrafoLista::carrega_grafo(const string& nomeArquivo) {
     return grafo;
 }
 
+void GrafoLista::novo_grafo(const string& nomeArquivoEntrada, const string& nomeArquivoSaida) {
+    ifstream arquivoEntrada(nomeArquivoEntrada);
+    if (!arquivoEntrada.is_open()) {
+        cerr << "Erro ao abrir o arquivo: " << nomeArquivoEntrada << endl;
+        return;
+    }
 
-// void Grafo::geraGrafoAleatorio(int grau, int nVertices, bool direcionado, int compConexas, bool ponderadoVertices, bool ponderadoArestas, bool completo, bool bipartido, bool arvore, bool arestaPonte, bool verticeArticulacao) {
-//     // Adiciona arestas aleatórias
-//     for (int i = 0; i < nVertices; ++i) {
-//         for (int j = 0; j < nVertices; ++j) {
-//             if (i != j && (rand() % 2 == 0)) { // 50% de chance de adicionar uma aresta
-//                 int peso = ponderadoArestas ? (rand() % 10 + 1) : 0; // Peso entre 1 e 10 se ponderado
-//                 adicionarAresta(i, j, peso);
-//                 if (!direcionado) {
-//                     adicionarAresta(j, i, peso);
-//                 }
-//             }
-//         }
-//     }
+    int grau, nVertices, direcionado, compConexas, ponderadoVertices, ponderadoArestas, completo, bipartido, arvore, arestaPonte, verticeArticulacao;
+    arquivoEntrada >> grau >> nVertices >> direcionado >> compConexas >> ponderadoVertices >> ponderadoArestas >> completo >> bipartido >> arvore >> arestaPonte >> verticeArticulacao;
+    arquivoEntrada.close();
 
-//     // Define pesos aleatórios para os vértices, se necessário
-//     if (ponderadoVertices) {
-//         for (int i = 0; i < nVertices; ++i) {
-//             int peso = rand() % 10 + 1; // Peso entre 1 e 10
-//             getVertices()[i].setPeso(peso);
-//         }
-//     }
+    GrafoLista grafo(nVertices, direcionado, ponderadoVertices, ponderadoArestas);
 
-//     if (bipartido) {
-//         // Gera um grafo bipartido
-//         int metade = nVertices / 2;
-//         for (int i = 0; i < metade; ++i) {
-//             for (int j = metade; j < nVertices; ++j) {
-//                 if (rand() % 2 == 0) { // 50% de chance de adicionar uma aresta
-//                     int peso = ponderadoArestas ? (rand() % 10 + 1) : 0; // Peso entre 1 e 10 se ponderado
-//                     adicionarAresta(i, j, peso);
-//                     if (!direcionado) {
-//                         adicionarAresta(j, i, peso);
-//                     }
-//                 }
-//             }
-//         }
-//     }
-// }
-// #endregion
+    if(nVertices <= grau){
+        cout << "Nao e possivel gerar o grafo. O numero de vertices eh menor ou igual ao grau desejado" << endl;
+    }
+
+    // Define pesos aleatórios para os vértices, se necessário
+    if (ponderadoVertices) {
+        for (int i = 0; i < nVertices; ++i) {
+            int peso = rand() % 10 + 1; // Peso entre 1 e 10
+            grafo.getVertices()[i].setPeso(peso);
+            cout << "Peso do vertice " << i << ": " << peso << endl;
+        }
+    }
+
+    // Adiciona arestas no vértice 0 de acordo com o grau informado
+    for (int i = 1; i <= grau && i < nVertices; ++i) {
+        int peso = ponderadoArestas ? (rand() % 10 + 1) : 0; // Peso entre 1 e 10 se ponderado
+        grafo.adicionarAresta(0, i, peso);
+         if (!direcionado) {
+            grafo.adicionarAresta(i, 0, peso);
+        }
+    }
+
+    // Verifica e ajusta a quantidade de componentes conexas
+    while (grafo.n_conexo() != compConexas) {
+        if (grafo.n_conexo() > compConexas) {
+            // Reduz o número de componentes conexas adicionando arestas
+            for (int i = 0; i < nVertices; ++i) {
+                for (int j = i + 1; j < nVertices; ++j) {
+                    if (grafo.n_conexo() <= compConexas) {
+                        break;
+                    }
+                    // Verifica se o grau dos vértices não será excedido
+                    if (grafo.getVertices()[i].getGrauVertice() < grau && grafo.getVertices()[j].getGrauVertice() < grau) {
+                        int peso = ponderadoArestas ? (std::rand() % 10 + 1) : 0; // Peso entre 1 e 10 se ponderado
+                        grafo.adicionarAresta(i, j, peso);
+                         if (!direcionado) {
+                             grafo.adicionarAresta(i, 0, peso);
+                        }
+                    }
+                }
+            }
+        } else {
+            // Aumenta o número de componentes conexas removendo arestas
+            for (int i = 0; i < nVertices; ++i) {
+                for (int j = i + 1; j < nVertices; ++j) {
+                    if (grafo.n_conexo() >= compConexas) {
+                        break;
+                    }
+                    // Remove a aresta se existir
+                    grafo.removerAresta(i, j);
+                    if (!direcionado) {
+                        grafo.removerAresta(j, i);
+                    }
+                }
+            }
+        }
+    }
+// Depuração: Imprime as arestas do vértice 0
+    int vertice = 1; // Altere este valor para o vértice desejado
+    Aresta* aresta = grafo.getVertices()[vertice].getArestas();
+    std::cout << "Arestas do vertice " << vertice << ":" << std::endl;
+    while (aresta != nullptr) {
+        std::cout << "Origem: " << aresta->getOrigem() << " Destino: " << aresta->getDestino();
+        if (ponderadoArestas) {
+            std::cout << " Peso: " << aresta->getPeso();
+        }
+        std::cout << std::endl;
+        aresta = aresta->getProx();
+    }
+    // Verificações adicionais para garantir que o grafo atende aos requisitos
+    // (completo, bipartido, arvore, arestaPonte, verticeArticulacao)
+    // Essas verificações podem ser complexas e podem exigir ajustes adicionais no grafo
+
+    // Salva o grafo gerado no arquivo de saída
+    std::ofstream arquivoSaida(nomeArquivoSaida);
+    if (!arquivoSaida.is_open()) {
+        std::cerr << "Erro ao abrir o arquivo: " << nomeArquivoSaida << std::endl;
+        return;
+    }
+
+    arquivoSaida << nVertices << " " << direcionado << " " << ponderadoVertices << " " << ponderadoArestas << std::endl;
+    const int MAX_ARESTAS = 1000; // Defina um tamanho máximo para o array
+    std::pair<int, int> arestasEscritas[MAX_ARESTAS];
+    int numArestasEscritas = 0;
+
+    for (int i = 0; i < nVertices; ++i) {
+        Aresta* aresta = grafo.getVertices()[i].getArestas();
+        while (aresta != nullptr) {
+            int origem = aresta->getOrigem();
+            int destino = aresta->getDestino();
+            bool arestaInversaEscrita = false;
+            for (int k = 0; k < numArestasEscritas; ++k) {
+                if (arestasEscritas[k].first == destino && arestasEscritas[k].second == origem) {
+                    arestaInversaEscrita = true;
+                    break;
+                }
+            }
+            if (direcionado || !arestaInversaEscrita) {
+                arquivoSaida << origem << " " << destino;
+                if (ponderadoArestas) {
+                    arquivoSaida << " " << aresta->getPeso();
+                }
+                arquivoSaida << std::endl;
+                arestasEscritas[numArestasEscritas++] = {origem, destino};
+            }
+            aresta = aresta->getProx();
+        }
+    }
+
+    arquivoSaida.close();
+}
