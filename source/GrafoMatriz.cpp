@@ -195,12 +195,7 @@ void GrafoMatriz::imprimirMatrizAdj() {
         std::cout << std::endl;
     }
 }
-
 void GrafoMatriz::imprimeGrafoMatriz(){
-    cout << "__________________________________________________________________" << endl;
-    cout << endl << "--- Grafo Matriz ---" << endl;
-    cout << "__________________________________________________________________" << endl << endl;
-    imprime();
 }
 // #endregion
 
@@ -215,20 +210,6 @@ int GrafoMatriz::grauVertice(int vertice)
         }
     }
     return grau;
-}
-
-Vertice& GrafoMatriz::getVertice(int i) {
-    return vertices[i];
-}
-
-void GrafoMatriz::imprimeGrafoMatriz()
-{
-    cout << "__________________________________________________________________" << endl;
-    cout << endl
-         << "--- Grafo Matriz ---" << endl;
-    cout << "__________________________________________________________________" << endl
-         << endl;
-    imprime();
 }
 
 GrafoMatriz *GrafoMatriz::carrega_grafo(const std::string &nomeArquivo)
