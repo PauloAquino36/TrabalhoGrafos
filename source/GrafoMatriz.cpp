@@ -89,6 +89,37 @@ int GrafoMatriz::get_grau()
     return grauMaior;
 }
 
+bool GrafoMatriz::eh_completo() {
+    for (int i = 0; i < nVertices; i++) {
+        for (int j = 0; j < nVertices; j++) {
+            if (i != j && matrizAdj[i][j] == 0) {
+                return false; // Se não existe uma aresta entre i e j, o grafo não é completo
+            }
+        }
+    }
+    return true;
+}
+
+bool GrafoMatriz::eh_arvore() {
+    // Verifica se o grafo é conexo
+    if (!ehConexo()) {
+        return false;
+    }
+
+    // Verifica se o grafo possui ciclos
+    bool* visitado = new bool[nVertices];
+    for (int i = 0; i < nVertices; i++) {
+        visitado[i] = false;
+    }
+
+    bool temCiclo = temCicloDFS(0, visitado, -1);
+
+    delete[] visitado;
+
+    // Um grafo é uma árvore se for conexo e não tiver ciclos
+    return !temCiclo;
+}
+
 bool GrafoMatriz::possui_ponte() {
     bool* visitado = new bool[nVertices];
     int* discovery = new int[nVertices];

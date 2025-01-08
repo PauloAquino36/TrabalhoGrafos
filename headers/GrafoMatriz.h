@@ -21,8 +21,8 @@ public:
     //bool eh_direcionado() override;
     //bool vertice_ponderado() override;
     //bool aresta_ponderada() override;
-    //bool eh_completo() override;
-    //bool eh_arvore() override;
+    bool eh_completo() override;
+    bool eh_arvore() override;
     //bool possui_articulacao() override;
     bool possui_ponte() override;
 
