@@ -33,8 +33,9 @@ GrafoMatriz::~GrafoMatriz()
 // #region Funcoes principais
 bool GrafoMatriz::eh_bipartido()
 {
-   int* subconjunto = new int[nVertices];
-    for (int i = 0; i < nVertices; i++) {
+    int *subconjunto = new int[nVertices];
+    for (int i = 0; i < nVertices; i++)
+    {
         subconjunto[i] = -1; // Inicializa todos os vértices como não atribuídos a um conjunto
     }
 
@@ -120,20 +121,24 @@ bool GrafoMatriz::eh_arvore() {
     return !temCiclo;
 }
 
-bool GrafoMatriz::possui_ponte() {
-    bool* visitado = new bool[nVertices];
-    int* discovery = new int[nVertices];
-    int* low = new int[nVertices];
-    int* parent = new int[nVertices];
+bool GrafoMatriz::possui_ponte()
+{
+    bool *visitado = new bool[nVertices];
+    int *discovery = new int[nVertices];
+    int *low = new int[nVertices];
+    int *parent = new int[nVertices];
     bool ponteEncontrada = false;
 
-    for (int i = 0; i < nVertices; i++) {
+    for (int i = 0; i < nVertices; i++)
+    {
         visitado[i] = false;
         parent[i] = -1;
     }
 
-    for (int i = 0; i < nVertices; i++) {
-        if (!visitado[i]) {
+    for (int i = 0; i < nVertices; i++)
+    {
+        if (!visitado[i])
+        {
             DFSPonte(i, visitado, discovery, low, parent, ponteEncontrada);
         }
     }
@@ -148,13 +153,16 @@ bool GrafoMatriz::possui_ponte() {
 // #endregion
 
 // #region Funcoes auxiliares
-Vertice& GrafoMatriz::getVertice(int i) {
+Vertice &GrafoMatriz::getVertice(int i)
+{
     return vertices[i];
 }
 
-void GrafoMatriz::adicionarAresta(int origem, int destino, int peso) {
-    if (origem < 0 || origem >= nVertices || destino < 0 || destino >= nVertices) {
-        cout << "Origem: " << origem << " / Destino: " << destino << " / Num Vertices:"<< nVertices << endl;
+void GrafoMatriz::adicionarAresta(int origem, int destino, int peso)
+{
+    if (origem < 0 || origem >= nVertices || destino < 0 || destino >= nVertices)
+    {
+        cout << "Origem: " << origem << " / Destino: " << destino << " / Num Vertices:" << nVertices << endl;
         std::cerr << "Erro: indices de origem ou destino invalidos.\n";
         return;
     }
@@ -164,15 +172,20 @@ void GrafoMatriz::adicionarAresta(int origem, int destino, int peso) {
     {
         matrizAdj[destino][origem] = peso;
     }
-    //cout << "Aresta adicionada: Origem: " << origem << " Destino: " << destino << endl;
+    cout << "Aresta adicionada: Origem: " << origem << " Destino: " << destino << endl;
 }
 
-bool GrafoMatriz::verificarParticaoBipartida(int v, int subconjunto[]) {
-    if (v == nVertices) {
+bool GrafoMatriz::verificarParticaoBipartida(int v, int subconjunto[])
+{
+    if (v == nVertices)
+    {
         // Verifica se a partição atual é válida
-        for (int i = 0; i < nVertices; i++) {
-            for (int j = 0; j < nVertices; j++) {
-                if (matrizAdj[i][j] != 0 && subconjunto[i] == subconjunto[j]) {
+        for (int i = 0; i < nVertices; i++)
+        {
+            for (int j = 0; j < nVertices; j++)
+            {
+                if (matrizAdj[i][j] != 0 && subconjunto[i] == subconjunto[j])
+                {
                     return false; // Encontrou uma aresta entre vértices do mesmo conjunto
                 }
             }
@@ -182,13 +195,15 @@ bool GrafoMatriz::verificarParticaoBipartida(int v, int subconjunto[]) {
 
     // Tenta atribuir o vértice v ao conjunto 0
     subconjunto[v] = 0;
-    if (verificarParticaoBipartida(v + 1, subconjunto)) {
+    if (verificarParticaoBipartida(v + 1, subconjunto))
+    {
         return true;
     }
 
     // Tenta atribuir o vértice v ao conjunto 1
     subconjunto[v] = 1;
-    if (verificarParticaoBipartida(v + 1, subconjunto)) {
+    if (verificarParticaoBipartida(v + 1, subconjunto))
+    {
         return true;
     }
 
@@ -215,21 +230,29 @@ bool GrafoMatriz::ehConexo()
     return true;
 }
 
-void GrafoMatriz::DFS(int v, bool visitado[]) {
+void GrafoMatriz::DFS(int v, bool visitado[])
+{
     visitado[v] = true;
-    for (int i = 0; i < nVertices; i++) {
-        if (matrizAdj[v][i] != 0 && !visitado[i]) {
+    for (int i = 0; i < nVertices; i++)
+    {
+        if (matrizAdj[v][i] != 0 && !visitado[i])
+        {
             DFS(i, visitado);
         }
     }
 }
 
-bool GrafoMatriz::temCicloDFS(int v, bool visitado[], int pai) {
+bool GrafoMatriz::temCicloDFS(int v, bool visitado[], int pai)
+{
     visitado[v] = true;
-    for (int i = 0; i < nVertices; i++) {
-        if (matrizAdj[v][i] != 0) {
-            if (!visitado[i]) {
-                if (temCicloDFS(i, visitado, v)) {
+    for (int i = 0; i < nVertices; i++)
+    {
+        if (matrizAdj[v][i] != 0)
+        {
+            if (!visitado[i])
+            {
+                if (temCicloDFS(i, visitado, v))
+                {
                     return true;
                 }
             }
@@ -244,18 +267,24 @@ bool GrafoMatriz::temCicloDFS(int v, bool visitado[], int pai) {
 // #endregion
 
 // #region Funcoes de imprimir
-void GrafoMatriz::imprimirMatrizAdj() {
-    for (int i = 0; i < nVertices; i++) {
-        for (int j = 0; j < nVertices; j++) {
+void GrafoMatriz::imprimirMatrizAdj()
+{
+    for (int i = 0; i < nVertices; i++)
+    {
+        for (int j = 0; j < nVertices; j++)
+        {
             std::cout << matrizAdj[i][j] << " ";
         }
         std::cout << std::endl;
     }
 }
-void GrafoMatriz::imprimeGrafoMatriz(){
+void GrafoMatriz::imprimeGrafoMatriz()
+{
     cout << "__________________________________________________________________" << endl;
-    cout << endl << "--- Grafo Matriz ---" << endl;
-    cout << "__________________________________________________________________" << endl << endl;
+    cout << endl
+         << "--- Grafo Matriz ---" << endl;
+    cout << "__________________________________________________________________" << endl
+         << endl;
     imprime();
 }
 // #endregion
@@ -263,6 +292,17 @@ void GrafoMatriz::imprimeGrafoMatriz(){
 int GrafoMatriz::grauVertice(int vertice)
 {
     int grau = 0;
+    if (eh_direcionado())
+    {
+        for (int i = 0; i < nVertices; i++)
+        {
+            if (matrizAdj[vertice][i] > 0)
+            {
+                grau++;
+            }
+        }
+        return grau;
+    }
     for (int i = 0; i < nVertices; i++)
     {
         if (matrizAdj[vertice][i] > 0)
@@ -333,7 +373,7 @@ GrafoMatriz *GrafoMatriz::novo_grafo()
     int grau, ordem, direcionado, componentesConexas, ponderadoVertices, ponderadoArestas, completo, bipartido, arvore, arestaPonte, verticeArticulacao;
     arquivo1 >> grau >> ordem >> direcionado >> componentesConexas >> ponderadoVertices >> ponderadoArestas >> completo >> bipartido >> arvore >> arestaPonte >> verticeArticulacao;
 
-    //cout << "Grau: " << grau << " Ordem: " << ordem << " Direcionado: " << direcionado << " Componentes Conexas: " << componentesConexas << " Ponderado Vertices: " << ponderadoVertices << " Ponderado Arestas: " << ponderadoArestas << " Completo: " << completo << " Bipartido: " << bipartido << " Arvore: " << arvore << " Aresta Ponte: " << arestaPonte << " Vertice Articulacao: " << verticeArticulacao << endl;
+    // cout << "Grau: " << grau << " Ordem: " << ordem << " Direcionado: " << direcionado << " Componentes Conexas: " << componentesConexas << " Ponderado Vertices: " << ponderadoVertices << " Ponderado Arestas: " << ponderadoArestas << " Completo: " << completo << " Bipartido: " << bipartido << " Arvore: " << arvore << " Aresta Ponte: " << arestaPonte << " Vertice Articulacao: " << verticeArticulacao << endl;
     arquivo1.close();
 
     // Cria uma instância de GrafoMatriz
@@ -359,22 +399,23 @@ GrafoMatriz *GrafoMatriz::novo_grafo()
         while (arestaOrigem == arestaDestino)
         {
             arestaDestino = (rand() % ordem - 1) + 1;
-          //  cout << "evita self-loop" << endl;
+            //  cout << "evita self-loop" << endl;
         }
 
         if (grafo->matrizAdj[arestaOrigem][arestaDestino] == 0)
         {
             int novoPeso = 1;
-            if(ponderadoArestas){
+            if (ponderadoArestas)
+            {
                 novoPeso = (rand() % (100 - 1 + 1)) + 1;
             }
             grafo->adicionarAresta(arestaOrigem, arestaDestino, novoPeso);
         }
-        //cout << "Grau do vertice " << grafo->grauVertice(arestaOrigem) << endl;
+        // cout << "Grau do vertice " << grafo->grauVertice(arestaOrigem) << endl;
 
         if (grafo->grauVertice(arestaOrigem) == grau)
         {
-            //cout << "Grau do vertice " << grafo->grauVertice(arestaOrigem) << " atingido!" << endl;
+            // cout << "Grau do vertice " << grafo->grauVertice(arestaOrigem) << " atingido!" << endl;
             break;
         }
     }
@@ -386,7 +427,8 @@ GrafoMatriz *GrafoMatriz::novo_grafo()
     }
 
     cout << "Grafo Matriz gerado aleatoriamente em: " << nomeArquivoEscrito << endl;
-    cout << "__________________________________________________________________" << endl << endl;
+    cout << "__________________________________________________________________" << endl
+         << endl;
     //
 
     ofstream arquivo2(nomeArquivoEscrito);
@@ -397,7 +439,7 @@ GrafoMatriz *GrafoMatriz::novo_grafo()
         return nullptr;
     }
 
-   // cout << "Escrevendo no arquivo '" << nomeArquivoEscrito << "':" << endl;
+    // cout << "Escrevendo no arquivo '" << nomeArquivoEscrito << "':" << endl;
 
     arquivo2 << grafo->get_ordem() << " " << grafo->eh_direcionado() << " " << grafo->vertice_ponderado() << " " << grafo->aresta_ponderada() << endl;
     if (grafo->vertice_ponderado())
@@ -409,22 +451,43 @@ GrafoMatriz *GrafoMatriz::novo_grafo()
         arquivo2 << endl;
     }
 
-    for (int i = 0; i < grafo->get_ordem(); i++)
+    if (grafo->eh_direcionado())
     {
-        for (int j = 0; j < grafo->get_ordem(); j++)
+        for (int i = 0; i < grafo->get_ordem(); i++)
         {
-            if (i != j)
+            for (int j = 0; j < grafo->get_ordem(); j++)
             {
                 if (grafo->matrizAdj[i][j] != 0)
                 {
                     if (grafo->aresta_ponderada())
-                    {                                                                 // Verifica se existe uma aresta
-                        int peso = grafo->matrizAdj[i][j];                            // Obtém o peso diretamente da matriz de adjacência
-                        arquivo2 << (i) << " " << (j) << " " << peso << endl; // Origem, Destino, Peso
+                    {
+                        int peso = grafo->matrizAdj[i][j];
+                        arquivo2 << i << " " << j << " " << peso << endl;
                     }
                     else
                     {
-                        arquivo2 << (i) << " " << (j) << endl; // Origem, Destino
+                        arquivo2 << i << " " << j << endl;
+                    }
+                }
+            }
+        }
+    }
+    else
+    {
+        for (int i = 0; i < grafo->get_ordem(); i++)
+        {
+            for (int j = i + 1; j < grafo->get_ordem(); j++) // j começa em i + 1
+            {
+                if (grafo->matrizAdj[i][j] != 0) // Verifica se existe uma aresta
+                {
+                    if (grafo->aresta_ponderada())
+                    {
+                        int peso = grafo->matrizAdj[i][j];                // Obtém o peso diretamente da matriz de adjacência
+                        arquivo2 << i << " " << j << " " << peso << endl; // Origem, Destino, Peso
+                    }
+                    else
+                    {
+                        arquivo2 << i << " " << j << endl; // Origem, Destino
                     }
                 }
             }
@@ -432,31 +495,36 @@ GrafoMatriz *GrafoMatriz::novo_grafo()
     }
 
     arquivo2.close(); // esta quebrando o codigo
-   // cout << "Escrita concluida!" << endl;
+                      // cout << "Escrita concluida!" << endl;
     return nullptr;
 }
 
-
-
-//Verifica funçao ponte
-void GrafoMatriz::DFSPonte(int v, bool visitado[], int discovery[], int low[], int parent[], bool& ponteEncontrada) {
+// Verifica funçao ponte
+void GrafoMatriz::DFSPonte(int v, bool visitado[], int discovery[], int low[], int parent[], bool &ponteEncontrada)
+{
     static int tempo = 0;
     visitado[v] = true;
     discovery[v] = low[v] = ++tempo;
 
-    for (int i = 0; i < nVertices; i++) {
-        if (matrizAdj[v][i] != 0) {
+    for (int i = 0; i < nVertices; i++)
+    {
+        if (matrizAdj[v][i] != 0)
+        {
             int u = i;
-            if (!visitado[u]) {
+            if (!visitado[u])
+            {
                 parent[u] = v;
                 DFSPonte(u, visitado, discovery, low, parent, ponteEncontrada);
 
                 low[v] = min(low[v], low[u]);
 
-                if (low[u] > discovery[v]) {
+                if (low[u] > discovery[v])
+                {
                     ponteEncontrada = true;
                 }
-            } else if (u != parent[v]) {
+            }
+            else if (u != parent[v])
+            {
                 low[v] = min(low[v], discovery[u]);
             }
         }
