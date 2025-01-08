@@ -250,7 +250,8 @@ GrafoMatriz* GrafoMatriz::novo_grafo() {
         }
     }
     for(int i = 0; i < grafo->nVertices; i++){
-        grafo->getVertice(i).setPeso(2); // Gera um número aleatório
+        int pesoAleatorio = (rand() % (100 - 1 + 1)) + 1;
+        grafo->getVertice(i).setPeso(pesoAleatorio); // Gera um número aleatório
     }
 
     cout << "Grafo Matriz gerado aleatoriamente!" << endl;
