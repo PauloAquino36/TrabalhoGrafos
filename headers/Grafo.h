@@ -6,45 +6,37 @@
 
 class Grafo {
 protected:
-
     Vertice* vertices; // Lista de vértices
-    int nVertices;   // Número de vértices
-    int grau;        // Grau do grafo
-    bool direcionado;  // Indica se o grafo é direcionado
-    bool ponderadoVertices;
-    bool ponderadoArestas;
+    int nVertices;          // Número de vértices (ordem) do grafo
+    int grau;               // Grau do grafo (número de arestas do vertice que possui mais arestas)
+    bool direcionado;       // Indica se o grafo é direcionado
+    bool ponderadoVertices; // Indica se o grafo possui peso nos vertices
+    bool ponderadoArestas;  // Indica se o grafo possui peso nas arestas
 
 public:
-    bool eh_bipartido();                   //  Lucas    // Ja esta Feita :)
-    int n_conexo();                        //  Lucas    // Ja esta Feita :)
-    int get_grau();                        //  Leandro  // Ja esta Feita :)
-    int get_ordem();                       //  Leandro  // Ja esta Feita :)
-    bool eh_direcionado();                 //  Paulo    // Ja esta Feita :)
-    bool vertice_ponderado();              //  Paulo    // Ja esta Feita :)
-    bool aresta_ponderada();               //  Paulo    // Ja esta Feita :)
-    bool eh_completo();                    //  Leticia  // Ja esta Feita :)
-    bool eh_arvore();                      //  Leticia  // Ja esta Feita :)
-    bool possui_articulacao();
-    void DFSArticulacao(int v, bool visited[], int low[], int parent[], bool &articulacao);
-    bool possui_ponte();                   //  Favio
-    void DFS_Ponte(int v, bool visited[], int discovery[], int low[], int parent[], bool& ponteEncontrada);
-
-    static Grafo* carrega_grafo(const std::string& nomeArquivo); //  Lucas
-    static void novo_grafo(const std::string& nomeArquivoEntrada, const std::string& nomeArquivoSaida); //  Lucas
-
+    //Construtor e Destrutor
     Grafo(int numVertices, bool direcionado, bool ponderadoVertices, bool ponderadoArestas);
     ~Grafo();
 
-    //funçoes auxiliares
-    Vertice* getVertices();
-    void adicionarAresta(int origem, int destino, int peso);
-    void geraGrafoAleatorio(int grau, int nVertices, bool direcionado, int compConexas, bool ponderadoVertices, bool ponderadoArestas, bool completo, bool bipartido, bool arvore, bool arestaPonte, bool verticeArticulacao);
-    bool ehConexo();
-    int conta_componentes_conexos_removido(int verticeRemovido);
-    bool temCicloDFS(int v, bool visitado[], int pai);
+    //Funcoes principais
+    virtual bool eh_bipartido();       //Verifica se o grafo eh bipartido ou nao
+    virtual int n_conexo();            //Retorna a quantidade total de componentes conexas do grafo
+    virtual int get_grau();            //Retorna o grau do grafo
+    virtual int get_ordem();           //Retorna a ordem do grafo (numero de vertices do grafo)
+    virtual bool eh_direcionado();     //Retorna se o grafo eh direcionado ou nao
+    virtual bool vertice_ponderado();  //Retorna se o grafo possui peso nos vertices ou nao
+    virtual bool aresta_ponderada();   //Retorna se o grafo possui peso nas arestas ou nao
+    virtual bool eh_completo();        //Verifica se o grafo eh completo ou nao
+    virtual bool eh_arvore();          //Verifica se o grafo eh uma arvore ou nao
+    virtual bool possui_articulacao(); //Verifica se o grafo possui pelo menos 1 vertice de articulacao
+    virtual bool possui_ponte();       //Verifica se o grafo possui pelo menos 1 aresta ponte
 
-private:
-    void DFS(int v, bool visited[]);
+
+    static Grafo* carrega_grafo(const std::string& nomeArquivo);        //Gera um grafo a partir do arquivo grafo.txt
+    static void novo_grafo(const std::string& nomeArquivoEntrada, const std::string& nomeArquivoSaida);         //Gera um novo grafo a partir do arquivo descricao.txt
+
+    void imprime();        //Imprime os atributos do grafo
+
 };
 
 #endif
