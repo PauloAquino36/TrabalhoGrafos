@@ -78,6 +78,10 @@ int GrafoMatriz::get_grau() {
 // #endregion
 
 // #region Funcoes auxiliares
+Vertice& GrafoMatriz::getVertice(int i) {
+    return vertices[i];
+}
+
 void GrafoMatriz::adicionarAresta(int origem, int destino, int peso) {
     if (origem < 0 || origem >= nVertices || destino < 0 || destino >= nVertices) {
         cout << "Origem: " << origem << " / Destino: " << destino << " / Num Vertices:"<< nVertices << endl;
@@ -91,22 +95,34 @@ void GrafoMatriz::adicionarAresta(int origem, int destino, int peso) {
     }
 }
 
-void GrafoMatriz::imprimirMatrizAdj() {
-    for (int i = 0; i < nVertices; i++) {
-        for (int j = 0; j < nVertices; j++) {
-            std::cout << matrizAdj[i][j] << " ";
+bool GrafoMatriz::verificarParticaoBipartida(int v, int subconjunto[]) {
+    if (v == nVertices) {
+        // Verifica se a partição atual é válida
+        for (int i = 0; i < nVertices; i++) {
+            for (int j = 0; j < nVertices; j++) {
+                if (matrizAdj[i][j] != 0 && subconjunto[i] == subconjunto[j]) {
+                    return false; // Encontrou uma aresta entre vértices do mesmo conjunto
+                }
+            }
         }
-        std::cout << std::endl;
+        return true; // Partição válida
     }
-}
 
-void GrafoMatriz::DFS(int v, bool visitado[]) {
-    visitado[v] = true;
-    for (int i = 0; i < nVertices; i++) {
-        if (matrizAdj[v][i] != 0 && !visitado[i]) {
-            DFS(i, visitado);
-        }
+    // Tenta atribuir o vértice v ao conjunto 0
+    subconjunto[v] = 0;
+    if (verificarParticaoBipartida(v + 1, subconjunto)) {
+        return true;
     }
+
+    // Tenta atribuir o vértice v ao conjunto 1
+    subconjunto[v] = 1;
+    if (verificarParticaoBipartida(v + 1, subconjunto)) {
+        return true;
+    }
+
+    // Nenhuma partição válida encontrada
+    subconjunto[v] = -1;
+    return false;
 }
 
 bool GrafoMatriz::ehConexo() {
@@ -124,6 +140,15 @@ bool GrafoMatriz::ehConexo() {
     return true;
 }
 
+void GrafoMatriz::DFS(int v, bool visitado[]) {
+    visitado[v] = true;
+    for (int i = 0; i < nVertices; i++) {
+        if (matrizAdj[v][i] != 0 && !visitado[i]) {
+            DFS(i, visitado);
+        }
+    }
+}
+
 bool GrafoMatriz::temCicloDFS(int v, bool visitado[], int pai) {
     visitado[v] = true;
     for (int i = 0; i < nVertices; i++) {
@@ -139,7 +164,27 @@ bool GrafoMatriz::temCicloDFS(int v, bool visitado[], int pai) {
     }
     return false;
 }
+// #endregion
 
+// #region Funcoes de imprimir
+void GrafoMatriz::imprimirMatrizAdj() {
+    for (int i = 0; i < nVertices; i++) {
+        for (int j = 0; j < nVertices; j++) {
+            std::cout << matrizAdj[i][j] << " ";
+        }
+        std::cout << std::endl;
+    }
+}
+
+void GrafoMatriz::imprimeGrafoMatriz(){
+    cout << "__________________________________________________________________" << endl;
+    cout << endl << "--- Grafo Matriz ---" << endl;
+    cout << "__________________________________________________________________" << endl << endl;
+    imprime();
+}
+// #endregion
+
+// #region Funcoes gera grafo
 GrafoMatriz* GrafoMatriz::carrega_grafo(const std::string& nomeArquivo) {
     ifstream arquivo(nomeArquivo);
     if (!arquivo.is_open()) {
@@ -175,45 +220,4 @@ GrafoMatriz* GrafoMatriz::carrega_grafo(const std::string& nomeArquivo) {
     }
     arquivo.close();
     return grafo;
-}
-
-Vertice& GrafoMatriz::getVertice(int i) {
-    return vertices[i];
-}
-
-void GrafoMatriz::imprimeGrafoMatriz(){
-    cout << "__________________________________________________________________" << endl;
-    cout << endl << "--- Grafo Matriz ---" << endl;
-    cout << "__________________________________________________________________" << endl << endl;
-    imprime();
-}
-
-bool GrafoMatriz::verificarParticaoBipartida(int v, int subconjunto[]) {
-    if (v == nVertices) {
-        // Verifica se a partição atual é válida
-        for (int i = 0; i < nVertices; i++) {
-            for (int j = 0; j < nVertices; j++) {
-                if (matrizAdj[i][j] != 0 && subconjunto[i] == subconjunto[j]) {
-                    return false; // Encontrou uma aresta entre vértices do mesmo conjunto
-                }
-            }
-        }
-        return true; // Partição válida
-    }
-
-    // Tenta atribuir o vértice v ao conjunto 0
-    subconjunto[v] = 0;
-    if (verificarParticaoBipartida(v + 1, subconjunto)) {
-        return true;
-    }
-
-    // Tenta atribuir o vértice v ao conjunto 1
-    subconjunto[v] = 1;
-    if (verificarParticaoBipartida(v + 1, subconjunto)) {
-        return true;
-    }
-
-    // Nenhuma partição válida encontrada
-    subconjunto[v] = -1;
-    return false;
 }

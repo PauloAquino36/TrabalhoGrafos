@@ -32,13 +32,15 @@ public:
     //Funcoes auxiliares
     Vertice* getVertices();             //Retorna o vetor de vertices do grafo
     void adicionarAresta(int origem, int destino, int peso);    //Adiciona uma aresta no grafo
+    bool verificarParticaoBipartida(int v, int subconjunto[]);
     bool ehConexo();                    //Verifica se o grafo eh conexo ou nao
     void DFS(int v, bool visitado[]);   //Percorre o grafo em profundidade
     void DFS_Ponte(int v, bool visited[], int discovery[], int low[], int parent[], bool& ponteEncontrada);     //Funcao auxiliar para a funcao possui_ponte
     void DFSArticulacao(int v, bool visited[], int low[], int parent[], bool &articulacao);                     //Funcao auxiliar para a funcao possui_articulacao
     bool temCicloDFS(int v, bool visitado[], int pai);      //Verifica se o grafo possui ciclo
+
+    //Funcoes de imprimir
     void imprimeGrafoLista();
-    bool verificarParticaoBipartida(int v, int subconjunto[]);
 };
 
 #endif // GRAFOLISTA_H

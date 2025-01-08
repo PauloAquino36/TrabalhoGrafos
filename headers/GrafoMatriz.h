@@ -30,15 +30,16 @@ public:
     static GrafoMatriz* carrega_grafo(const std::string& nomeArquivo);
 
     // Funções auxiliares
-    int** getVertices();        //Retorna os vertices do grafo
-    void adicionarAresta(int origem, int destino, int peso = 1);    //Adiciona uma aresta no grafo
-    bool ehConexo();            //Verifica se o grafo eh conexo ou nao
-    void DFS(int v, bool visitado[]);       //Percorre o grafo em profundidade
-    bool temCicloDFS(int v, bool visitado[], int pai);      //Verifica se o grafo possui ciclo
-    void imprimirMatrizAdj();
-    void imprimeGrafoMatriz();
-    Vertice& getVertice(int vertice);
-    bool verificarParticaoBipartida(int v, int subconjunto[]);
+    Vertice& getVertice(int vertice);                                   //Retorna um vertice especifico do grafo
+    void adicionarAresta(int origem, int destino, int peso = 1);        //Adiciona uma aresta no grafo
+    bool verificarParticaoBipartida(int v, int subconjunto[]);          //Funcao auxiliar para verificar se o grafo é bipartido
+    bool ehConexo();                                                    //Verifica se o grafo eh conexo ou nao
+    void DFS(int v, bool visitado[]);                                   //Percorre o grafo em profundidade
+    bool temCicloDFS(int v, bool visitado[], int pai);                  //Verifica se o grafo possui ciclo
+
+    //Funcoes de imprimir
+    void imprimirMatrizAdj();                                           //Imprime a matriz de adjacência
+    void imprimeGrafoMatriz();                                          //Imprime os atributos do grafo
 };
 
 #endif // GRAFOMATRIZ_H

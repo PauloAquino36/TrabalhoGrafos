@@ -197,6 +197,39 @@ void GrafoLista::adicionarAresta(int origem, int destino, int peso) {
     }
 }
 
+bool GrafoLista::verificarParticaoBipartida(int v, int subconjunto[]) {
+    if (v == nVertices) {
+        // Verifica se a partição atual é válida
+        for (int i = 0; i < nVertices; i++) {
+            Aresta* aresta = vertices[i].getArestas();
+            while (aresta != nullptr) {
+                int j = aresta->getDestino();
+                if (subconjunto[i] == subconjunto[j]) {
+                    return false; // Encontrou uma aresta entre vértices do mesmo conjunto
+                }
+                aresta = aresta->getProx();
+            }
+        }
+        return true; // Partição válida
+    }
+
+    // Tenta atribuir o vértice v ao conjunto 0
+    subconjunto[v] = 0;
+    if (verificarParticaoBipartida(v + 1, subconjunto)) {
+        return true;
+    }
+
+    // Tenta atribuir o vértice v ao conjunto 1
+    subconjunto[v] = 1;
+    if (verificarParticaoBipartida(v + 1, subconjunto)) {
+        return true;
+    }
+
+    // Nenhuma partição válida encontrada
+    subconjunto[v] = -1;
+    return false;
+}
+
 bool GrafoLista::ehConexo(){
     bool *visitado = new bool[nVertices]; //cria um vetor de visitados
 
@@ -300,39 +333,6 @@ void GrafoLista::imprimeGrafoLista(){
     cout << endl << "--- Grafo Lista---" << endl;
     cout << "__________________________________________________________________" << endl << endl;
     imprime();
-}
-
-bool GrafoLista::verificarParticaoBipartida(int v, int subconjunto[]) {
-    if (v == nVertices) {
-        // Verifica se a partição atual é válida
-        for (int i = 0; i < nVertices; i++) {
-            Aresta* aresta = vertices[i].getArestas();
-            while (aresta != nullptr) {
-                int j = aresta->getDestino();
-                if (subconjunto[i] == subconjunto[j]) {
-                    return false; // Encontrou uma aresta entre vértices do mesmo conjunto
-                }
-                aresta = aresta->getProx();
-            }
-        }
-        return true; // Partição válida
-    }
-
-    // Tenta atribuir o vértice v ao conjunto 0
-    subconjunto[v] = 0;
-    if (verificarParticaoBipartida(v + 1, subconjunto)) {
-        return true;
-    }
-
-    // Tenta atribuir o vértice v ao conjunto 1
-    subconjunto[v] = 1;
-    if (verificarParticaoBipartida(v + 1, subconjunto)) {
-        return true;
-    }
-
-    // Nenhuma partição válida encontrada
-    subconjunto[v] = -1;
-    return false;
 }
 // #endregion
 
