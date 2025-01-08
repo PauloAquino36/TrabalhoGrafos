@@ -23,7 +23,7 @@ public:
     //bool aresta_ponderada() override;
     bool eh_completo() override;
     bool eh_arvore() override;
-    //bool possui_articulacao() override;
+    bool possui_articulacao() override;
     bool possui_ponte() override;
 
     //Funcoes gera grafo
@@ -38,7 +38,7 @@ public:
     void DFS(int v, bool visitado[]);                                   //Percorre o grafo em profundidade
     bool temCicloDFS(int v, bool visitado[], int pai);                  //Verifica se o grafo possui ciclo
     void DFSPonte(int v, bool visitado[], int discovery[], int low[], int parent[], bool& ponteEncontrada); //Funcao auxiliar para a funcao possui_ponte
-
+    void DFSArticulacao(int i, bool visitado[],int discovery[],int low[],int parent[],bool& articulacaoEncontrada); //Funcao auxiliar para a funcao possui_articulacao
     //Funcoes de imprimir
     void imprimirMatrizAdj();                                           //Imprime a matriz de adjacência
     void imprimeGrafoMatriz();                                          //Imprime os atributos do grafo

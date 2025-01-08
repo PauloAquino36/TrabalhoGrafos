@@ -121,6 +121,32 @@ bool GrafoMatriz::eh_arvore() {
     return !temCiclo;
 }
 
+bool GrafoMatriz::possui_articulacao() {
+    bool* visitado = new bool[nVertices];
+    int* discovery = new int[nVertices];
+    int* low = new int[nVertices];
+    int* parent = new int[nVertices];
+    bool articulacaoEncontrada = false;
+
+    for (int i = 0; i < nVertices; i++) {
+        visitado[i] = false;
+        parent[i] = -1;
+    }
+
+    for (int i = 0; i < nVertices; i++) {
+        if (!visitado[i]) {
+            DFSArticulacao(i, visitado, discovery, low, parent, articulacaoEncontrada);
+        }
+    }
+
+    delete[] visitado;
+    delete[] discovery;
+    delete[] low;
+    delete[] parent;
+
+    return articulacaoEncontrada;
+}
+
 bool GrafoMatriz::possui_ponte()
 {
     bool *visitado = new bool[nVertices];
@@ -525,6 +551,37 @@ void GrafoMatriz::DFSPonte(int v, bool visitado[], int discovery[], int low[], i
             }
             else if (u != parent[v])
             {
+                low[v] = min(low[v], discovery[u]);
+            }
+        }
+    }
+}
+
+//verifica funçao articulaçao
+void GrafoMatriz::DFSArticulacao(int v, bool visitado[], int discovery[], int low[], int parent[], bool& articulacaoEncontrada) {
+    static int tempo = 0;
+    int filhos = 0;
+    visitado[v] = true;
+    discovery[v] = low[v] = ++tempo;
+
+    for (int i = 0; i < nVertices; i++) {
+        if (matrizAdj[v][i] != 0) {
+            int u = i;
+            if (!visitado[u]) {
+                filhos++;
+                parent[u] = v;
+                DFSArticulacao(u, visitado, discovery, low, parent, articulacaoEncontrada);
+
+                low[v] = min(low[v], low[u]);
+
+                if (parent[v] == -1 && filhos > 1) {
+                    articulacaoEncontrada = true;
+                }
+
+                if (parent[v] != -1 && low[u] >= discovery[v]) {
+                    articulacaoEncontrada = true;
+                }
+            } else if (u != parent[v]) {
                 low[v] = min(low[v], discovery[u]);
             }
         }
