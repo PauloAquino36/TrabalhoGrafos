@@ -28,6 +28,7 @@ public:
 
     //Funcoes gera grafo
     static GrafoMatriz* carrega_grafo(const std::string& nomeArquivo);
+    static GrafoMatriz* novo_grafo();
 
     // Funções auxiliares
     int** getVertices();        //Retorna os vertices do grafo
