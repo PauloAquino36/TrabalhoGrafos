@@ -6,8 +6,7 @@
 
 using namespace std;
 
-GrafoMatriz::GrafoMatriz(int numVertices, bool direcionado, bool ponderadoVertices, bool ponderadoArestas)
-    : Grafo(numVertices, direcionado, ponderadoVertices, ponderadoArestas) {  
+GrafoMatriz::GrafoMatriz(int numVertices, bool direcionado, bool ponderadoVertices, bool ponderadoArestas) : Grafo(numVertices, direcionado, ponderadoVertices, ponderadoArestas) {  
     matrizAdj = new int*[nVertices];
     for (int i = 0; i < nVertices; i++) {
         matrizAdj[i] = new int[nVertices];
@@ -105,7 +104,7 @@ GrafoMatriz* GrafoMatriz::carrega_grafo(const std::string& nomeArquivo) {
         for (int i = 0; i < nVertices; ++i) {
             int peso;
             arquivo >> peso;
-            grafo->getVertices()[i].setPeso(peso);
+            grafo->getVertice(i).setPeso(peso);
         }
     }
 
@@ -122,6 +121,10 @@ GrafoMatriz* GrafoMatriz::carrega_grafo(const std::string& nomeArquivo) {
     }
     arquivo.close();
     return grafo;
+}
+
+Vertice& GrafoMatriz::getVertice(int i) {
+    return vertices[i];
 }
 
 int GrafoMatriz::get_grau() {
@@ -142,3 +145,9 @@ int GrafoMatriz::get_grau() {
     return grauMaior;
 }
 
+void GrafoMatriz::imprimeGrafoMatriz(){
+    cout << "__________________________________________________________________" << endl;
+    cout << endl << "--- Grafo Matriz ---" << endl;
+    cout << "__________________________________________________________________" << endl << endl;
+    imprime();
+}
