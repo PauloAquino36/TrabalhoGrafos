@@ -88,6 +88,32 @@ int GrafoMatriz::get_grau()
     }
     return grauMaior;
 }
+
+bool GrafoMatriz::possui_ponte() {
+    bool* visitado = new bool[nVertices];
+    int* discovery = new int[nVertices];
+    int* low = new int[nVertices];
+    int* parent = new int[nVertices];
+    bool ponteEncontrada = false;
+
+    for (int i = 0; i < nVertices; i++) {
+        visitado[i] = false;
+        parent[i] = -1;
+    }
+
+    for (int i = 0; i < nVertices; i++) {
+        if (!visitado[i]) {
+            DFSPonte(i, visitado, discovery, low, parent, ponteEncontrada);
+        }
+    }
+
+    delete[] visitado;
+    delete[] discovery;
+    delete[] low;
+    delete[] parent;
+
+    return ponteEncontrada;
+}
 // #endregion
 
 // #region Funcoes auxiliares
