@@ -367,7 +367,7 @@ void GrafoLista::DFS_Ponte(int u, bool visited[], int disc[], int low[], int par
 
 void GrafoLista::imprimeGrafoLista(){
     cout << "__________________________________________________________________" << endl;
-    cout << endl << "--- Grafo Lista---" << endl;
+    cout << endl << "--- Grafo Lista ---" << endl;
     cout << "__________________________________________________________________" << endl << endl;
     imprime();
 }
@@ -432,7 +432,6 @@ void GrafoLista::novo_grafo(const string& nomeArquivoEntrada, const string& nome
         for (int i = 0; i < nVertices; ++i) {
             int peso = rand() % 10 + 1; // Peso entre 1 e 10
             grafo.getVertices()[i].setPeso(peso);
-            cout << "Peso do vertice " << i << ": " << peso << endl;
         }
     }
 
@@ -480,18 +479,6 @@ void GrafoLista::novo_grafo(const string& nomeArquivoEntrada, const string& nome
             }
         }
     }
-// Depuração: Imprime as arestas do vértice 0
-    int vertice = 1; // Altere este valor para o vértice desejado
-    Aresta* aresta = grafo.getVertices()[vertice].getArestas();
-    std::cout << "Arestas do vertice " << vertice << ":" << std::endl;
-    while (aresta != nullptr) {
-        std::cout << "Origem: " << aresta->getOrigem() << " Destino: " << aresta->getDestino();
-        if (ponderadoArestas) {
-            std::cout << " Peso: " << aresta->getPeso();
-        }
-        std::cout << std::endl;
-        aresta = aresta->getProx();
-    }
     // Verificações adicionais para garantir que o grafo atende aos requisitos
     // (completo, bipartido, arvore, arestaPonte, verticeArticulacao)
     // Essas verificações podem ser complexas e podem exigir ajustes adicionais no grafo
@@ -532,5 +519,8 @@ void GrafoLista::novo_grafo(const string& nomeArquivoEntrada, const string& nome
         }
     }
 
+    cout << "__________________________________________________________________" << endl;
+    cout << "Grafo Lista gerado aleatoriamente em: " << nomeArquivoSaida << endl;
+    cout << "__________________________________________________________________" << endl;
     arquivoSaida.close();
 }

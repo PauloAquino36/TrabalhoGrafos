@@ -28,7 +28,7 @@ public:
 
     //Funcoes gera grafo
     static GrafoMatriz* carrega_grafo(const std::string& nomeArquivo);
-    static GrafoMatriz* novo_grafo();
+    static GrafoMatriz* novo_grafo(const std::string& nomeArquivoEntrada, const std::string& nomeArquivoSaida);
 
     // Funções auxiliares
     Vertice& getVertice(int vertice);                                   //Retorna um vertice especifico do grafo

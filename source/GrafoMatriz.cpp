@@ -198,7 +198,6 @@ void GrafoMatriz::adicionarAresta(int origem, int destino, int peso)
     {
         matrizAdj[destino][origem] = peso;
     }
-    cout << "Aresta adicionada: Origem: " << origem << " Destino: " << destino << endl;
 }
 
 bool GrafoMatriz::verificarParticaoBipartida(int v, int subconjunto[])
@@ -383,10 +382,10 @@ GrafoMatriz *GrafoMatriz::carrega_grafo(const std::string &nomeArquivo)
     return grafo;
 }
 
-GrafoMatriz *GrafoMatriz::novo_grafo()
+GrafoMatriz *GrafoMatriz::novo_grafo(const std::string &nomeArquivoEntrada, const std::string &nomeArquivoSaida)
 {
-    string nomeArquivoLido = "descricao.txt";
-    string nomeArquivoEscrito = "grafo.txt";
+    string nomeArquivoLido = nomeArquivoEntrada;
+    string nomeArquivoEscrito = nomeArquivoSaida;
 
     // Ler arquivo de descrição
     ifstream arquivo1(nomeArquivoLido);
@@ -451,11 +450,9 @@ GrafoMatriz *GrafoMatriz::novo_grafo()
         int pesoAleatorio = (rand() % (100 - 1 + 1)) + 1;
         grafo->getVertice(i).setPeso(pesoAleatorio); // Gera um número aleatório
     }
-
+    cout << "__________________________________________________________________" << endl;
     cout << "Grafo Matriz gerado aleatoriamente em: " << nomeArquivoEscrito << endl;
-    cout << "__________________________________________________________________" << endl
-         << endl;
-    //
+    cout << "__________________________________________________________________" << endl;
 
     ofstream arquivo2(nomeArquivoEscrito);
 
