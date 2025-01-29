@@ -1,4 +1,4 @@
-#include "../headers/Vertice.h"
+#include "../include/Vertice.h"
 #include <iostream>
 
 using namespace std;

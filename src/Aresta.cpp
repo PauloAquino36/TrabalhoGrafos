@@ -1,4 +1,4 @@
-#include "../headers/Aresta.h"
+#include "../include/Aresta.h"
 
 // Construtor padrão
 Aresta::Aresta(){

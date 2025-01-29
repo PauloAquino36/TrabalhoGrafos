@@ -1,13 +1,14 @@
 #include <fstream>
 #include <iostream>
 #include <string>
-#include "../../headers/GrafoMatriz.h"
-#include "../../headers/GrafoLista.h"
-#include "../../headers/Grafo.h"
-#include "../../headers/Aresta.h"
-#include "../../headers/Vertice.h"
+#include "include/GrafoMatriz.h"
+#include "include/GrafoLista.h"
+#include "include/Grafo.h"
+#include "include/Aresta.h"
+#include "include/Vertice.h"
 
 using namespace std;
+
 
 int main(int argc, char* argv[]) {
 

@@ -2,7 +2,7 @@
 #include <iostream>
 #include <cmath>
 #include <string>
-#include "../headers/GrafoMatriz.h"
+#include "../include/GrafoMatriz.h"
 
 using namespace std;
 

@@ -2,7 +2,7 @@
 #include <fstream>
 #include <cmath>
 #include <string>
-#include "../headers/Grafo.h"
+#include "../include/Grafo.h"
 using namespace std;
 
 Grafo::Grafo(int numVertices, bool direcionado, bool ponderadoVertices, bool ponderadoArestas)

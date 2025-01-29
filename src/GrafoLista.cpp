@@ -1,5 +1,5 @@
-#include "../headers/GrafoLista.h"
-#include "../headers/Aresta.h"
+#include "../include/GrafoLista.h"
+#include "../include/Aresta.h"
 #include <iostream>
 #include <fstream>
 
