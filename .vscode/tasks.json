@@ -8,14 +8,14 @@
       "args": [
         "-fdiagnostics-color=always",
         "-g",
-        "${workspaceFolder}/src/main/main.cpp",
+        "${workspaceFolder}/main.cpp",
         "${workspaceFolder}/src/Grafo.cpp",
         "${workspaceFolder}/src/GrafoMatriz.cpp",
         "${workspaceFolder}/src/GrafoLista.cpp",
         "${workspaceFolder}/src/Vertice.cpp",
         "${workspaceFolder}/src/Aresta.cpp",
         "-o",
-        "${workspaceFolder}/src/main/main.exe"
+        "${workspaceFolder}/main.exe"
       ],
       "options": {
         "cwd": "${workspaceFolder}"

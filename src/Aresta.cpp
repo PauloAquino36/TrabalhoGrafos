@@ -17,7 +17,7 @@ Aresta::Aresta(int origem, int destino, int peso){
 
 // Destrutor
 Aresta::~Aresta() {
-    // Não há recursos dinâmicos para liberar
+    delete[] prox;
 }
 
 int Aresta::getDestino() {

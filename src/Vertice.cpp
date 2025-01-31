@@ -67,3 +67,9 @@ int Vertice::getGrauVertice() {
 void Vertice::setArestas(Aresta* arestas) {
     this->arestas = arestas;
 }
+
+void Vertice::adicionarAresta(int destino, int peso) {
+    Aresta* novaAresta = new Aresta(destino, peso);
+    novaAresta->setProx(arestas);
+    arestas = novaAresta;
+}

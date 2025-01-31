@@ -8,43 +8,13 @@
 #include "include/Vertice.h"
 
 using namespace std;
+// Para compilar: CTRL+SHIFT+B ou g++ -o main main.cpp src/GrafoMatriz.cpp src/GrafoLista.cpp src/Grafo.cpp src/Aresta.cpp src/Vertice.cpp
+// Para executar: ./main
 
-
-int main(int argc, char* argv[]) {
-
-    string opcao1 = argv[1];
-    string opcao2 = argv[2];
-    string arquivoEntrada = argv[3];
-    string arquivoSaida = (argc == 5) ? argv[4] : "";
-
-    if (opcao1 == "-d" && opcao2 == "-m") {
-        // Caso 1: Imprime descrição do grafo usando matriz de adjacência
-        GrafoMatriz* grafo = GrafoMatriz::carrega_grafo(arquivoEntrada);
-        if (grafo) {
-            grafo->imprimeGrafoMatriz();
-            delete grafo;
-        } else {
-            cerr << "Erro ao carregar o grafo." << endl;
-        }
-    } else if (opcao1 == "-d" && opcao2 == "-l") {
-        // Caso 2: Imprime descrição do grafo usando lista encadeada
-        GrafoLista* grafo = GrafoLista::carrega_grafo(arquivoEntrada);
-        if (grafo) {
-            grafo->imprimeGrafoLista();
-            delete grafo;
-        } else {
-            cerr << "Erro ao carregar o grafo." << endl;
-        }
-    } else if (opcao1 == "-c" && opcao2 == "-m" && !arquivoSaida.empty()) {
-        // Caso 3: Cria grafo aleatório com matriz de adjacência e salva no arquivo
-        GrafoMatriz::novo_grafo(arquivoEntrada, arquivoSaida);
-    } else if (opcao1 == "-c" && opcao2 == "-l" && !arquivoSaida.empty()) {
-        // Caso 4: Cria grafo aleatório com lista encadeada e salva no arquivo
-        GrafoLista::novo_grafo(arquivoEntrada, arquivoSaida);
-    } else {
-        return 1;
-    }
-
-    cout << "Programa finalizado!" << endl;
+int main() {
+    GrafoLista grafo(10, false, false, false);
+    grafo.carrega_grafo(&grafo,  "entradas/grafo.txt");
+    grafo.imprime();
+    grafo.getVertices()[0].getGrauVertice();
     return 0;
 }

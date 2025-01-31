@@ -25,6 +25,7 @@ public:
     Aresta* getArestas();
     int getGrauVertice();
     bool existeAresta(int destino);
+    void adicionarAresta(int destino, int peso = 1);
 };
 
 #endif
