@@ -1,8 +1,8 @@
+#include "../include/GrafoMatriz.h"
 #include <fstream>
 #include <iostream>
 #include <cmath>
 #include <string>
-#include "../include/GrafoMatriz.h"
 
 using namespace std;
 
@@ -31,10 +31,10 @@ GrafoMatriz::~GrafoMatriz()
 // #endregion
 
 // #region Funcoes auxiliares
-Vertice &GrafoMatriz::getVertice(int i)
-{
-    //return vertices[i];
-}
+// Vertice &GrafoMatriz::getVertice(int i)
+// {
+//     //return vertices[i];
+// }
 
 void GrafoMatriz::adicionar_aresta(int origem, int destino, int peso)
 {

@@ -1,7 +1,7 @@
 #ifndef LISTA_ADJ_VERTICE_H
 #define LISTA_ADJ_VERTICE_H
 
-#include "NoVertice.h" // Ensure this file defines the NoVertice class
+#include "NoVertice.h"
 
 class ListaAdjVertice {
 private:

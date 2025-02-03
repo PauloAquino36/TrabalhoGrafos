@@ -1,8 +1,6 @@
 #ifndef NO_ARESTA_H
 #define NO_ARESTA_H
 
-#include "Aresta.h"
-
 class NoAresta {
 private:
     int idVerticeOrigem;        // Identificador do vertice de origem

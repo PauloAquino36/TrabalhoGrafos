@@ -1,7 +1,6 @@
 #ifndef NO_VERTICE_H
 #define NO_VERTICE_H
 
-#include <iostream>
 #include "ListaAdjAresta.h"
 #include "NoAresta.h"
 

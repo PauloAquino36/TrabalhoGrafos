@@ -1,9 +1,9 @@
+#ifndef GRAFO_LISTA_H
+#define GRAFO_LISTA_H
+
 #include "Grafo.h"
 #include "ListaAdjVertice.h"
 #include "ListaAdjAresta.h"
-
-#ifndef GRAFO_LISTA_H
-#define GRAFO_LISTA_H
 
 class GrafoLista : public Grafo {
 protected:

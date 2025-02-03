@@ -1,9 +1,11 @@
 #ifndef GRAFO_H
 #define GRAFO_H
 
-#include <iostream>
 #include "../include/ListaAdjAresta.h"
 #include "../include/ListaAdjVertice.h"
+#include <iostream>
+
+using namespace std;
 
 class Grafo {
 protected:
@@ -27,7 +29,7 @@ public:
     bool eh_completo();        //Verifica se o grafo eh completo ou nao
 
     // Funcao gera Grafo
-    static void carrega_grafo(Grafo* grafo, const std::string& nomeArquivo);        //Gera um grafo a partir do arquivo grafo.txt
+    static void carrega_grafo(Grafo* grafo, const string& nomeArquivo);        //Gera um grafo a partir do arquivo grafo.txt
    
     //Funcao imprime
     void imprime();        //Imprime os atributos do grafo
