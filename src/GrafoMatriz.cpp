@@ -9,6 +9,10 @@ using namespace std;
 //Contrutor e Destrutor
 GrafoMatriz::GrafoMatriz(int numVertices, bool direcionado, bool ponderadoVertices, bool ponderadoArestas) : Grafo(numVertices, direcionado, ponderadoVertices, ponderadoArestas)
 {
+    if (numVertices <= 0)
+    {
+        numVertices = 1;
+    }
     matrizAdj = new int *[numVertices];
     for (int i = 0; i < numVertices; i++)
     {
