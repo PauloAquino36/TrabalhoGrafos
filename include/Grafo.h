@@ -38,8 +38,9 @@ public:
     virtual void atualiza_grafo(int numVertices){};                                     //Atualiza o numero de vertices do grafo
     virtual void adicionar_aresta(int origem, int destino, int peso = 1){};             //Adiciona uma aresta no grafo
     virtual void adicionar_vertice(int id, int peso = 0){};                             //Adiciona um vertice no grafo  
-    virtual ListaAdjAresta* get_vizinhos(int id){};                                     //Retorna os vertices vizinhos de um vertice
-    virtual int get_num_vizinhos(int id){};                                             //Retorna o numero de vizinhos de um vertice
+    virtual ListaAdjAresta* get_vizinhos(int id) { return nullptr; };                   // Retorna ponteiro nulo
+    virtual int get_num_vizinhos(int id) { return 0; };                                 // Retorna 0
+
     virtual void dfs(int v, bool* visitado){};
 };
 
