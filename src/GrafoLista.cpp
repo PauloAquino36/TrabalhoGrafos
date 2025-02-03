@@ -50,9 +50,9 @@ int GrafoLista::get_num_vizinhos(int id) {
     return listaAdjVertices->getVertice(id)->getNumArestas();
 }
 
-void GrafoLista::dfs(int v, bool* visitado) {
-    visitado[v] = true;
-    NoAresta* atual = listaAdjVertices->getVertice(v)->getArestas()->getCabeca();
+void GrafoLista::dfs(int id, bool* visitado) {
+    visitado[id] = true;
+    NoAresta* atual = listaAdjVertices->getVertice(id)->getArestas()->getCabeca();
     while(atual != nullptr){
         if(!visitado[atual->getDestino()]){
             dfs(atual->getDestino(), visitado);

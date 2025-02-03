@@ -19,16 +19,16 @@ Grafo::~Grafo()
 {
 }
 
-int Grafo::n_conexo() //IMPLEMENTAR
+int Grafo::n_conexo()
 {
     bool* visitado = new bool[numVertices];
-    for (int i = 0; i < numVertices; i++) {
+    for (int i = 1; i <= numVertices; i++) {
         visitado[i] = false;
     }
 
     int numComponentes = 0;
 
-    for (int i = 0; i < numVertices; i++) {
+    for (int i = 1; i <= numVertices; i++) {
         if (!visitado[i]) {
             dfs(i, visitado);
             numComponentes++;
@@ -42,7 +42,7 @@ int Grafo::n_conexo() //IMPLEMENTAR
 int Grafo::get_grau()
 {
     int grauMax = 0;
-    for (int i = 1 ; i < numVertices; i++) {
+    for (int i = 1 ; i <= numVertices; i++) {
         if (get_num_vizinhos(i) > grauMax) {
             grauMax = get_num_vizinhos(i);
         }
@@ -72,7 +72,13 @@ bool Grafo::aresta_ponderada()
 
 bool Grafo::eh_completo() //IMPLEMENTAR
 {
-    return false;
+    for (int i = 1; i <= numVertices; i++) {
+        int numVizinhos = get_num_vizinhos(i);
+        if (numVizinhos != numVertices - 1) {
+            return false;
+        }
+    }
+    return true;
 }
 
 void Grafo::imprime()
@@ -119,8 +125,14 @@ void Grafo::carrega_grafo(Grafo* grafo, const string& nomeArquivo) {
             int peso;
             arquivo >> peso;
             grafo->adicionar_aresta(origem, destino, peso);
+            if(!direcionado) {
+                grafo->adicionar_aresta(destino, origem, peso);
+            }
         } else {
             grafo->adicionar_aresta(origem, destino);
+            if(!direcionado) {
+                grafo->adicionar_aresta(destino, origem);
+            }
         }
     }
     arquivo.close();

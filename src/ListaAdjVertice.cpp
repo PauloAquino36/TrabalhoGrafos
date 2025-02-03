@@ -61,7 +61,6 @@ void ListaAdjVertice::adicionar_vertice(int id, int peso) {
 }
 
 void ListaAdjVertice::adicionar_aresta(int origem, int destino, int peso) {
-    // Acessa o no da origem
     NoVertice* atual = this->cabeca;
     while (atual != nullptr) {
         if (atual->getIdVertice() == origem) {

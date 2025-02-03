@@ -19,7 +19,7 @@ public:
     void adicionar_aresta(int origem, int destino, int peso = 0) override;       //Adiciona uma aresta no grafo
     ListaAdjAresta* get_vizinhos(int id) override;                               //Retorna os vertices vizinhos de um vertice
     int get_num_vizinhos(int id) override;                                       //Retorna o numero de vizinhos de um vertice
-    void dfs(int v, bool* visitado) override;                                    //Realiza a busca em profundidade
+    void dfs(int id, bool* visitado) override;                                    //Realiza a busca em profundidade
 
     //Funcoes imprime
     void imprimeGrafoLista();                                                   //Imprime as informacoes do grafo
