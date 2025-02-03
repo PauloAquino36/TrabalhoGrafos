@@ -8,7 +8,7 @@
 
 using namespace std;
 
-// Para compilar: CTRL+SHIFT+B ou g++ -o main main.cpp src/GrafoMatriz.cpp src/GrafoLista.cpp src/Grafo.cpp src/Aresta.cpp src/Vertice.cpp
+// Para compilar: CTRL+SHIFT+B ou g++ -o main main.cpp src/GrafoMatriz.cpp src/GrafoLista.cpp src/Grafo.cpp src/NoAresta.cpp src/NoVertice.cpp
 // Para executar: ./main
 
 int main() {
