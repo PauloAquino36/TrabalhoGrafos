@@ -1,35 +1,33 @@
+#include "Grafo.h"
+#include "ListaAdjVertice.h"
+#include "ListaAdjAresta.h"
+
 #ifndef GRAFO_LISTA_H
 #define GRAFO_LISTA_H
 
-#include "Grafo.h"
-#include "Vertice.h"
 class GrafoLista : public Grafo {
 protected:
-    Vertice* vertices;      // Lista de vertices
+    ListaAdjVertice* listaAdjVertices; // Lista de adjacência
 public:
     //Construtor e Destrutor
-    GrafoLista(int nVertices, bool direcionado, bool ponderadoVertices, bool ponderadoArestas);
+    GrafoLista(int numVertices, bool direcionado, bool ponderadoVertices, bool ponderadoArestas);
     ~GrafoLista();
 
-    //Funcoes principais
-    bool eh_bipartido() override;
-    bool eh_arvore() override;
-    bool possui_articulacao() override;
-    bool possui_ponte() override;
-
     //Funcoes auxiliares
-    Vertice* getVertices();             //Retorna o vetor de vertices do grafo
-    void adicionarAresta(int origem, int destino, int peso) override;    //Adiciona uma aresta no grafo
-    void removerAresta(int origem, int destino);                 //Remove uma aresta do grafo
-    bool verificarParticaoBipartida(int v, int subconjunto[]);
-    bool ehConexo();                    //Verifica se o grafo eh conexo ou nao
-    void DFS(int v, bool visitado[]);   //Percorre o grafo em profundidade
-    void DFS_Ponte(int v, bool visited[], int discovery[], int low[], int parent[], bool& ponteEncontrada);     //Funcao auxiliar para a funcao possui_ponte
-    void DFSArticulacao(int v, bool visited[], int low[], int parent[], bool &articulacao);                     //Funcao auxiliar para a funcao possui_articulacao
-    bool temCicloDFS(int v, bool visitado[], int pai);      //Verifica se o grafo possui ciclo
+    void atualiza_grafo(int numVertices) override;                               //Atualiza o grafo
+    void adicionar_vertice(int id, int peso = 0) override;                       //Adiciona um vertice no grafo
+    void adicionar_aresta(int origem, int destino, int peso = 0) override;       //Adiciona uma aresta no grafo
+    ListaAdjAresta* get_vizinhos(int id) override;                               //Retorna os vertices vizinhos de um vertice
+    int get_num_vizinhos(int id) override;                                       //Retorna o numero de vizinhos de um vertice
+    void dfs(int v, bool* visitado) override;                                    //Realiza a busca em profundidade
 
-    //Funcoes de imprimir
-    void imprimeGrafoLista();
+    //Funcoes imprime
+    void imprimeGrafoLista();                                                   //Imprime as informacoes do grafo
+    void imprimeListaAdj();                                                     //Imprime a lista de adjacência
+    
+
+    void removerAresta(int origem, int destino);                               //Remove uma aresta do grafo
+    
 };
 
 #endif // GRAFOLISTA_H

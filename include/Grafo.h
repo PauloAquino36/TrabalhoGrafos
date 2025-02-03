@@ -2,16 +2,15 @@
 #define GRAFO_H
 
 #include <iostream>
-#include "Vertice.h"
+#include "../include/ListaAdjAresta.h"
+#include "../include/ListaAdjVertice.h"
 
 class Grafo {
 protected:
-    Vertice* vertices;      // Lista de vértices
-    int nVertices;          // Número de vértices (ordem) do grafo
-    int grau;               // Grau do grafo (número de arestas do vertice que possui mais arestas)
-    bool direcionado;       // Indica se o grafo é direcionado
-    bool ponderadoVertices; // Indica se o grafo possui peso nos vertices
-    bool ponderadoArestas;  // Indica se o grafo possui peso nas arestas
+    int numVertices;                    // Número de vértices (ordem) do grafo
+    bool direcionado;                   // Indica se o grafo é direcionado
+    bool ponderadoVertices;             // Indica se o grafo possui peso nos vertices
+    bool ponderadoArestas;              // Indica se o grafo possui peso nas arestas
 
 public:
     // Construtor e Destrutor
@@ -27,20 +26,19 @@ public:
     bool aresta_ponderada();   //Retorna se o grafo possui peso nas arestas ou nao
     bool eh_completo();        //Verifica se o grafo eh completo ou nao
 
-    virtual bool eh_bipartido() = 0;       //Verifica se o grafo eh bipartido ou nao
-    virtual bool eh_arvore() = 0;          //Verifica se o grafo eh uma arvore ou nao
-    virtual bool possui_articulacao() = 0; //Verifica se o grafo possui pelo menos 1 vertice de articulacao
-    virtual bool possui_ponte() = 0;       //Verifica se o grafo possui pelo menos 1 aresta ponte
-
     // Funcao gera Grafo
     static void carrega_grafo(Grafo* grafo, const std::string& nomeArquivo);        //Gera um grafo a partir do arquivo grafo.txt
    
     //Funcao imprime
     void imprime();        //Imprime os atributos do grafo
 
-    //Funcoes auxiliares
-    virtual void adicionarAresta(int origem, int destino, int peso = 1) = 0;            //Adiciona uma aresta no grafo
-    virtual void DFS(int v, bool visitado[]){};                                       //Percorre o grafo em profundidade
+    //Funcoes auxiliares abstratas que serao implementadas nas classes filhas
+    virtual void atualiza_grafo(int numVertices){};                                     //Atualiza o numero de vertices do grafo
+    virtual void adicionar_aresta(int origem, int destino, int peso = 1){};             //Adiciona uma aresta no grafo
+    virtual void adicionar_vertice(int id, int peso = 0){};                             //Adiciona um vertice no grafo  
+    virtual ListaAdjAresta* get_vizinhos(int id){};                                     //Retorna os vertices vizinhos de um vertice
+    virtual int get_num_vizinhos(int id){};                                             //Retorna o numero de vizinhos de um vertice
+    virtual void dfs(int v, bool* visitado){};
 };
 
 #endif

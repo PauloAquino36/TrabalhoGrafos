@@ -5,25 +5,24 @@
 
 class Aresta {
 private:
-    int origem;
-    int destino;
-    int peso;
-    Aresta* prox; // Ponteiro para a próxima aresta
+    int idOrigem;                   // Id do vértice de origem
+    int idDestino;                  // Id do vertice de destino
+    int peso;                       // Peso da aresta
+    Aresta* proxima;                // Ponteiro para a próxima aresta
 
 public:
-    Aresta(); // Construtor padrão
-    Aresta(int origem, int destino, int peso = 0); // Construtor parametrizado
+    // Construtor e Destrutor
+    Aresta(int idDestino, int peso = 0);
     ~Aresta();
 
-    int getOrigem();
-    int getDestino();
+    // Getters e Setters
+    int getIdOrigem();
+    int getIdDestino();
     int getPeso(); 
-    Aresta* getProx();
+    Aresta* getProxima();
 
-    void setOrigem(int origem);
-    void setDestino(int destino);
     void setPeso(int peso);
-    void setProx(Aresta* prox);
+    void setProxima(Aresta* prox);
 };
 
 #endif

@@ -1,31 +1,32 @@
 #ifndef VERTICE_H
 #define VERTICE_H
 
-#include "Aresta.h"
+#include "ListaAdjAresta.h"
 
 class Vertice {
 private:
-    int id;
-    int peso;
-    Aresta* arestas; // Array dinamico de arestas
-    int nArestas;
+    int id;                                 // Id do Vertice
+    int peso;                               // Peso do Vertice
+    int numArestas = 0;                     // Número de arestas
+    ListaAdjAresta* arestas;                // Lista de arestas
 
 public:
-    Vertice();
+    // Construtor e Destrutor   
     Vertice(int id, int peso = 0);
     ~Vertice();
 
+    // Getters e Setters
     int getId();
-    void setId(int id);
-
     int getPeso();
-    void setPeso(int peso);
-    void setArestas(Aresta* arestas);
+    int getNumArestas();
+    ListaAdjAresta* getArestas();
 
-    Aresta* getArestas();
-    int getGrauVertice();
-    bool existeAresta(int destino);
-    void adicionarAresta(int destino, int peso = 1);
+    void setId(int id);
+    void setPeso(int peso);
+    void setNumArestas(int numArestas);
+
+    void adicionarVertice(int origem, int destino, int peso);
+    void adicionarAresta(int origem, int destino, int peso);
 };
 
 #endif

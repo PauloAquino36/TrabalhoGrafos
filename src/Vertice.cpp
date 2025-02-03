@@ -1,75 +1,51 @@
 #include "../include/Vertice.h"
+#include "../include/ListaAdjVertice.h"
 #include <iostream>
 
 using namespace std;
 
-Vertice::Vertice(){
-    nArestas = 0; //Valor Padrao
-    id = 0; //Valor Padrao
-    peso = 0; //Valor Padrao
-    arestas = nullptr; //Valor Padrao
-}
-
 Vertice::Vertice(int id, int peso){
     this->id = id;
     this->peso = peso;
-    arestas = nullptr; //Valor Padrao
+    this->arestas = new ListaAdjAresta[numArestas];
 }
 
 Vertice::~Vertice() {
-    Aresta* atual = arestas;
-    while (atual != nullptr) {
-        Aresta* prox = atual->getProx();
-        delete atual;
-        atual = prox;
-    }
+    delete[] arestas;
 }
 
 int Vertice::getId() {
     return id;
 }
 
-void Vertice::setId(int id) {
-    this->id = id;
-}
-
 int Vertice::getPeso() {
     return peso;
+}
+
+int Vertice::getNumArestas() {
+    return numArestas;
+}
+
+ListaAdjAresta* Vertice::getArestas() {
+    return arestas;
+}
+
+void Vertice::setId(int id) {
+    this->id = id;
 }
 
 void Vertice::setPeso(int peso) {
     this->peso = peso;
 }
 
-Aresta* Vertice::getArestas() {
-    return arestas;
+void Vertice::setNumArestas(int numArestas) {
+    this->numArestas = numArestas;
 }
 
-bool Vertice::existeAresta(int destino) {
-    Aresta* atual = arestas;
-    while (atual != nullptr) {
-        if (atual->getDestino() == destino) return true;
-        atual = atual->getProx();
-    }
-    return false;
+void Vertice::adicionarVertice(int id, int peso) {
+    arestas->adicionar(id, peso);
 }
 
-int Vertice::getGrauVertice() {
-    int grau = 0;
-    Aresta* atual = arestas;
-    while (atual != nullptr) {
-        grau++;
-        atual = atual->getProx();
-    }
-    return grau;
-}
-
-void Vertice::setArestas(Aresta* arestas) {
-    this->arestas = arestas;
-}
-
-void Vertice::adicionarAresta(int destino, int peso) {
-    Aresta* novaAresta = new Aresta(destino, peso);
-    novaAresta->setProx(arestas);
-    arestas = novaAresta;
+void Vertice::adicionarAresta(int origem, int destino, int peso) {
+    arestas->adicionar(origem, destino, peso);
 }

@@ -1,53 +1,38 @@
 #include "../include/Aresta.h"
 
-// Construtor padrão
-Aresta::Aresta(){
-    this->destino = 0;
-    this->peso = 0;
-    this->origem = 0;
-}
-
-// Construtor parametrizad
-Aresta::Aresta(int origem, int destino, int peso){
-    this->destino = destino;
+// Construtor
+Aresta::Aresta(int idDestino, int peso){
+    this->idDestino = idDestino;
     this->peso = peso;
-    this->origem = origem;
-    prox = nullptr;
+    this->proxima = nullptr;
 }
 
 // Destrutor
 Aresta::~Aresta() {
-    delete[] prox;
+    delete[] proxima;
 }
 
-int Aresta::getDestino() {
-    return destino;
+int Aresta::getIdOrigem() {
+    return this->idOrigem;
+}
+
+int Aresta::getIdDestino() {
+    return this->idDestino;
 }
 
 int Aresta::getPeso() {
-    return peso;
+    return this->peso;
 }
 
-int Aresta::getOrigem() {
-    return origem;
-}
-
-Aresta* Aresta::getProx() {
-    return prox;
-}
-
-void Aresta::setDestino(int destino) {
-    this->destino = destino;
+Aresta* Aresta::getProxima() {
+    return this->proxima;
 }
 
 void Aresta::setPeso(int peso) {
     this->peso = peso;
 }
 
-void Aresta::setOrigem(int origem) {
-    this->origem = origem;
-}
-
-void Aresta::setProx(Aresta* prox) {
-    this->prox = prox;
+void Aresta::setProxima(Aresta* proxima) {
+    if(getIdDestino() == proxima->getIdOrigem())
+    this->proxima = proxima;
 }

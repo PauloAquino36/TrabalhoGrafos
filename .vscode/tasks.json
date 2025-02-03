@@ -12,8 +12,10 @@
         "${workspaceFolder}/src/Grafo.cpp",
         "${workspaceFolder}/src/GrafoMatriz.cpp",
         "${workspaceFolder}/src/GrafoLista.cpp",
-        "${workspaceFolder}/src/Vertice.cpp",
-        "${workspaceFolder}/src/Aresta.cpp",
+        "${workspaceFolder}/src/ListaAdjVertice.cpp",
+        "${workspaceFolder}/src/ListaAdjAresta.cpp",
+        "${workspaceFolder}/src/NoVertice.cpp",
+        "${workspaceFolder}/src/NoAresta.cpp",
         "-o",
         "${workspaceFolder}/main.exe"
       ],
