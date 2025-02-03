@@ -12,11 +12,19 @@ using namespace std;
 // Para executar: ./main
 
 int main() {
+    /*
     GrafoLista grafo(0, false, false, false);
     grafo.carrega_grafo(&grafo, "entradas/grafo.txt");
     grafo.imprimeGrafoLista();
     grafo.imprimeListaAdj();
     grafo.get_vizinhos(2);
+    */
+
+    GrafoMatriz grafo(0, false, false, false);
+    grafo.imprimirMatrizAdj();
+    grafo.carrega_grafo(&grafo, "entradas/grafo.txt");
+    grafo.imprimirMatrizAdj();
+    cout << endl << "Grafo finalizado!" << endl;
     
     return 0;
 }

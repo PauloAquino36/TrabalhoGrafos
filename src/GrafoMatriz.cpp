@@ -6,7 +6,7 @@
 
 using namespace std;
 
-// #region Contrutor e Destrutor
+//Contrutor e Destrutor
 GrafoMatriz::GrafoMatriz(int numVertices, bool direcionado, bool ponderadoVertices, bool ponderadoArestas) : Grafo(numVertices, direcionado, ponderadoVertices, ponderadoArestas)
 {
     matrizAdj = new int *[numVertices];
@@ -20,44 +20,62 @@ GrafoMatriz::GrafoMatriz(int numVertices, bool direcionado, bool ponderadoVertic
     }
 }
 
-GrafoMatriz::~GrafoMatriz()
-{
-    for (int i = 0; i < numVertices; i++)
-    {
-        delete[] matrizAdj[i];
+GrafoMatriz::~GrafoMatriz() {
+    if (matrizAdj != nullptr) {  // Verifica se há memória alocada
+        for (int i = 0; i < numVertices; i++) {
+            delete[] matrizAdj[i];
+        }
+        delete[] matrizAdj;
+        matrizAdj = nullptr; // Evita ponteiro danificado
     }
-    delete[] matrizAdj;
 }
-// #endregion
 
-// #region Funcoes auxiliares
-// Vertice &GrafoMatriz::getVertice(int i)
-// {
-//     //return vertices[i];
-// }
+//Funcoes auxiliares
+
+void GrafoMatriz::atualiza_grafo(int numVertices) {
+    // Verifica se a matrizAdj já foi alocada antes de liberar a memória
+    if (matrizAdj != nullptr) {
+        for (int i = 0; i < this->numVertices; i++) {
+            delete[] matrizAdj[i]; // Libera cada linha da matriz
+        }
+        delete[] matrizAdj; // Libera o array de ponteiros
+        matrizAdj = nullptr; // Evita ponteiro danificado
+    }
+
+    this->numVertices = numVertices;
+
+    // Aloca uma nova matriz de adjacência com o novo tamanho
+    matrizAdj = new int*[numVertices];
+    for (int i = 0; i < numVertices; i++) {
+        matrizAdj[i] = new int[numVertices](); // Inicializa automaticamente com 0
+    }
+}
+
 
 void GrafoMatriz::adicionar_aresta(int origem, int destino, int peso)
 {
-    // if (origem < 0 || origem >= numVertices || destino < 0 || destino >= numVertices)
-    // {
-    //     cout << "Origem: " << origem << " / Destino: " << destino << " / Num Vertices:" << numVertices << endl;
-    //     cout << "Erro: indices de origem ou destino invalidos.\n";
-    //     return;
-    // }
+    cout << "Num Vertices:" << numVertices << endl;
+    cout << "Origem: " << origem << " / Destino: " << destino << " / Num Vertices:" << numVertices << endl;
+    
+     if (origem < 0 || origem >= numVertices || destino < 0 || destino >= numVertices)
+     {
+         cout << "Erro: indices de origem ou destino invalidos.\n";
+         return;
+     }
+     
+    cout << "conluido: " <<  "Origem: " << origem << " / Destino: " << destino << endl;
 
-    // matrizAdj[origem][destino] = peso;
-    // vertices[origem].adicionarAresta(destino, peso);
-
-    // if (!direcionado)
-    // {
-    //     matrizAdj[destino][origem] = peso;
-    //     vertices[destino].adicionarAresta(origem, peso);
-    // }
+     if(direcionado){
+        matrizAdj[origem][destino] = peso;
+     }
+     else{
+        matrizAdj[origem][destino] = 1;
+        matrizAdj[destino][origem] = 1;
+     }
 }
 
-// #endregion
 
-// #region Funcoes de imprimir
+//Funcoes de imprimir
 void GrafoMatriz::imprimirMatrizAdj()
 {
     for (int i = 0; i < numVertices; i++)
@@ -78,4 +96,3 @@ void GrafoMatriz::imprimeGrafoMatriz()
          << endl;
     imprime();
 }
-// #endregion

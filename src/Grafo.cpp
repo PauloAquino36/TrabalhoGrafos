@@ -117,6 +117,7 @@ void Grafo::carrega_grafo(Grafo* grafo, const string& nomeArquivo) {
         } else {
             grafo->adicionar_vertice(i);
         }
+        
     }
     
     int origem, destino;
