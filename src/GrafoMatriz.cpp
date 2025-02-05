@@ -92,7 +92,17 @@ int GrafoMatriz::get_num_vizinhos(int id) {
     return contador;
 }
 void GrafoMatriz::dfs(int id, bool* visitado) {
-    
+    if (id < 0 || id >= numVertices || visitado[id]) {
+        return; // Verifica se o vértice é válido ou já foi visitado
+    }
+
+    visitado[id] = true; // Marca o vértice como visitado
+
+    for (int i = 0; i < numVertices; i++) {
+        if (matrizAdj[id][i] != 0 && !visitado[i]) { // Se houver uma aresta e o vértice não foi visitado
+            dfs(i, visitado);
+        }
+    }
 }
 
 
