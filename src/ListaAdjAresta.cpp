@@ -38,3 +38,13 @@ void ListaAdjAresta::adicionar_aresta(int origem, int destino, int peso) {
     this->cabeca = novaAresta;
     cout << "Adicionada Aresta " << novaAresta->getOrigem() << " -> " << novaAresta->getDestino() << endl;
 }
+
+int ListaAdjAresta::getNumVertices() {
+    int tamanho = 0;
+    NoAresta* atual = this->cabeca;
+    while (atual != nullptr) {
+        tamanho++;
+        atual = atual->getProximo();
+    }
+    return tamanho;
+}

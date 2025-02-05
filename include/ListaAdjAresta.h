@@ -11,6 +11,7 @@ public:
     ListaAdjAresta(); // Construtor
     ~ListaAdjAresta(); // Destrutor
 
+    int getNumVertices(); // Retorna o número de vértices na lista
     NoAresta* getCabeca(); // Retorna a cabeça da lista de adjacência de arestas
     void adicionar_aresta(int origem, int destino, int peso); // Adiciona uma aresta à lista
 };

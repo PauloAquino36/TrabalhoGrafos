@@ -45,6 +45,7 @@ int Grafo::get_grau()
     for (int i = 1 ; i <= numVertices; i++) {
         if (get_num_vizinhos(i) > grauMax) {
             grauMax = get_num_vizinhos(i);
+            cout << "Vertice: " << i << " Grau: " << grauMax << endl;
         }
     }
     return grauMax;

@@ -40,14 +40,15 @@ ListaAdjAresta* GrafoLista::get_vizinhos(int id) {
     cout << "Vizinhos do vertice " << id << ": ";
     NoAresta* atual = listaAdjVertices->getVertice(id)->getArestas()->getCabeca();
     while(atual != nullptr){
-        cout << atual->getDestino() << " ";
+        cout << atual->getDestino() << " " ;
         atual = atual->getProximo();
     }
+    cout << endl;
     return listaAdjVertices->getVertice(id)->getArestas();
 }
 
 int GrafoLista::get_num_vizinhos(int id) {
-    return listaAdjVertices->getVertice(id)->getNumArestas();
+    return listaAdjVertices->getVertice(id)->getNumVizinhos();
 }
 
 void GrafoLista::dfs(int id, bool* visitado) {

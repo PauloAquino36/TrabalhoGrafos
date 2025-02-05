@@ -25,7 +25,8 @@ public:
     void setProximo(NoVertice* proximo);                    // Define o próximo nó vertice
 
     ListaAdjAresta* getArestas();                           // Retorna a lista de adjacência de arestas
-    int getNumArestas();                                    // Retorna o número de arestas (grau do vértice)
+    int getNumArestas();                                    // Retorna o número de arestas totais
+    int getNumVizinhos();                                   // Retorna o número de vizinhos do vértice (número de arestas de saida/ grau do vertice)
     void adicionar_aresta(int id, int peso);                 // Adiciona uma aresta ao vertice
 
 };
