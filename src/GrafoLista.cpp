@@ -33,7 +33,18 @@ void GrafoLista::adicionar_vertice(int id, int peso) {
 }
 
 void GrafoLista::adicionar_aresta(int origem, int destino, int peso) {
+    if(listaAdjVertices->getVertice(origem) == nullptr){
+        cout << "Vertice " << origem << " nao existe!" << endl;
+        return;
+    }
+    if(listaAdjVertices->getVertice(destino) == nullptr){
+        cout << "Vertice " << destino << " nao existe!" << endl;
+        return;
+    }
     listaAdjVertices->adicionar_aresta(origem, destino, peso);
+    if(!direcionado){
+        listaAdjVertices->adicionar_aresta(destino, origem, peso);
+    }
 }
 
 ListaAdjAresta* GrafoLista::get_vizinhos(int id) {

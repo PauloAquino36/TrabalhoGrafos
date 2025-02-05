@@ -67,12 +67,17 @@ void GrafoMatriz::adicionar_aresta(int origem, int destino, int peso)
      
     //cout << "conluido: " <<  "Origem: " << origem << " / Destino: " << destino << endl;
 
-     if(direcionado){
+     if(ponderadoArestas){
         matrizAdj[origem][destino] = peso;
+        if(!direcionado){
+            matrizAdj[destino][origem] = peso;
+        }
      }
      else{
         matrizAdj[origem][destino] = 1;
-        matrizAdj[destino][origem] = 1;
+        if(!direcionado){
+            matrizAdj[destino][origem] = 1;
+        }
      }
 }
 int GrafoMatriz::get_num_vizinhos(int id) {
@@ -84,9 +89,6 @@ int GrafoMatriz::get_num_vizinhos(int id) {
     for (int i = 0; i < numVertices; i++) {
         if (matrizAdj[id][i] != 0) { // Se houver uma aresta entre os vértices
             contador++;
-                if(!direcionado){
-                    contador++;
-            }
         }
     }
     return contador;

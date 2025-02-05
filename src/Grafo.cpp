@@ -45,7 +45,6 @@ int Grafo::get_grau()
     for (int i = 1 ; i <= numVertices; i++) {
         if (get_num_vizinhos(i) > grauMax) {
             grauMax = get_num_vizinhos(i);
-            cout << "Vertice: " << i << " Grau: " << grauMax << endl;
         }
     }
     return grauMax;
@@ -127,14 +126,8 @@ void Grafo::carrega_grafo(Grafo* grafo, const string& nomeArquivo) {
             int peso;
             arquivo >> peso;
             grafo->adicionar_aresta(origem, destino, peso);
-            if(!direcionado) {
-                grafo->adicionar_aresta(destino, origem, peso);
-            }
         } else {
             grafo->adicionar_aresta(origem, destino);
-            if(!direcionado) {
-                grafo->adicionar_aresta(destino, origem);
-            }
         }
     }
     arquivo.close();
