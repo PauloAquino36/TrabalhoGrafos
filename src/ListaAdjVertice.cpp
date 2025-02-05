@@ -9,6 +9,7 @@ ListaAdjVertice::ListaAdjVertice() {
 }
 
 ListaAdjVertice::~ListaAdjVertice() {
+    // Desaloca a memoria para cada no da lista de vertices
     NoVertice* atual = this->cabeca;
     while (atual != nullptr) {
         NoVertice* next = atual->getProximo();
@@ -43,20 +44,12 @@ NoVertice* ListaAdjVertice::getVertice(int id) {
 }
 
 void ListaAdjVertice::adicionar_vertice(int id, int peso) {
-    // Verifica se o vértice já existe
-    NoVertice* atual = this->cabeca;
-    while (atual != nullptr) {
-        if (atual->getIdVertice() == id) {
-            cout << "Erro: Vertice " << id << " ja existe." <<  endl;
-            return;
-        }
-        atual = atual->getProximo();
-    }
-
     // Adiciona um novo vértice
     NoVertice* novoNo = new NoVertice(id, peso);
     novoNo->setProximo(this->cabeca);
     this->cabeca = novoNo;
+
+    //Debug
     cout << "Adicionado Vertice " << novoNo->getIdVertice() << endl;
 }
 

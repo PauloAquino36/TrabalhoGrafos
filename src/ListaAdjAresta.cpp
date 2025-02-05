@@ -9,6 +9,7 @@ ListaAdjAresta::ListaAdjAresta() {
 }
 
 ListaAdjAresta::~ListaAdjAresta() {
+    // Desaloca a memoria para cada no da lista de arestas
     NoAresta* atual = this->cabeca;
     while (atual != nullptr) {
         NoAresta* next = atual->getProximo();
@@ -39,7 +40,7 @@ void ListaAdjAresta::adicionar_aresta(int origem, int destino, int peso) {
     cout << "Adicionada Aresta " << novaAresta->getOrigem() << " -> " << novaAresta->getDestino() << endl;
 }
 
-int ListaAdjAresta::getNumVertices() {
+int ListaAdjAresta::getNumVerticesVizinhos() {
     int tamanho = 0;
     NoAresta* atual = this->cabeca;
     while (atual != nullptr) {

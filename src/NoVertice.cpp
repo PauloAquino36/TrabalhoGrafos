@@ -42,7 +42,7 @@ int NoVertice::getNumArestas() {
 }
 
 int NoVertice::getNumVizinhos() {
-    return this->arestas->getNumVertices();
+    return this->arestas->getNumVerticesVizinhos();
 }
 
 void NoVertice::adicionar_aresta(int destino, int peso) {

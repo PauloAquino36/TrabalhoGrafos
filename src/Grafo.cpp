@@ -70,7 +70,7 @@ bool Grafo::aresta_ponderada()
     return ponderadoArestas;
 }
 
-bool Grafo::eh_completo() //IMPLEMENTAR
+bool Grafo::eh_completo()
 {
     for (int i = 1; i <= numVertices; i++) {
         int numVizinhos = get_num_vizinhos(i);

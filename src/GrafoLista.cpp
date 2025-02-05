@@ -8,39 +8,50 @@ using namespace std;
 // #region Contrutor e Destrutor
 GrafoLista::GrafoLista(int numVertices, bool direcionado, bool ponderadoVertices, bool ponderadoArestas) : Grafo(numVertices, direcionado, ponderadoVertices, ponderadoArestas)
 {
-    this->listaAdjVertices = new ListaAdjVertice[numVertices];    // Inicializa a lista de adjacência
+    this->listaAdjVertices = new ListaAdjVertice[numVertices];          // Inicializa a lista de adjacência
 }
 
 GrafoLista::~GrafoLista()
 {
-    delete[] listaAdjVertices; // Libera a memória alocada para os vértices
+    delete[] listaAdjVertices;          // Libera a memória alocada para os vértices
 }
 
 // #region Funcoes auxiliares
 void GrafoLista::atualiza_grafo(int numVertices) {
-    // Libera a memória antiga
-    delete[] this->listaAdjVertices;
-
-    // Atualiza o número de vértices
-    this->numVertices = numVertices;
-
-    // Aloca uma nova lista de adjacência com o novo tamanho
-    this->listaAdjVertices = new ListaAdjVertice[numVertices];
+    delete[] this->listaAdjVertices;                                    // Libera a memória antiga
+    this->numVertices = numVertices;                                    // Atualiza o número de vértices
+    this->listaAdjVertices = new ListaAdjVertice[numVertices];          // Aloca uma nova lista de adjacência com o novo tamanho
 }
 
 void GrafoLista::adicionar_vertice(int id, int peso) {
+    // Verifica se o vertice ja existe
+    if(listaAdjVertices->getVertice(id) != nullptr){
+        cout << "Vertice " << id << " ja existe!" << endl;
+        return;
+    }
+
+    // Adiciona o vertice
     listaAdjVertices->adicionar_vertice(id, peso);
 }
 
 void GrafoLista::adicionar_aresta(int origem, int destino, int peso) {
+    // Verifica se o vertice de origem existe
     if(listaAdjVertices->getVertice(origem) == nullptr){
         cout << "Vertice " << origem << " nao existe!" << endl;
         return;
     }
+    // Verifica se o vertice de destino existe
     if(listaAdjVertices->getVertice(destino) == nullptr){
         cout << "Vertice " << destino << " nao existe!" << endl;
         return;
     }
+    // Verifica se a aresta eh um self-loop
+    if(origem == destino){
+        cout << "Nao e possivel adicionar aresta: Origem e destino iguais! " << endl;
+        return;
+    }
+
+    // Adiciona a aresta
     listaAdjVertices->adicionar_aresta(origem, destino, peso);
     if(!direcionado){
         listaAdjVertices->adicionar_aresta(destino, origem, peso);
@@ -48,6 +59,7 @@ void GrafoLista::adicionar_aresta(int origem, int destino, int peso) {
 }
 
 ListaAdjAresta* GrafoLista::get_vizinhos(int id) {
+    // Debug
     cout << "Vizinhos do vertice " << id << ": ";
     NoAresta* atual = listaAdjVertices->getVertice(id)->getArestas()->getCabeca();
     while(atual != nullptr){
@@ -55,6 +67,7 @@ ListaAdjAresta* GrafoLista::get_vizinhos(int id) {
         atual = atual->getProximo();
     }
     cout << endl;
+    // Fim debug
     return listaAdjVertices->getVertice(id)->getArestas();
 }
 
@@ -76,13 +89,13 @@ void GrafoLista::dfs(int id, bool* visitado) {
 
 // #region Funcoes imprime
 void GrafoLista::imprimeListaAdj(){
-    listaAdjVertices->imprimir();
+    listaAdjVertices->imprimir();                                    // Imprime a lista de adjacência
 }
 
 void GrafoLista::imprimeGrafoLista(){
     cout << "__________________________________________________________________" << endl;
     cout << endl << "--- Grafo Lista ---" << endl;
     cout << "__________________________________________________________________" << endl << endl;
-    imprime();
+    imprime();                                                      // Imprime as informações do grafo
 }
 // #endregion

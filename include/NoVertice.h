@@ -6,29 +6,29 @@
 
 class NoVertice {
 private:
-    int idVertice;      // Identificador do vértice
-    int peso;           // Peso do vértice
-    int numArestas;     // Número de arestas
-    NoVertice* proximo; // Ponteiro para o próximo nó vertice
-    ListaAdjAresta* arestas; // Lista de adjacência de arestas
+    int idVertice;              // Identificador do vértice
+    int peso;                   // Peso do vértice
+    int numArestas;             // Número de arestas do vertice (quantidade de vertices vizinhos)
+    NoVertice* proximo;         // Ponteiro para o próximo nó vertice
+    ListaAdjAresta* arestas;    // Lista encadeada de arestas
 
 public:
     // Construtor e Destrutor
     NoVertice(int vertice, int peso);
     ~NoVertice();
 
-    //Getters e Setters
+    // Getters e Setters
     int getIdVertice();                                     // Retorna o identificador do vértice
     int getPesoVertice();                                   // Retorna o peso do vértice
+    int getNumArestas();                                    // Retorna a quantidade de arestas do vertice
     NoVertice* getProximo();                                // Retorna o próximo nó vertice
-
+    ListaAdjAresta* getArestas();                           // Retorna a lista encadeada de arestas
+    
     void setProximo(NoVertice* proximo);                    // Define o próximo nó vertice
-
-    ListaAdjAresta* getArestas();                           // Retorna a lista de adjacência de arestas
-    int getNumArestas();                                    // Retorna o número de arestas totais
+    
+    // Funcoes auxiliares
     int getNumVizinhos();                                   // Retorna o número de vizinhos do vértice (número de arestas de saida/ grau do vertice)
-    void adicionar_aresta(int id, int peso);                 // Adiciona uma aresta ao vertice
-
+    void adicionar_aresta(int id, int peso);                // Adiciona uma aresta ao vertice
 };
 
 #endif // NO_H
