@@ -54,12 +54,10 @@ void GrafoMatriz::atualiza_grafo(int numVertices) {
         matrizAdj[i] = new int[numVertices](); // Inicializa automaticamente com 0
     }
 }
-
-
 void GrafoMatriz::adicionar_aresta(int origem, int destino, int peso)
 {
-    cout << "Num Vertices:" << numVertices << endl;
-    cout << "Origem: " << origem << " / Destino: " << destino << " / Num Vertices:" << numVertices << endl;
+    //cout << "Num Vertices:" << numVertices << endl;
+    //cout << "Origem: " << origem << " / Destino: " << destino << " / Num Vertices:" << numVertices << endl;
     
      if (origem < 0 || origem >= numVertices || destino < 0 || destino >= numVertices)
      {
@@ -67,7 +65,7 @@ void GrafoMatriz::adicionar_aresta(int origem, int destino, int peso)
          return;
      }
      
-    cout << "conluido: " <<  "Origem: " << origem << " / Destino: " << destino << endl;
+    //cout << "conluido: " <<  "Origem: " << origem << " / Destino: " << destino << endl;
 
      if(direcionado){
         matrizAdj[origem][destino] = peso;
@@ -76,6 +74,35 @@ void GrafoMatriz::adicionar_aresta(int origem, int destino, int peso)
         matrizAdj[origem][destino] = 1;
         matrizAdj[destino][origem] = 1;
      }
+}
+int GrafoMatriz::get_num_vizinhos(int id) {
+    if (id < 0 || id >= numVertices) {
+        return 0; // Retorna 0 se o ID do vértice for inválido
+    }
+
+    int contador = 0;
+    for (int i = 0; i < numVertices; i++) {
+        if (matrizAdj[id][i] != 0) { // Se houver uma aresta entre os vértices
+            contador++;
+                if(!direcionado){
+                    contador++;
+            }
+        }
+    }
+    return contador;
+}
+void GrafoMatriz::dfs(int id, bool* visitado) {
+    if (id < 0 || id >= numVertices || visitado[id]) {
+        return; // Verifica se o vértice é válido ou já foi visitado
+    }
+
+    visitado[id] = true; // Marca o vértice como visitado
+
+    for (int i = 0; i < numVertices; i++) {
+        if (matrizAdj[id][i] != 0 && !visitado[i]) { // Se houver uma aresta e o vértice não foi visitado
+            dfs(i, visitado);
+        }
+    }
 }
 
 
