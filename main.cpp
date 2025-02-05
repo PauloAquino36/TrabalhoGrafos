@@ -14,7 +14,6 @@ using namespace std;
 int main() {
 
     cout << "Iniciando o programa..." << endl;
-    cout << "Grafo Lista" << endl; 
     
     GrafoLista grafo(0, false, false, false);
     grafo.carrega_grafo(&grafo, "entradas/grafo.txt");
@@ -22,7 +21,6 @@ int main() {
     //grafo.imprimeListaAdj();
     //grafo.get_vizinhos(2);
     
-    cout << endl << "Grafo Matriz" << endl;
     GrafoMatriz grafoM(0, false, false, false);
     grafoM.carrega_grafo(&grafoM, "entradas/grafo.txt");
     grafoM.imprimeGrafoMatriz();
