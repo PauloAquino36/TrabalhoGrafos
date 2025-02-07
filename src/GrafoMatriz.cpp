@@ -62,8 +62,86 @@ void GrafoMatriz::atualiza_grafo(int numVertices)
         matrizAdj[i] = new int[numVertices](); // Inicializa automaticamente com 0
     }
 }
-void GrafoMatriz::adicionar_aresta(int origem, int destino, int peso)
+
+// Adiciona um vértice ao grafo
+void GrafoMatriz::adicionar_vertice(int id, int peso)
 {
+    int novoNumVertices = numVertices + 1;
+    int **novaMatriz = new int *[novoNumVertices];
+
+    for (int i = 0; i < novoNumVertices; i++)
+    {
+        novaMatriz[i] = new int[novoNumVertices](); // Inicializa com 0
+    }
+
+    // Copia os valores da matriz antiga para a nova matriz
+    for (int i = 0; i < numVertices; i++)
+    {
+        for (int j = 0; j < numVertices; j++)
+        {
+            novaMatriz[i][j] = matrizAdj[i][j];
+        }
+    }
+
+    // Libera a matriz antiga
+    for (int i = 0; i < numVertices; i++)
+    {
+        delete[] matrizAdj[i];
+    }
+    delete[] matrizAdj;
+
+    matrizAdj = novaMatriz;
+    numVertices = novoNumVertices;
+}
+
+// Remove um vértice do grafo
+void GrafoMatriz::remover_vertice(int id)
+{
+    if (id < 0 || id >= numVertices)
+    {
+        cout << "Erro: índice de vértice inválido.\n";
+        return;
+    }
+
+    int novoNumVertices = numVertices - 1;
+    int **novaMatriz = new int *[novoNumVertices];
+
+    for (int i = 0; i < novoNumVertices; i++)
+    {
+        novaMatriz[i] = new int[novoNumVertices]();
+    }
+
+    // Copia os valores da matriz antiga para a nova, excluindo o vértice removido
+    for (int i = 0, ni = 0; i < numVertices; i++)
+    {
+        if (i == id)
+            continue;
+        
+        for (int j = 0, nj = 0; j < numVertices; j++)
+        {
+            if (j == id)
+                continue;
+
+            novaMatriz[ni][nj] = matrizAdj[i][j];
+            nj++;
+        }
+        ni++;
+    }
+
+    // Libera a matriz antiga
+    for (int i = 0; i < numVertices; i++)
+    {
+        delete[] matrizAdj[i];
+    }
+    delete[] matrizAdj;
+
+    matrizAdj = novaMatriz;
+    numVertices = novoNumVertices;
+}
+
+// Adiciona uma aresta ao grafo
+void GrafoMatriz::adicionar_aresta(int origem, int destino, int peso)
+{    
     // cout << "Num Vertices:" << numVertices << endl;
     // cout << "Origem: " << origem << " / Destino: " << destino << " / Num Vertices:" << numVertices << endl;
 
