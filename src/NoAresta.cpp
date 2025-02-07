@@ -13,7 +13,7 @@ NoAresta::NoAresta(int idVerticeOrigem, int idVerticeDestino, int peso) {
 
 // Destrutor
 NoAresta::~NoAresta() {
-    delete[] proximo;
+
 }
 
 int NoAresta::getOrigem() {

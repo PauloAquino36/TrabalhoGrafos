@@ -29,6 +29,7 @@ public:
     // Funcoes auxiliares
     int getNumVizinhos();                                   // Retorna o número de vizinhos do vértice (número de arestas de saida/ grau do vertice)
     void adicionar_aresta(int id, int peso);                // Adiciona uma aresta ao vertice
+    void remover_aresta(int destino);                       // Remove uma aresta do vertice
 };
 
 #endif // NO_H

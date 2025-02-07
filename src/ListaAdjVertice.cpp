@@ -63,6 +63,16 @@ void ListaAdjVertice::adicionar_aresta(int origem, int destino, int peso) {
     }
 }
 
+void ListaAdjVertice::remover_aresta(int origem, int destino) {
+    NoVertice* atual = this->cabeca;
+    while (atual != nullptr) {
+        if (atual->getIdVertice() == origem) {
+            atual->remover_aresta(destino);
+        }
+        atual = atual->getProximo();
+    }
+}
+
 void ListaAdjVertice::imprimir() {
     cout << "__________________________________________________________________" << endl;
     cout << endl << "--- Lista de Adjacencia ---" << endl;

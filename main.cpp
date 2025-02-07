@@ -13,31 +13,37 @@ using namespace std;
 
 int main() {
     
-    // cout << "============================== LISTA ==============================" << endl;
-    // GrafoLista grafoLista(0, false, false, false);
-    // grafoLista.carrega_grafo(&grafoLista, "entradas/grafo.txt");
-    // grafoLista.imprimeGrafoLista();
-    // grafoLista.imprimeListaAdj();
-    // grafoLista.adicionar_vertice(7, 0);
-    // grafoLista.adicionar_aresta(7, 1, 1);
-    // grafoLista.adicionar_aresta(7, 2, 1);
-    // grafoLista.adicionar_aresta(3, 7, 1);
-    // grafoLista.adicionar_aresta(4, 7, 1);
-    // grafoLista.adicionar_aresta(5, 6, 1);
-    // grafoLista.adicionar_aresta(8, 1, 1);
-    // grafoLista.adicionar_aresta(1, 9, 1);
-    // grafoLista.adicionar_aresta(10, 11, 1);
-    // grafoLista.imprimeGrafoLista();
-    // grafoLista.imprimeListaAdj();
-    // cout << "============================== FIM LISTA ==============================" << endl << endl;
+    cout << "============================== LISTA ==============================" << endl;
+    GrafoLista grafoLista(0, false, false, false);
+    grafoLista.carrega_grafo(&grafoLista, "entradas/grafo.txt");
+    grafoLista.imprimeGrafoLista();
+    grafoLista.imprimeListaAdj();
+    grafoLista.adicionar_novo_vertice(7, 0);
+    grafoLista.adicionar_aresta(7, 1, 1);
+    grafoLista.adicionar_aresta(7, 2, 1);
+    grafoLista.adicionar_aresta(3, 7, 1);
+    grafoLista.adicionar_aresta(4, 7, 1);
+    grafoLista.adicionar_aresta(5, 6, 1);
+    grafoLista.adicionar_aresta(8, 1, 1);
+    grafoLista.adicionar_aresta(1, 9, 1);
+    grafoLista.adicionar_aresta(10, 11, 1);
+    grafoLista.imprimeGrafoLista();
+    grafoLista.imprimeListaAdj();
+
+    grafoLista.remover_aresta(7, 1);
+    grafoLista.remover_aresta(2, 4);
+    grafoLista.remover_aresta(5, 6);
+    grafoLista.imprimeListaAdj();
+    grafoLista.imprimeGrafoLista();
+    cout << "============================== FIM LISTA ==============================" << endl << endl;
     
-    cout << "============================== MATRIZ ==============================" << endl;
-    GrafoMatriz grafoMatriz(0, false, false, false);
-    grafoMatriz.carrega_grafo(&grafoMatriz, "entradas/grafo.txt");
-    grafoMatriz.imprimeGrafoMatriz();
-    grafoMatriz.imprimirMatrizAdj();
-    cout << endl << "Grafo finalizado!" << endl;
-    cout << "============================== FIM MATRIZ ==============================" << endl << endl;
+    // cout << "============================== MATRIZ ==============================" << endl;
+    // GrafoMatriz grafoMatriz(0, false, false, false);
+    // grafoMatriz.carrega_grafo(&grafoMatriz, "entradas/grafo.txt");
+    // grafoMatriz.imprimeGrafoMatriz();
+    // grafoMatriz.imprimirMatrizAdj();
+    // cout << endl << "Grafo finalizado!" << endl;
+    // cout << "============================== FIM MATRIZ ==============================" << endl << endl;
 
     return 0;
 }

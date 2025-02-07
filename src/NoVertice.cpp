@@ -49,3 +49,8 @@ void NoVertice::adicionar_aresta(int destino, int peso) {
     this->arestas->adicionar_aresta(this->idVertice, destino, peso);
     this->numArestas++;
 }
+
+void NoVertice::remover_aresta(int destino) {
+    this->arestas->remover_aresta(this->idVertice, destino);
+    this->numArestas--;
+}

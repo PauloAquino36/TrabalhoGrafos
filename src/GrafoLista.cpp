@@ -34,6 +34,18 @@ void GrafoLista::adicionar_vertice(int id, int peso) {
     listaAdjVertices->adicionar_vertice(id, peso);
 }
 
+void GrafoLista::adicionar_novo_vertice(int id, int peso) {
+    // Verifica se o vertice ja existe
+    if(listaAdjVertices->getVertice(id) != nullptr){
+        cout << "Vertice " << id << " ja existe!" << endl;
+        return;
+    }
+
+    // Adiciona o vertice
+    listaAdjVertices->adicionar_vertice(id, peso);
+    numVertices++;
+}
+
 void GrafoLista::adicionar_aresta(int origem, int destino, int peso) {
     // Verifica se o vertice de origem existe
     if(listaAdjVertices->getVertice(origem) == nullptr){
@@ -55,6 +67,25 @@ void GrafoLista::adicionar_aresta(int origem, int destino, int peso) {
     listaAdjVertices->adicionar_aresta(origem, destino, peso);
     if(!direcionado){
         listaAdjVertices->adicionar_aresta(destino, origem, peso);
+    }
+}
+
+void GrafoLista::remover_aresta(int origem, int destino) {
+    // Verifica se o vertice de origem existe
+    if(listaAdjVertices->getVertice(origem) == nullptr){
+        cout << "Vertice " << origem << " nao existe!" << endl;
+        return;
+    }
+    // Verifica se o vertice de destino existe
+    if(listaAdjVertices->getVertice(destino) == nullptr){
+        cout << "Vertice " << destino << " nao existe!" << endl;
+        return;
+    }
+
+    // Remove a aresta
+    listaAdjVertices->remover_aresta(origem, destino);
+    if(!direcionado){
+        listaAdjVertices->remover_aresta(destino, origem);
     }
 }
 

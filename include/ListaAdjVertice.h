@@ -17,6 +17,7 @@ public:
     NoVertice* getVertice(int id);                                  // Retorna um vertice da lista
     void adicionar_vertice(int id, int peso);                       // Adiciona um vértice à lista
     void adicionar_aresta(int origem, int destino, int peso);       // Adiciona uma aresta ao vertice
+    void remover_aresta(int origem, int destino);                   // Remove uma aresta do vertice
 
     // Funcoes de imprimir
     void imprimir();                                                // Imprime a Lista de adjacência
