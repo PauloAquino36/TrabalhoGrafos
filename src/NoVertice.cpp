@@ -14,7 +14,7 @@ NoVertice::NoVertice(int idVertice, int peso) {
 
 // Destrutor
 NoVertice::~NoVertice() {
-    delete[] arestas;
+    delete arestas;
 }
 
 int NoVertice::getIdVertice() {
@@ -31,6 +31,10 @@ NoVertice* NoVertice::getProximo() {
 
 void NoVertice::setProximo(NoVertice* proximo) {
     this->proximo = proximo;
+}
+
+int NoVertice::setIdVertice(int novoId) {
+    this->idVertice = novoId;
 }
 
 ListaAdjAresta* NoVertice::getArestas() {

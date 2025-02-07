@@ -35,3 +35,11 @@ NoAresta* NoAresta::getProximo() {
 void NoAresta::setProximo(NoAresta* proximo) {
     this->proximo = proximo;
 }
+
+void NoAresta::setVerticeOrigem(int novoId) {
+    this->idVerticeOrigem = novoId;
+}
+
+void NoAresta::setVerticeDestino(int novoId) {
+    this->idVerticeDestino = novoId;
+}

@@ -73,6 +73,54 @@ void ListaAdjVertice::remover_aresta(int origem, int destino) {
     }
 }
 
+void ListaAdjVertice::remover_vertice(int id) {
+    NoVertice* atual = this->cabeca;
+    NoVertice* anterior = nullptr;
+    NoVertice* remover =  nullptr;
+    while (atual != nullptr) {
+        if (atual->getIdVertice() == id) {
+            if (anterior == nullptr) {
+                this->cabeca = atual->getProximo();
+            } else {
+                anterior->setProximo(atual->getProximo());
+            }
+            remover = atual;
+        }
+        atual->remover_aresta(id);
+        anterior = atual;
+        atual = atual->getProximo();
+    }
+    if(remover == nullptr){
+        cout << "Vertice " << id << " nao existe!" << endl;
+        return;
+    }
+    cout << "Removendo vertice " << remover->getIdVertice() << endl;
+    delete remover;
+    
+    // Recalculando ID dos vertices
+    atual = this->cabeca;
+    while (atual != nullptr) {
+        if (atual->getIdVertice() > id) {
+            atual->setIdVertice(atual->getIdVertice() - 1);
+        }
+        atual = atual->getProximo();
+    }
+
+    // Reorganizando as arestas
+    atual = this->cabeca;
+    while (atual != nullptr) {
+        NoAresta* arestaAtual = atual->getArestas()->getCabeca();
+        while (arestaAtual != nullptr) {
+            if (arestaAtual->getDestino() > id) {
+                arestaAtual->setVerticeDestino(arestaAtual->getDestino() - 1);
+            }
+            arestaAtual = arestaAtual->getProximo();
+        }
+        atual = atual->getProximo();
+    }
+
+}
+
 void ListaAdjVertice::imprimir() {
     cout << "__________________________________________________________________" << endl;
     cout << endl << "--- Lista de Adjacencia ---" << endl;

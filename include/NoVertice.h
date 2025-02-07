@@ -25,6 +25,7 @@ public:
     ListaAdjAresta* getArestas();                           // Retorna a lista encadeada de arestas
     
     void setProximo(NoVertice* proximo);                    // Define o próximo nó vertice
+    int setIdVertice(int novoId);                                     // Define o identificador do vertice
     
     // Funcoes auxiliares
     int getNumVizinhos();                                   // Retorna o número de vizinhos do vértice (número de arestas de saida/ grau do vertice)

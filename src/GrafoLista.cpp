@@ -89,6 +89,18 @@ void GrafoLista::remover_aresta(int origem, int destino) {
     }
 }
 
+void GrafoLista::remover_vertice(int id){
+    // Verifica se o vertice existe
+    if(listaAdjVertices->getVertice(id) == nullptr){
+        cout << "Vertice " << id << " nao existe!" << endl;
+        return;
+    }
+
+    // Remove o vertice
+    listaAdjVertices->remover_vertice(id);
+    numVertices--;
+}
+
 ListaAdjAresta* GrafoLista::get_vizinhos(int id) {
     // Debug
     cout << "Vizinhos do vertice " << id << ": ";

@@ -19,6 +19,8 @@ public:
     int getPeso();                          //Retorna o peso da aresta
     NoAresta* getProximo();                 // Retorna o próximo nó aresta
     void setProximo(NoAresta* proximo);     // Define o próximo nó aresta
+    void setVerticeOrigem(int novoId);      // Define o identificador do vertice de origem
+    void setVerticeDestino(int novoId);     // Define o identificador do vertice de destino
 };
 
 #endif // NO_H
