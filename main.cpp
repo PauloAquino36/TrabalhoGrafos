@@ -20,7 +20,7 @@ int main() {
     // grafoLista.imprimeListaAdj();
 
     // cout << "============================== TESTE 1 ==============================" << endl;
-    // grafoLista.adicionar_novo_vertice(7, 0);
+    // grafoLista.adicionar_vertice(7, 0);
     // grafoLista.adicionar_aresta(7, 1, 1);
     // grafoLista.adicionar_aresta(7, 2, 1);
     // grafoLista.adicionar_aresta(3, 7, 1);

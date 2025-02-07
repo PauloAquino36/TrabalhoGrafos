@@ -19,10 +19,12 @@ ListaAdjVertice::~ListaAdjVertice() {
 }
 
 NoVertice* ListaAdjVertice::getCabeca() {
+    // Retorna o primeiro nó da lista
     return this->cabeca;
 }
 
 int ListaAdjVertice::getNumVertices() {
+    // Retorna a quantidade de vertices na lista
     int tamanho = 0;
     NoVertice* atual = this->cabeca;
     while (atual != nullptr) {
@@ -33,6 +35,7 @@ int ListaAdjVertice::getNumVertices() {
 }
 
 NoVertice* ListaAdjVertice::getVertice(int id) {
+    // Retorna o vertice[id] da lista
     NoVertice* atual = this->cabeca;
     while (atual != nullptr) {
         if (atual->getIdVertice() == id) {
@@ -49,8 +52,8 @@ void ListaAdjVertice::adicionar_vertice(int id, int peso) {
     novoNo->setProximo(this->cabeca);
     this->cabeca = novoNo;
 
-    //Debug
-    cout << "Adicionado Vertice " << novoNo->getIdVertice() << endl;
+    /* { DEBUG } */
+    cout << "Adicionado Vertice " << novoNo->getIdVertice() << endl;                    /* { DEBUG } */
 }
 
 void ListaAdjVertice::adicionar_aresta(int origem, int destino, int peso) {
@@ -85,16 +88,16 @@ void ListaAdjVertice::remover_vertice(int id) {
                 anterior->setProximo(atual->getProximo());
             }
             remover = atual;
+            break;
         }
+        // Remove as arestas que apontam para o vertice a ser removido
         atual->remover_aresta(id);
+        // Atualiza os ponteiros
         anterior = atual;
         atual = atual->getProximo();
     }
-    if(remover == nullptr){
-        cout << "Vertice " << id << " nao existe!" << endl;
-        return;
-    }
-    cout << "Removendo vertice " << remover->getIdVertice() << endl;
+    // Remove o vertice
+    cout << "Removendo vertice " << remover->getIdVertice() << endl;            /* { DEBUG } */
     delete remover;
     
     // Recalculando ID dos vertices
@@ -122,6 +125,7 @@ void ListaAdjVertice::remover_vertice(int id) {
 }
 
 void ListaAdjVertice::imprimir() {
+    // Imprime a lista de adjacencia
     cout << "__________________________________________________________________" << endl;
     cout << endl << "--- Lista de Adjacencia ---" << endl;
     cout << "__________________________________________________________________" << endl << endl;

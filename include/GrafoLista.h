@@ -14,15 +14,14 @@ public:
     ~GrafoLista();
 
     // Funcoes auxiliares
-    void atualiza_grafo(int numVertices) override;                              // Redimensiona o grafo
-    ListaAdjAresta* get_vizinhos(int id) override;                              // Retorna os vertices vizinhos de um vertice
-    int get_num_vizinhos(int id) override;                                      // Retorna o numero de vizinhos de um vertice
-    void dfs(int id, bool* visitado) override;                                  // Realiza a busca em profundidade
+    int get_num_vizinhos(int id) override;                                      // Retorna o numero de vizinhos de um vertice do grafo
+    void dfs(int id, bool* visitado) override;                                  // Realiza a busca em profundidade no grafo
+    bool existe_vertice(int id);                                                // Verifica se um vertice existe no grafo
     
+    // Funcoes de maniplacao de vertices e arestas
     void adicionar_vertice(int id, int peso = 0) override;                      // Adiciona um vertice no grafo
-    void adicionar_novo_vertice(int id, int peso = 0);                          // Adiciona um novo vertice no grafo
     void adicionar_aresta(int origem, int destino, int peso = 0) override;      // Adiciona uma aresta no grafo
-    void remover_vertice(int id) override;                                    // Remove um vertice do grafo
+    void remover_vertice(int id) override;                                      // Remove um vertice do grafo
     void remover_aresta(int origem, int destino) override;                      // Remove uma aresta do grafo
 
     //void calcula_menor_dist(int origem, int destino);                            // Calcula a menor distancia entre dois vertices

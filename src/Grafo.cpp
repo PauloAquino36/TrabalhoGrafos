@@ -102,7 +102,6 @@ void Grafo::carrega_grafo(Grafo* grafo, const string& nomeArquivo) {
     int numVertices, direcionado, ponderadoVertices, ponderadoArestas;
     arquivo >> numVertices >> direcionado >> ponderadoVertices >> ponderadoArestas;
 
-    grafo->numVertices = numVertices;
     grafo->direcionado = direcionado;
     grafo->ponderadoVertices = ponderadoVertices;
     grafo->ponderadoArestas = ponderadoArestas;

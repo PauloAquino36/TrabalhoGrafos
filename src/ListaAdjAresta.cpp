@@ -19,6 +19,7 @@ ListaAdjAresta::~ListaAdjAresta() {
 }
 
 NoAresta* ListaAdjAresta::getCabeca() {
+    // Retorna o primeiro nó da lista
     return this->cabeca;
 }
 
@@ -27,7 +28,7 @@ void ListaAdjAresta::adicionar_aresta(int origem, int destino, int peso) {
     NoAresta* atual = this->cabeca;
     while (atual != nullptr) {
         if (atual->getOrigem() == origem && atual->getDestino() == destino) {
-            cout << "Erro: Aresta " << origem << " -> " << destino << " ja existe." <<  endl;
+            cout << "Erro: Aresta " << origem << " -> " << destino << " ja existe." <<  endl;                       /* { DEBUG } */
             return;
         }
         atual = atual->getProximo();
@@ -37,7 +38,7 @@ void ListaAdjAresta::adicionar_aresta(int origem, int destino, int peso) {
     NoAresta* novaAresta = new NoAresta(origem, destino, peso);
     novaAresta->setProximo(this->cabeca);
     this->cabeca = novaAresta;
-    cout << "Adicionada Aresta " << novaAresta->getOrigem() << " -> " << novaAresta->getDestino() << endl;
+    cout << "Adicionada Aresta " << novaAresta->getOrigem() << " -> " << novaAresta->getDestino() << endl;          /* { DEBUG } */
 }
 
 void ListaAdjAresta::remover_aresta(int origem, int destino) {
@@ -51,16 +52,17 @@ void ListaAdjAresta::remover_aresta(int origem, int destino) {
                 anterior->setProximo(atual->getProximo());
             }
             delete atual;
-            cout << "Removida Aresta " << origem << " -> " << destino << endl;
+            cout << "Removida Aresta " << origem << " -> " << destino << endl;                                      /* { DEBUG } */
             return;
         }
         anterior = atual;
         atual = atual->getProximo();
     }
-    cout << "Erro: Aresta " << origem << " -> " << destino << " nao existe." <<  endl;
+    cout << "Erro: Aresta " << origem << " -> " << destino << " nao existe." <<  endl;                              /* { DEBUG } */
 }
 
 int ListaAdjAresta::getNumVerticesVizinhos() {
+    // Retorna o tamanho da lista / numero de vertices vizinhos / grau do vertice
     int tamanho = 0;
     NoAresta* atual = this->cabeca;
     while (atual != nullptr) {
