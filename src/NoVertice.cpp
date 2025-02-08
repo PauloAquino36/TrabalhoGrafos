@@ -33,7 +33,7 @@ void NoVertice::setProximo(NoVertice* proximo) {
     this->proximo = proximo;
 }
 
-int NoVertice::setIdVertice(int novoId) {
+void NoVertice::setIdVertice(int novoId) {
     this->idVertice = novoId;
 }
 

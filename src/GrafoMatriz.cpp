@@ -170,6 +170,25 @@ void GrafoMatriz::adicionar_aresta(int origem, int destino, int peso)
         }
     }
 }
+
+//remove uma aresta do grafo
+void GrafoMatriz::remover_aresta(int origem, int destino)
+{
+    if (origem < 0 || origem >= numVertices || destino < 0 || destino >= numVertices)
+    {
+        cout << "Erro: indices de origem ou destino invalidos.\n";
+        return;
+    }
+
+    matrizAdj[origem][destino] = 0;
+    if (!direcionado)
+    {
+        matrizAdj[destino][origem] = 0;
+    }
+
+    cout << "Aresta removida com sucesso!" << endl;
+}
+
 int GrafoMatriz::get_num_vizinhos(int id)
 {
     if (id < 0 || id >= numVertices)
