@@ -35,6 +35,7 @@ void NoVertice::setProximo(NoVertice* proximo) {
 
 int NoVertice::setIdVertice(int novoId) {
     this->idVertice = novoId;
+    return this->idVertice;
 }
 
 ListaAdjAresta* NoVertice::getArestas() {

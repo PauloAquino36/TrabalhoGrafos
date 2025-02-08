@@ -10,15 +10,23 @@ using namespace std;
 // Contrutor e Destrutor
 GrafoMatriz::GrafoMatriz(int numVertices, bool direcionado, bool ponderadoVertices, bool ponderadoArestas) : Grafo(numVertices, direcionado, ponderadoVertices, ponderadoArestas)
 {
+    int numVerticesTotal = 10;
+
     if (numVertices <= 0)
     {
         numVertices = 1;
     }
-    matrizAdj = new int *[numVertices];
-    for (int i = 0; i < numVertices; i++)
+
+    while (numVerticesTotal < numVertices)
     {
-        matrizAdj[i] = new int[numVertices];
-        for (int j = 0; j < numVertices; j++)
+        numVerticesTotal *= 2;
+    }
+    
+    matrizAdj = new int *[numVerticesTotal];
+    for (int i = 0; i < numVerticesTotal; i++)
+    {
+        matrizAdj[i] = new int[numVerticesTotal];
+        for (int j = 0; j < numVerticesTotal; j++)
         {
             matrizAdj[i][j] = 0; // Inicializa com 0 (sem aresta)
         }
@@ -138,7 +146,20 @@ void GrafoMatriz::remover_vertice(int id)
     matrizAdj = novaMatriz;
     numVertices = novoNumVertices;
 }
+void GrafoMatriz::remover_aresta(int origem, int destino)
+{
+    if (origem < 0 || origem >= numVertices || destino < 0 || destino >= numVertices)
+    {
+        cout << "Erro: indices de origem ou destino invalidos.\n";
+        return;
+    }
 
+    matrizAdj[origem][destino] = 0;
+    if (!direcionado)
+    {
+        matrizAdj[destino][origem] = 0;
+    }
+}
 // Adiciona uma aresta ao grafo
 void GrafoMatriz::adicionar_aresta(int origem, int destino, int peso)
 {    
