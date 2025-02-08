@@ -22,22 +22,25 @@ Grafo::~Grafo()
 int Grafo::n_conexo()
 {
     bool* visitado = new bool[numVertices];
-    for (int i = 1; i <= numVertices; i++) {
+
+    for (int i = 0; i < numVertices; i++) {
         visitado[i] = false;
     }
 
     int numComponentes = 0;
 
-    for (int i = 1; i <= numVertices; i++) {
+    for (int i = 0; i < numVertices; i++) {
         if (!visitado[i]) {
             dfs(i, visitado);
             numComponentes++;
         }
     }
 
-    delete[] visitado;
+    cout << "Numero de componentes conexas: " << numComponentes << endl;
+    delete[] visitado; // Agora não vai quebrar
     return numComponentes;
 }
+
 
 int Grafo::get_grau()
 {
