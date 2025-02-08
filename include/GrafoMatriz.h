@@ -24,7 +24,7 @@ public:
     void remover_vertice(int id) override;                                      // Remove um vertice do grafo
     void remover_aresta(int origem, int destino) override;                      // Remove uma aresta do grafo
 
-    //void calcula_menor_dist(int origem, int destino);                            // Calcula a menor distancia entre dois vertices
+    void calcula_menor_dist(int origem, int destino);                            // Calcula a menor distancia entre dois vertices
 
     // Funcoes de imprimir
     void imprimirMatrizAdj();                                                   // Imprime a matriz de adjacência

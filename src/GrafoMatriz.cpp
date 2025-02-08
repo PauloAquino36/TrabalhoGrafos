@@ -5,6 +5,7 @@
 #include <string>
 #include <iomanip> // Biblioteca necessária para setw()
 
+
 using namespace std;
 
 // Contrutor e Destrutor
@@ -197,6 +198,87 @@ void GrafoMatriz::adicionar_aresta(int origem, int destino, int peso)
         }
     }
 }
+//Calcula menor distancia entre dois vertices
+void GrafoMatriz::calcula_menor_dist(int origem, int destino)
+{
+    const int INF = 1000000; // Valor grande para representar infinito
+    int *dist = new int[numVertices];
+    int *prev = new int[numVertices];
+    bool *visitado = new bool[numVertices];
+
+    for (int i = 0; i < numVertices; i++)
+    {
+        dist[i] = INF;
+        prev[i] = -1;
+        visitado[i] = false;
+    }
+
+    dist[origem] = 0;
+
+    // Loop principal do algoritmo de Dijkstra
+    for (int i = 0; i < numVertices; i++)
+    {
+        int u = -1;
+
+        // Encontra o vértice não visitado com a menor distância
+        for (int j = 0; j < numVertices; j++)
+        {
+            if (!visitado[j] && (u == -1 || dist[j] < dist[u]))
+            {
+                u = j;
+            }
+        }
+
+        // Se a menor distância é infinita, todos os vértices restantes são inacessíveis
+        if (dist[u] == INF)
+        {
+            break;
+        }
+
+        visitado[u] = true;
+
+        // Atualiza as distâncias dos vizinhos do vértice atual
+        for (int v = 0; v < numVertices; v++)
+        {
+            if (matrizAdj[u][v] != 0 && dist[u] + matrizAdj[u][v] < dist[v])
+            {
+                dist[v] = dist[u] + matrizAdj[u][v];
+                prev[v] = u;
+            }
+        }
+    }
+
+    // Verifica se há um caminho até o destino
+    if (dist[destino] == INF)
+    {
+        std::cout << "Não há caminho entre " << origem << " e " << destino << std::endl;
+    }
+    else
+    {
+        std::cout << "Menor distância entre " << origem << " e " << destino << " é " << dist[destino] << std::endl;
+        std::cout << "Caminho: ";
+        int* caminho = new int[numVertices];
+        int count = 0;
+        for (int at = destino; at != -1; at = prev[at])
+        {
+            caminho[count++] = at;
+        }
+
+        // Imprime o caminho na ordem correta
+        for (int i = count - 1; i >= 0; i--) {
+            std::cout << caminho[i];
+            if (i > 0) {
+                std::cout << " -> ";
+            }
+        }
+        std::cout << std::endl;
+    }
+
+    delete[] dist;
+    delete[] prev;
+    delete[] visitado;
+}
+
 int GrafoMatriz::get_num_vizinhos(int id)
 {
     if (id < 0 || id >= numVertices)
