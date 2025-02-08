@@ -48,7 +48,7 @@ int main() {
     // cout << "============================== FIM LISTA ==============================" << endl << endl;
     
     cout << "============================== MATRIZ ==============================" << endl;
-    GrafoMatriz grafoMatriz(false, false, false);
+    GrafoMatriz grafoMatriz(0, false, false, false);
     grafoMatriz.carrega_grafo(&grafoMatriz, "entradas/grafo.txt");
     grafoMatriz.imprimeGrafoMatriz();
     grafoMatriz.imprimirMatrizAdj();
@@ -65,7 +65,7 @@ int main() {
     grafoMatriz.adicionar_aresta(10, 11, 1);
     grafoMatriz.imprimeGrafoMatriz();
     grafoMatriz.imprimirMatrizAdj();
-
+    
     /*
     cout << "============================== TESTE 2 ==============================" << endl;
     grafoMatriz.remover_aresta(7, 1);
