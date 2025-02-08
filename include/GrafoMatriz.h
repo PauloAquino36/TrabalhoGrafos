@@ -6,6 +6,7 @@
 class GrafoMatriz  : public Grafo {
 protected:
     int** matrizAdj;  // Matriz de adjacência
+    int tamanhoMatriz;  // Número MXM vértices
 
 public:
     // Construtor e Destrutor

@@ -52,10 +52,14 @@ int main() {
     grafoMatriz.carrega_grafo(&grafoMatriz, "entradas/grafo.txt");
     grafoMatriz.imprimeGrafoMatriz();
     grafoMatriz.imprimirMatrizAdj();
-
+    
     cout << "============================== TESTE 1 ==============================" << endl;
-    grafoMatriz.adicionar_vertice(7, 0);
-    grafoMatriz.adicionar_aresta(7, 1, 1);
+    grafoMatriz.adicionar_vertice(7, 50);
+    grafoMatriz.adicionar_vertice(8, 25);
+    grafoMatriz.adicionar_vertice(9, 82);
+    grafoMatriz.adicionar_vertice(10, 55);
+    grafoMatriz.adicionar_vertice(11, 96);
+    grafoMatriz.adicionar_aresta(7, 1, 63);
     grafoMatriz.adicionar_aresta(7, 2, 1);
     grafoMatriz.adicionar_aresta(3, 7, 1);
     grafoMatriz.adicionar_aresta(4, 7, 1);
@@ -66,21 +70,21 @@ int main() {
     grafoMatriz.imprimeGrafoMatriz();
     grafoMatriz.imprimirMatrizAdj();
     
-    /*
+    
     cout << "============================== TESTE 2 ==============================" << endl;
     grafoMatriz.remover_aresta(7, 1);
     grafoMatriz.remover_aresta(2, 4);
     grafoMatriz.remover_aresta(5, 6);
     grafoMatriz.imprimeGrafoMatriz();
     grafoMatriz.imprimirMatrizAdj();
-
+    
     cout << "============================== TESTE 3 ==============================" << endl;
     grafoMatriz.remover_vertice(4);
     grafoMatriz.remover_vertice(5);
     grafoMatriz.remover_vertice(6);
     grafoMatriz.imprimeGrafoMatriz();
     grafoMatriz.imprimirMatrizAdj();
-    */
+    
     
     cout << "============================== FIM MATRIZ ==============================" << endl << endl;
 
