@@ -8,14 +8,16 @@
       "args": [
         "-fdiagnostics-color=always",
         "-g",
-        "${workspaceFolder}/source/main/main.cpp",
-        "${workspaceFolder}/source/Grafo.cpp",
-        "${workspaceFolder}/source/GrafoMatriz.cpp",
-        "${workspaceFolder}/source/GrafoLista.cpp",
-        "${workspaceFolder}/source/Vertice.cpp",
-        "${workspaceFolder}/source/Aresta.cpp",
+        "${workspaceFolder}/main.cpp",
+        "${workspaceFolder}/src/Grafo.cpp",
+        "${workspaceFolder}/src/GrafoMatriz.cpp",
+        "${workspaceFolder}/src/GrafoLista.cpp",
+        "${workspaceFolder}/src/ListaAdjVertice.cpp",
+        "${workspaceFolder}/src/ListaAdjAresta.cpp",
+        "${workspaceFolder}/src/NoVertice.cpp",
+        "${workspaceFolder}/src/NoAresta.cpp",
         "-o",
-        "${workspaceFolder}/source/main/main.exe"
+        "${workspaceFolder}/main.exe"
       ],
       "options": {
         "cwd": "${workspaceFolder}"
