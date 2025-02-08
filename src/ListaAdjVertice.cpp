@@ -88,7 +88,6 @@ void ListaAdjVertice::remover_vertice(int id) {
                 anterior->setProximo(atual->getProximo());
             }
             remover = atual;
-            break;
         }
         // Remove as arestas que apontam para o vertice a ser removido
         atual->remover_aresta(id);
@@ -134,7 +133,7 @@ void ListaAdjVertice::imprimir() {
         cout << "Vertice " << atual->getIdVertice() << " -> ";
         NoAresta* atualAresta = atual->getArestas()->getCabeca();
         while (atualAresta != nullptr) {
-            cout << atualAresta->getDestino() << " ";
+            cout << atualAresta->getDestino() << "(" << atualAresta->getPeso() << ")"<< "  ";
             atualAresta = atualAresta->getProximo();
         }
         cout << endl;
