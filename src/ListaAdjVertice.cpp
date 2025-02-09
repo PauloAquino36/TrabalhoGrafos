@@ -125,8 +125,7 @@ void ListaAdjVertice::remover_vertice(int id) {
 void ListaAdjVertice::imprimir() {
     // Imprime a lista de adjacencia
     cout << "__________________________________________________________________" << endl;
-    cout << endl << "--- Lista de Adjacencia ---" << endl;
-    cout << "__________________________________________________________________" << endl << endl;
+    cout << endl << "--- Lista de Adjacencia ---" << endl << endl ;
     NoVertice* atual = this->cabeca;
     while (atual != nullptr) {
         cout << "Vertice " << atual->getIdVertice() << " -> ";

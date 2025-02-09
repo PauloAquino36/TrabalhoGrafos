@@ -96,6 +96,9 @@ int GrafoLista::get_num_vizinhos(int id) {
 }
 
 void GrafoLista::dfs(int id, bool* visitado) {
+    if(listaAdjVertices->getVertice(id) == nullptr){
+        return;
+    }
     visitado[id] = true;
     NoAresta* atual = this->listaAdjVertices->getVertice(id)->getArestas()->getCabeca();
     while(atual != nullptr){

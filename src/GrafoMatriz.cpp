@@ -348,14 +348,29 @@ void GrafoMatriz::dfs(int id, bool *visitado)
 // Funcoes de imprimir
 void GrafoMatriz::imprimirMatrizAdj()
 {
+    cout << "__________________________________________________________________" << endl;
+    cout << endl << "--- Matriz de Adjacencia ---" << endl << endl;
+
+    // Imprime o cabeçalho dos índices dos vértices
+    cout << "  V";
     for (int i = 0; i < tamanhoMatriz; i++)
     {
+        cout << std::setw(3) << i << " ";
+    }
+    cout << endl;
+
+    for (int i = 0; i < tamanhoMatriz; i++)
+    {
+        // Imprime o índice do vértice na lateral esquerda
+        cout << std::setw(3) << i;
+
         for (int j = 0; j < tamanhoMatriz; j++)
         {
             std::cout << std::setw(3) << matrizAdj[i][j] << " ";
         }
         std::cout << std::endl;
     }
+    cout << "__________________________________________________________________" << endl;
 }
 void GrafoMatriz::imprimeGrafoMatriz()
 {

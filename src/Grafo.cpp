@@ -36,7 +36,6 @@ int Grafo::n_conexo()
         }
     }
 
-    cout << "Numero de componentes conexas: " << numComponentes << endl;
     delete[] visitado; // Agora não vai quebrar
     return numComponentes;
 }
