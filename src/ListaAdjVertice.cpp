@@ -52,8 +52,7 @@ void ListaAdjVertice::adicionar_vertice(int id, int peso) {
     novoNo->setProximo(this->cabeca);
     this->cabeca = novoNo;
 
-    /* { DEBUG } */
-    cout << "Adicionado Vertice " << novoNo->getIdVertice() << endl;                    /* { DEBUG } */
+    //cout << "Adicionado Vertice " << novoNo->getIdVertice() << endl;                    /* { DEBUG } */
 }
 
 void ListaAdjVertice::adicionar_aresta(int origem, int destino, int peso) {
@@ -96,7 +95,7 @@ void ListaAdjVertice::remover_vertice(int id) {
         atual = atual->getProximo();
     }
     // Remove o vertice
-    cout << "Removendo vertice " << remover->getIdVertice() << endl;            /* { DEBUG } */
+    //cout << "Removendo vertice " << remover->getIdVertice() << endl;            /* { DEBUG } */
     delete remover;
     
     // Recalculando ID dos vertices

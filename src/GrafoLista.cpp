@@ -27,7 +27,7 @@ bool GrafoLista::existe_vertice(int id) {
 void GrafoLista::adicionar_vertice(int id, int peso) {
     // Verifica se o vertice ja existe
     if(existe_vertice(id)){
-        cout << "Vertice " << id << " ja existe!" << endl;                                      /* { DEBUG } */
+        cout << "Erro: Vertice " << id << " ja existe!" << endl;                                      /* { DEBUG } */
         return;
     }
 
@@ -39,17 +39,17 @@ void GrafoLista::adicionar_vertice(int id, int peso) {
 void GrafoLista::adicionar_aresta(int origem, int destino, int peso) {
     // Verifica se o vertice de origem existe
     if(!existe_vertice(origem)){
-        cout << "Vertice " << origem << " nao existe!" << endl;                                 /* { DEBUG } */
+        cout << "Erro: Vertice " << origem << " nao existe!" << endl;                                 /* { DEBUG } */
         return;
     }
     // Verifica se o vertice de destino existe
     if(!existe_vertice(destino)){
-        cout << "Vertice " << destino << " nao existe!" << endl;                                /* { DEBUG } */
+        cout << "Erro: Vertice " << destino << " nao existe!" << endl;                                /* { DEBUG } */
         return;
     }
     // Verifica se a aresta eh um self-loop
     if(origem == destino){
-        cout << "Nao e possivel adicionar aresta: Origem e destino iguais! " << endl;           /* { DEBUG } */
+        cout << "Erro: Nao eh possivel adicionar aresta. Origem e destino iguais! " << endl;           /* { DEBUG } */
         return;
     }
 
@@ -63,12 +63,12 @@ void GrafoLista::adicionar_aresta(int origem, int destino, int peso) {
 void GrafoLista::remover_aresta(int origem, int destino) {
     // Verifica se o vertice de origem existe
     if(listaAdjVertices->getVertice(origem) == nullptr){
-        cout << "Vertice " << origem << " nao existe!" << endl;                                 /* { DEBUG } */
+        cout << "Erro: Vertice " << origem << " nao existe!" << endl;                                 /* { DEBUG } */
         return;
     }
     // Verifica se o vertice de destino existe
     if(listaAdjVertices->getVertice(destino) == nullptr){
-        cout << "Vertice " << destino << " nao existe!" << endl;                                /* { DEBUG } */
+        cout << "Erro: Vertice " << destino << " nao existe!" << endl;                                /* { DEBUG } */
         return;
     }
 
@@ -82,7 +82,7 @@ void GrafoLista::remover_aresta(int origem, int destino) {
 void GrafoLista::remover_vertice(int id){
     // Verifica se o vertice existe
     if(!existe_vertice(id)){
-        cout << "Vertice " << id << " nao existe!" << endl;                                     /* { DEBUG } */
+        cout << "Erro: Vertice " << id << " nao existe!" << endl;                                     /* { DEBUG } */
         return;
     }
 
