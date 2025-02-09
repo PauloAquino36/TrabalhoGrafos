@@ -198,8 +198,8 @@ void GrafoMatriz::adicionar_aresta(int origem, int destino, int peso)
         }
     }
 }
-//Calcula menor distancia entre dois vertices
-void GrafoMatriz::calcula_menor_dist(int origem, int destino)
+// Calcula menor distancia entre dois vertices
+int GrafoMatriz::calcula_menor_dist(int origem, int destino)
 {
     const int INF = 1000000; // Valor grande para representar infinito
     int *dist = new int[numVertices];
@@ -248,15 +248,15 @@ void GrafoMatriz::calcula_menor_dist(int origem, int destino)
         }
     }
 
+    int menorDist = dist[destino];
     // Verifica se há um caminho até o destino
-    if (dist[destino] == INF)
+    if (menorDist == INF)
     {
-        std::cout << "Não há caminho entre " << origem << " e " << destino << std::endl;
+        // Não há caminho entre origem e destino
     }
     else
     {
-        std::cout << "Menor distância entre " << origem << " e " << destino << " é " << dist[destino] << std::endl;
-        std::cout << "Caminho: ";
+        // Caminho encontrado
         int* caminho = new int[numVertices];
         int count = 0;
         for (int at = destino; at != -1; at = prev[at])
@@ -266,17 +266,48 @@ void GrafoMatriz::calcula_menor_dist(int origem, int destino)
 
         // Imprime o caminho na ordem correta
         for (int i = count - 1; i >= 0; i--) {
-            std::cout << caminho[i];
+            // std::cout << caminho[i] + 1;
             if (i > 0) {
-                std::cout << " -> ";
+                // std::cout << " -> ";
             }
         }
-        std::cout << std::endl;
+        // std::cout << std::endl;
+
+        delete[] caminho;
     }
 
     delete[] dist;
     delete[] prev;
     delete[] visitado;
+
+    return menorDist;
+}
+
+int GrafoMatriz::calcula_maior_menor_dist() {
+    int maiorMenorDist = 0;
+    int verticeOrigem = -1;
+    int verticeDestino = -1;
+
+    for (int i = 0; i < numVertices; i++) {
+        for (int j = 0; j < numVertices; j++) {
+            if (i != j) {
+                int menorDist = calcula_menor_dist(i, j);
+                if (menorDist != 1000000 && menorDist > maiorMenorDist) {
+                    maiorMenorDist = menorDist;
+                    verticeOrigem = i;
+                    verticeDestino = j;
+                }
+            }
+        }
+    }
+
+    if (verticeOrigem != -1 && verticeDestino != -1) {
+        std::cout << "Maior menor distância (" << verticeOrigem + 1 << "-" << verticeDestino + 1 << ") = " << maiorMenorDist << std::endl;
+    } else {
+        std::cout << "Não há caminhos válidos no grafo." << std::endl;
+    }
+
+    return maiorMenorDist;
 }
 
 int GrafoMatriz::get_num_vizinhos(int id)

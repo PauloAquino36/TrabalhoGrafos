@@ -51,7 +51,9 @@ int main() {
     GrafoMatriz grafoMatriz(0, false, false, false);
     grafoMatriz.carrega_grafo(&grafoMatriz, "entradas/grafo.txt");
     grafoMatriz.imprimeGrafoMatriz();
+    grafoMatriz.calcula_maior_menor_dist();
     grafoMatriz.imprimirMatrizAdj();
+    
     
     cout << "============================== TESTE 1 ==============================" << endl;
     grafoMatriz.adicionar_vertice(7, 50);
