@@ -25,6 +25,8 @@ public:
     void remover_aresta(int origem, int destino) override;                      // Remove uma aresta do grafo
 
     int calcula_menor_dist(int origem, int destino);                            // Calcula a menor distancia entre dois vertices
+    int calcula_maior_menor_dist();                                             // Calcula a maior entre as menores distancias de um grafo
+
 
     // Funcoes imprime
     void imprimeGrafoLista();                                                   // Imprime as informacoes do grafo

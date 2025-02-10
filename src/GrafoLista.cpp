@@ -108,6 +108,26 @@ void GrafoLista::dfs(int id, bool* visitado) {
         atual = atual->getProximo();
     }
 }
+
+int GrafoLista::calcula_maior_menor_dist() {
+    int maiorMenorDist = 0;
+    int verticeOrigem = -1;
+    int verticeDestino = -1;
+    for (int i = 0; i < numVertices; i++) {
+        for (int j = 0; j < numVertices; j++) {
+            if (i != j) {
+                int menorDist = calcula_menor_dist(i, j);
+                if (menorDist != -1 && menorDist > maiorMenorDist) {
+                    maiorMenorDist = menorDist;
+                    verticeOrigem = i;
+                    verticeDestino = j;
+                }
+            }
+        }
+    }
+    return maiorMenorDist;
+}
+
 // #endregion
 
 // #region Funcoes imprime
