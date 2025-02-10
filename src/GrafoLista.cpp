@@ -116,6 +116,41 @@ void GrafoLista::imprimeListaAdj(){
     listaAdjVertices->imprimir();                                    
 }
 
+
+int GrafoLista::calcula_menor_dist(int origem, int destino) {
+    const int INF = 1000000;
+    int dist[numVertices];
+    bool visitado[numVertices];
+    for (int i = 0; i < numVertices; i++) {
+        dist[i] = INF;
+        visitado[i] = false;
+    }
+    dist[origem] = 0;
+    for (int i = 0; i < numVertices; i++) {
+        int u = -1;
+        for (int j = 0; j < numVertices; j++) {
+            if (!visitado[j] && (u == -1 || dist[j] < dist[u])) {
+                u = j;
+            }
+        }
+        if (dist[u] == INF) {
+            break;
+        }
+        visitado[u] = true;
+        NoAresta* atual = listaAdjVertices->getVertice(u)->getArestas()->getCabeca();
+        while (atual != nullptr) {
+            int v = atual->getDestino();
+            int peso = atual->getPeso();
+            if (dist[u] + peso < dist[v]) {
+                dist[v] = dist[u] + peso;
+            }
+            atual = atual->getProximo();
+        }
+    }
+    return (dist[destino] == INF) ? -1 : dist[destino];
+}
+
+
 void GrafoLista::imprimeGrafoLista(){
     cout << "__________________________________________________________________" << endl;
     cout << endl << "--- Grafo Lista ---" << endl;
@@ -123,4 +158,3 @@ void GrafoLista::imprimeGrafoLista(){
     // Imprime as informações do grafo
     imprime();                                                      
 }
-// #endregion
