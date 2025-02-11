@@ -21,14 +21,12 @@ int main(int argc, char* argv[]) {
         GrafoMatriz grafoMatriz(0, false, false, false);
         grafoMatriz.carrega_grafo(&grafoMatriz, arquivo);
         grafoMatriz.imprimeGrafoMatriz();
-        grafoMatriz.imprimirMatrizAdj();
         cout << "============================== FIM MATRIZ ==============================" << endl << endl;
     } else if (modo == "-l") {
         cout << "============================== LISTA ==============================" << endl;
         GrafoLista grafoLista(0, false, false, false);
         grafoLista.carrega_grafo(&grafoLista, arquivo);
         grafoLista.imprimeGrafoLista();
-        grafoLista.imprimeListaAdj();
         cout << "============================== FIM LISTA ==============================" << endl << endl;
     } else {
         cerr << "Use ./main -d -m grafo.txt  ou ./main -d -l grafo.txt" << endl;
