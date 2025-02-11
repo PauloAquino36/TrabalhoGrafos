@@ -8,10 +8,17 @@
 
 using namespace std;
 
-// Para compilar: CTRL+SHIFT+B ou g++ -o main main.cpp src/Grafo.cpp src/GrafoMatriz.cpp src/GrafoLista.cpp src/ListaAdjAresta.cpp src/ListaAdjVertice.cpp src/NoAresta.cpp src/NoVertice.cpp
-// Para executar Matriz: ./main -d -m grafo.txt
-// Para executar Lista:  ./main -d -l grafo.txt
-
+/**
+ * @brief Funcao principal do programa.
+ * 
+ * Para compilar: CTRL+SHIFT+B ou g++ -o main main.cpp src/Grafo.cpp src/GrafoMatriz.cpp src/GrafoLista.cpp src/ListaAdjAresta.cpp src/ListaAdjVertice.cpp src/NoAresta.cpp src/NoVertice.cpp
+ * Para executar Matriz: ./main -d -m grafo.txt
+ * Para executar Lista:  ./main -d -l grafo.txt
+ * 
+ * @param argc Numero de argumentos.
+ * @param argv Vetor de argumentos.
+ * @return int Codigo de retorno.
+ */
 int main(int argc, char* argv[]) {
     string modo = argv[2];
     string arquivo = "./entradas/" + string(argv[3]);

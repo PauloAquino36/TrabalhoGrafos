@@ -3,20 +3,56 @@
 
 #include "NoAresta.h"
 
+/**
+ * @class ListaAdjAresta
+ * @brief Classe que representa uma lista de adjacência de arestas.
+ */
 class ListaAdjAresta {
 private:
-    NoAresta* cabeca;           // Ponteiro para o primeiro no da lista
+    NoAresta* cabeca;           ///< Ponteiro para o primeiro no da lista
 
 public:
-    // Construtor e Destrutor
+    /**
+     * @brief Construtor da classe ListaAdjAresta.
+     */
     ListaAdjAresta();
+
+    /**
+     * @brief Destrutor da classe ListaAdjAresta.
+     */
     ~ListaAdjAresta();
 
-    NoAresta* getCabeca();                                              // Retorna a cabeca da lista de adjacencia de arestas
-    int getNumVerticesVizinhos();                                       // Retorna a quantidade de vertices vizinhos (vertices que estao na lista de arestas)
-    void adicionar_aresta(int origem, int destino, float peso);         // Adiciona uma aresta à lista
-    void remover_aresta(int origem, int destino);                       // Remove uma aresta da lista
-    void remover_primeira_aresta();                                     // Remove a primeira aresta da lista
+    /**
+     * @brief Retorna a cabeca da lista de adjacencia de arestas.
+     * @return Ponteiro para o primeiro no da lista.
+     */
+    NoAresta* getCabeca();
+
+    /**
+     * @brief Retorna a quantidade de vertices vizinhos.
+     * @return Numero de vertices vizinhos.
+     */
+    int getNumVerticesVizinhos();
+
+    /**
+     * @brief Adiciona uma aresta à lista.
+     * @param origem Identificador do vertice de origem.
+     * @param destino Identificador do vertice de destino.
+     * @param peso Peso da aresta.
+     */
+    void adicionar_aresta(int origem, int destino, float peso);
+
+    /**
+     * @brief Remove uma aresta da lista.
+     * @param origem Identificador do vertice de origem.
+     * @param destino Identificador do vertice de destino.
+     */
+    void remover_aresta(int origem, int destino);
+
+    /**
+     * @brief Remove a primeira aresta da lista.
+     */
+    void remover_primeira_aresta();
 };
 
 #endif // LISTA_ADJ_ARESTA_H

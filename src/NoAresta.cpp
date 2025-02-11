@@ -4,6 +4,13 @@
 using namespace std;
 
 // #region Construtor e Destrutor
+
+/**
+ * @brief Construtor da classe NoAresta.
+ * @param idVerticeOrigem Identificador do vertice de origem.
+ * @param idVerticeDestino Identificador do vertice de destino.
+ * @param peso Peso da aresta.
+ */
 NoAresta::NoAresta(int idVerticeOrigem, int idVerticeDestino, float peso) {
     this->idVerticeOrigem = idVerticeOrigem;
     this->idVerticeDestino = idVerticeDestino;
@@ -11,42 +18,66 @@ NoAresta::NoAresta(int idVerticeOrigem, int idVerticeDestino, float peso) {
     this->proximo = nullptr;
 }
 
+/**
+ * @brief Destrutor da classe NoAresta.
+ */
 NoAresta::~NoAresta() {
 
 }
 // #endregion
 
-// Retorna o vertice de origem da aresta
+/**
+ * @brief Retorna o vertice de origem da aresta.
+ * @return Identificador do vertice de origem.
+ */
 int NoAresta::getOrigem() {
     return idVerticeOrigem;
 }
 
-// Retorna o vertice de destino da aresta
+/**
+ * @brief Retorna o vertice de destino da aresta.
+ * @return Identificador do vertice de destino.
+ */
 int NoAresta::getDestino() {
     return idVerticeDestino;
 }
 
-// Retorna o peso da aresta
+/**
+ * @brief Retorna o peso da aresta.
+ * @return Peso da aresta.
+ */
 float NoAresta::getPeso() {
     return peso;
 }
 
-// Retorna o proximo Noh aresta
+/**
+ * @brief Retorna o proximo Noh aresta.
+ * @return Ponteiro para o proximo Noh aresta.
+ */
 NoAresta* NoAresta::getProximo() {
     return proximo;
 }
 
-// Define o proximo Noh aresta
+/**
+ * @brief Define o proximo Noh aresta.
+ * @param proximo Ponteiro para o proximo Noh aresta.
+ */
 void NoAresta::setProximo(NoAresta* proximo) {
     this->proximo = proximo;
 }
 
-// Define o id do vertice de origem
+/**
+ * @brief Define o id do vertice de origem.
+ * @param novoId Novo identificador do vertice de origem.
+ */
 void NoAresta::setVerticeOrigem(int novoId) {
     this->idVerticeOrigem = novoId;
 }
 
-// Define o id do vertice de destino
+/**
+ * @brief Define o id do vertice de destino.
+ * @param novoId Novo identificador do vertice de destino.
+ */
 void NoAresta::setVerticeDestino(int novoId) {
     this->idVerticeDestino = novoId;
 }

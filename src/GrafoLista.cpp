@@ -5,31 +5,46 @@
 
 using namespace std;
 
-// #region Contrutor e Destrutor
+/**
+ * @brief Construtor da classe GrafoLista.
+ * @param numVertices Numero de vertices do grafo.
+ * @param direcionado Indica se o grafo eh direcionado.
+ * @param ponderadoVertices Indica se o grafo possui peso nos vertices.
+ * @param ponderadoArestas Indica se o grafo possui peso nas arestas.
+ */
 GrafoLista::GrafoLista(int numVertices, bool direcionado, bool ponderadoVertices, bool ponderadoArestas) : Grafo(numVertices, direcionado, ponderadoVertices, ponderadoArestas)
 {
     // Inicializa a lista de adjacencia
     this->listaAdjVertices = new ListaAdjVertice();                 
 }
 
+/**
+ * @brief Destrutor da classe GrafoLista.
+ */
 GrafoLista::~GrafoLista()
 {
     // Libera a memoria alocada para os vertices
     delete this->listaAdjVertices;
 }
-// #endregion
 
-
-// #region Funcoes auxiliares
+/**
+ * @brief Verifica se um vertice existe no grafo.
+ * @param id Identificador do vertice.
+ * @return True se o vertice existe, false caso contrario.
+ */
 bool GrafoLista::existe_vertice(int id) {
     return this->listaAdjVertices->getVertice(id) != nullptr;
 }
 
-// Adiciona um vertice ao grafo
+/**
+ * @brief Adiciona um vertice ao grafo.
+ * @param id Identificador do vertice.
+ * @param peso Peso do vertice (opcional).
+ */
 void GrafoLista::adicionar_vertice(int id, float peso) {
     // Verifica se o vertice ja existe
     if(existe_vertice(id)){
-        cout << "Erro: Vertice " << id << " ja existe!" << endl;                                      /* { DEBUG } */
+        cout << "Erro: Vertice " << id << " ja existe!" << endl;
         return;
     }
 
@@ -38,21 +53,26 @@ void GrafoLista::adicionar_vertice(int id, float peso) {
     this->numVertices++;
 }
 
-// Adiciona uma aresta ao grafo
+/**
+ * @brief Adiciona uma aresta ao grafo.
+ * @param origem Identificador do vertice de origem.
+ * @param destino Identificador do vertice de destino.
+ * @param peso Peso da aresta (opcional).
+ */
 void GrafoLista::adicionar_aresta(int origem, int destino, float peso) {
     // Verifica se o vertice de origem existe
     if(!existe_vertice(origem)){
-        cout << "Erro: Vertice " << origem << " nao existe!" << endl;                                 /* { DEBUG } */
+        cout << "Erro: Vertice " << origem << " nao existe!" << endl;
         return;
     }
     // Verifica se o vertice de destino existe
     if(!existe_vertice(destino)){
-        cout << "Erro: Vertice " << destino << " nao existe!" << endl;                                /* { DEBUG } */
+        cout << "Erro: Vertice " << destino << " nao existe!" << endl;
         return;
     }
     // Verifica se a aresta eh um self-loop
     if(origem == destino){
-        cout << "Erro: Nao eh possivel adicionar aresta. Origem e destino iguais! " << endl;           /* { DEBUG } */
+        cout << "Erro: Nao eh possivel adicionar aresta. Origem e destino iguais!" << endl;
         return;
     }
 
@@ -63,16 +83,20 @@ void GrafoLista::adicionar_aresta(int origem, int destino, float peso) {
     }
 }
 
-// Remove uma aresta do grafo
+/**
+ * @brief Remove uma aresta do grafo.
+ * @param origem Identificador do vertice de origem.
+ * @param destino Identificador do vertice de destino.
+ */
 void GrafoLista::remover_aresta(int origem, int destino) {
     // Verifica se o vertice de origem existe
     if(listaAdjVertices->getVertice(origem) == nullptr){
-        cout << "Erro: Vertice " << origem << " nao existe!" << endl;                                 /* { DEBUG } */
+        cout << "Erro: Vertice " << origem << " nao existe!" << endl;
         return;
     }
     // Verifica se o vertice de destino existe
     if(listaAdjVertices->getVertice(destino) == nullptr){
-        cout << "Erro: Vertice " << destino << " nao existe!" << endl;                                /* { DEBUG } */
+        cout << "Erro: Vertice " << destino << " nao existe!" << endl;
         return;
     }
 
@@ -83,11 +107,14 @@ void GrafoLista::remover_aresta(int origem, int destino) {
     }
 }
 
-// Remove a primeira aresta de um vertice
+/**
+ * @brief Remove a primeira aresta de um vertice.
+ * @param id Identificador do vertice.
+ */
 void GrafoLista::remover_primeira_aresta(int id) {
     // Verifica se o vertice existe
     if(listaAdjVertices->getVertice(id) == nullptr){
-        cout << "Erro: Vertice " << id << " nao existe!" << endl;                                     /* { DEBUG } */
+        cout << "Erro: Vertice " << id << " nao existe!" << endl;
         return;
     }
 
@@ -95,11 +122,14 @@ void GrafoLista::remover_primeira_aresta(int id) {
     this->listaAdjVertices->remover_primeira_aresta(id);
 }
 
-// Remove um vertice do grafo
+/**
+ * @brief Remove um vertice do grafo.
+ * @param id Identificador do vertice.
+ */
 void GrafoLista::remover_vertice(int id){
     // Verifica se o vertice existe
     if(!existe_vertice(id)){
-        cout << "Erro: Vertice " << id << " nao existe!" << endl;                                     /* { DEBUG } */
+        cout << "Erro: Vertice " << id << " nao existe!" << endl;
         return;
     }
 
@@ -108,7 +138,12 @@ void GrafoLista::remover_vertice(int id){
     this->numVertices--;
 }
 
-// Calcula a menor distancia entre dois vertices
+/**
+ * @brief Calcula a menor distancia entre dois vertices.
+ * @param origem Identificador do vertice de origem.
+ * @param destino Identificador do vertice de destino.
+ * @return Menor distancia entre os vertices.
+ */
 int GrafoLista::calcula_menor_dist(int origem, int destino) {
     const int INF = 1000000;
     int dist[numVertices + 1];
@@ -148,7 +183,10 @@ int GrafoLista::calcula_menor_dist(int origem, int destino) {
     return (dist[destino] == INF) ? -1 : dist[destino];
 }
 
-// Percorre todos os pares de vértices e busca a maior das menores distâncias
+/**
+ * @brief Calcula a maior entre as menores distancias de um grafo.
+ * @return Maior entre as menores distancias.
+ */
 int GrafoLista::calcula_maior_menor_dist() {
     int maiorMenorDist = 0;
     int verticeOrigem = -1, verticeDestino = -1;
@@ -175,12 +213,20 @@ int GrafoLista::calcula_maior_menor_dist() {
     return maiorMenorDist;
 }
 
-// Retorna a quantidade de vizinhos de um vertice
+/**
+ * @brief Retorna a quantidade de vizinhos de um vertice.
+ * @param id Identificador do vertice.
+ * @return Numero de vizinhos do vertice.
+ */
 int GrafoLista::get_num_vizinhos(int id) {
     return this->listaAdjVertices->getVertice(id)->getNumVizinhos();
 }
 
-// Funcao de busca em largura
+/**
+ * @brief Realiza a busca em profundidade no grafo.
+ * @param id Identificador do vertice inicial.
+ * @param visitado Vetor de vertices visitados.
+ */
 void GrafoLista::dfs(int id, bool* visitado) {
     if(listaAdjVertices->getVertice(id) == nullptr){
         return;
@@ -194,17 +240,18 @@ void GrafoLista::dfs(int id, bool* visitado) {
         atual = atual->getProximo();
     }
 }
-// #endregion
 
-
-// #region Funcoes imprime
-// Imprime a lista de adjacencia
+/**
+ * @brief Imprime a lista de adjacencia.
+ */
 void GrafoLista::imprimeListaAdj(){
     // Imprime a lista de adjacencia
     listaAdjVertices->imprimir();                                    
 }
 
-// Imprime  os atributos do grafo
+/**
+ * @brief Imprime os atributos do grafo.
+ */
 void GrafoLista::imprimeGrafoLista(){
     cout << "__________________________________________________________________" << endl;
     cout << endl << "--- Grafo Lista ---" << endl;
@@ -212,4 +259,3 @@ void GrafoLista::imprimeGrafoLista(){
     // Imprime as informacoes do grafo
     imprime();                                                      
 }
-// #endregion

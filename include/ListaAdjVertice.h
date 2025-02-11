@@ -1,28 +1,58 @@
-#ifndef LISTA_ADJ_VERTICE_H
-#define LISTA_ADJ_VERTICE_H
+#ifndef LISTA_ADJ_ARESTA_H
+#define LISTA_ADJ_ARESTA_H
 
-#include "NoVertice.h"
+#include "NoAresta.h"
 
-class ListaAdjVertice {
+/**
+ * @class ListaAdjAresta
+ * @brief Classe que representa uma lista de adjacência de arestas.
+ */
+class ListaAdjAresta {
 private:
-    NoVertice* cabeca;          // Ponteiro para o primeiro no da lista
+    NoAresta* cabeca;           ///< Ponteiro para o primeiro no da lista
 
 public:
-    // Construtor e Destrutor
-    ListaAdjVertice();
-    ~ListaAdjVertice();
+    /**
+     * @brief Construtor da classe ListaAdjAresta.
+     */
+    ListaAdjAresta();
 
-    NoVertice* getCabeca();                                         // Retorna a cabeca da lista de adjacencia de arestas
-    int getNumVertices();                                           // Retorna a quantidade de vertices na lista (vertices totais no grafo)
-    NoVertice* getVertice(int id);                                  // Retorna um vertice da lista
-    void adicionar_vertice(int id, float peso);                     // Adiciona um vertice à lista
-    void adicionar_aresta(int origem, int destino, float peso);     // Adiciona uma aresta ao vertice
-    void remover_aresta(int origem, int destino);                   // Remove uma aresta do vertice
-    void remover_primeira_aresta(int id);                           // Remove a primeira aresta do vertice
-    void remover_vertice(int id);                                   // Remove um vertice da lista
+    /**
+     * @brief Destrutor da classe ListaAdjAresta.
+     */
+    ~ListaAdjAresta();
 
-    // Funcoes imprime
-    void imprimir();                                                // Imprime a Lista de adjacencia
+    /**
+     * @brief Retorna a cabeca da lista de adjacencia de arestas.
+     * @return Ponteiro para o primeiro no da lista.
+     */
+    NoAresta* getCabeca();
+
+    /**
+     * @brief Retorna a quantidade de vertices vizinhos.
+     * @return Numero de vertices vizinhos.
+     */
+    int getNumVerticesVizinhos();
+
+    /**
+     * @brief Adiciona uma aresta à lista.
+     * @param origem Identificador do vertice de origem.
+     * @param destino Identificador do vertice de destino.
+     * @param peso Peso da aresta.
+     */
+    void adicionar_aresta(int origem, int destino, float peso);
+
+    /**
+     * @brief Remove uma aresta da lista.
+     * @param origem Identificador do vertice de origem.
+     * @param destino Identificador do vertice de destino.
+     */
+    void remover_aresta(int origem, int destino);
+
+    /**
+     * @brief Remove a primeira aresta da lista.
+     */
+    void remover_primeira_aresta();
 };
 
-#endif // LISTA_ADJ_VERTICE_H
+#endif // LISTA_ADJ_ARESTA_H
