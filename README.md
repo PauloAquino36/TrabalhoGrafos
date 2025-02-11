@@ -93,33 +93,11 @@ g++ -o main main.cpp src/Grafo.cpp src/GrafoMatriz.cpp src/GrafoLista.cpp src/Li
 Para executar o programa, use o comando:
 
 ```
-./main
+./main -d -m entradas/grafo.txt  # Para matriz de adjacência
+./main -d -l entradas/grafo.txt  # Para lista de adjacência
 ```
 
 ### Consideracoes
 
 - O programa carrega um grafo a partir do arquivo grafo.txt.
 - O grafo pode ser representado tanto por lista de adjacencia quanto por matriz de adjacencia.
-- O codigo contem exemplos comentados de como adicionar e remover vertices e arestas, alem de imprimir as representacoes dos grafos.
-
-## Exemplo de Uso
-
-O arquivo main.cpp contem exemplos de uso das classes `GrafoLista` e `GrafoMatriz`. Para testar a representacao por lista de adjacencia, descomente as linhas correspondentes no main.cpp.
-
-```
-// Exemplo de uso com GrafoLista
-GrafoLista grafoLista(0, false, false, false);
-grafoLista.carrega_grafo(&grafoLista, "entradas/grafo.txt");
-grafoLista.imprimeGrafoLista();
-grafoLista.imprimeListaAdj();
-```
-
-Para testar a representacao por matriz de adjacencia, use o codigo ja presente no main.cpp.
-
-```
-// Exemplo de uso com GrafoMatriz
-GrafoMatriz grafoMatriz(0, false, false, false);
-grafoMatriz.carrega_grafo(&grafoMatriz, "entradas/grafo.txt");
-grafoMatriz.imprimeGrafoMatriz();
-grafoMatriz.imprimirMatrizAdj();
-```
