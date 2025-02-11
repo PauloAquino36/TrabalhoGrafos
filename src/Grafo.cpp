@@ -95,10 +95,6 @@ bool Grafo::eh_completo()
 // Imprime os atributos do grafo
 void Grafo::imprime()
 {
-    cout << "Excluindo Noh 1..." << endl;
-    this->remover_vertice(1);
-    cout << "Excluindo primeira aresta do Noh 2..." << endl << endl;
-    this->remover_primeira_aresta(2);
     cout << "Grau: " << get_grau() << endl;
     cout << "Ordem: " << numVertices << endl;
     cout << "Direcionado: " << (eh_direcionado() ? "Sim" : "Nao") << endl;
@@ -106,8 +102,6 @@ void Grafo::imprime()
     cout << "Vertices ponderados: " << (vertice_ponderado() ? "Sim" : "Nao") << endl;
     cout << "Arestas ponderadas: " << (aresta_ponderada() ? "Sim" : "Nao") << endl;
     cout << "Completo: " << (eh_completo() ? "Sim" : "Nao") << endl;
-    this->calcula_maior_menor_dist();
-    cout << "__________________________________________________________________" << endl << endl;
 }
 
 // Carrega o grafo a partir de um arquivo txt

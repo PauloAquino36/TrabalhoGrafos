@@ -17,17 +17,27 @@ int main(int argc, char* argv[]) {
     string arquivo = "./entradas/" + string(argv[3]);
 
     if (modo == "-m") {
-        cout << "============================== MATRIZ ==============================" << endl;
+        cout << endl << "============================== MATRIZ ==============================" << endl << endl;
         GrafoMatriz grafoMatriz(0, false, false, false);
         grafoMatriz.carrega_grafo(&grafoMatriz, arquivo);
+        cout << "Excluindo Noh 1..." << endl;
+        grafoMatriz.remover_vertice(1);
+        cout << "Excluindo primeira aresta do Noh 2..." << endl;
+        grafoMatriz.remover_primeira_aresta(2);
         grafoMatriz.imprimeGrafoMatriz();
-        cout << "============================== FIM MATRIZ ==============================" << endl << endl;
+        grafoMatriz.calcula_maior_menor_dist();
+        cout << endl << "============================== FIM MATRIZ ==============================" << endl << endl;
     } else if (modo == "-l") {
-        cout << "============================== LISTA ==============================" << endl;
+        cout << endl << "============================== LISTA ==============================" << endl << endl;
         GrafoLista grafoLista(0, false, false, false);
         grafoLista.carrega_grafo(&grafoLista, arquivo);
+        cout << "Excluindo Noh 1..." << endl;
+        grafoLista.remover_vertice(1);
+        cout << "Excluindo primeira aresta do Noh 2..." << endl ;
+        grafoLista.remover_primeira_aresta(2);
         grafoLista.imprimeGrafoLista();
-        cout << "============================== FIM LISTA ==============================" << endl << endl;
+        grafoLista.calcula_maior_menor_dist();
+        cout << endl << "============================== FIM LISTA ==============================" << endl << endl;
     } else {
         cerr << "Use ./main -d -m grafo.txt  ou ./main -d -l grafo.txt" << endl;
         return 1;
