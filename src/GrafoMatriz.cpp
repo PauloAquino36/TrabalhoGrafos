@@ -148,6 +148,29 @@ void GrafoMatriz::remover_aresta(int origem, int destino)
     }
 }
 
+// Remove a primeira aresta de um vertice
+void GrafoMatriz::remover_primeira_aresta(int id)
+{
+    if (id < 0 || id > numVertices)
+    {
+        cout << "Erro: indice de vertice invalido." << endl;
+        return;
+    }
+
+    for (int i = 0; i <= numVertices; i++)
+    {
+        if (matrizAdj[id][i] != 0)
+        {
+            matrizAdj[id][i] = 0;
+            if (!direcionado)
+            {
+                matrizAdj[i][id] = 0;
+            }
+            return;
+        }
+    }
+}
+
 // Adiciona uma aresta ao grafo
 void GrafoMatriz::adicionar_aresta(int origem, int destino, int peso)
 {

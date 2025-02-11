@@ -23,6 +23,7 @@ public:
     void adicionar_aresta(int origem, int destino, int peso = 1) override;      // Adiciona uma aresta no grafo
     void remover_vertice(int id) override;                                      // Remove um vertice do grafo
     void remover_aresta(int origem, int destino) override;                      // Remove uma aresta do grafo
+    void remover_primeira_aresta(int id) override;                              // Remove a primeira aresta de um vertice
 
     int calcula_menor_dist(int origem, int destino)override;                            // Calcula a menor distancia entre dois vertices
     int calcula_maior_menor_dist()override;                                            // Calcula a maior menor distancia entre dois vertices
