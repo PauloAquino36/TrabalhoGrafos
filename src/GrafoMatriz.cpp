@@ -248,32 +248,6 @@ int GrafoMatriz::calcula_menor_dist(int origem, int destino)
     }
 
     int menorDist = dist[destino];
-    // Verifica se ha um caminho ate o destino
-    if (menorDist == INF)
-    {
-        // Nao ha caminho entre origem e destino
-    }
-    else
-    {
-        // Caminho encontrado
-        int* caminho = new int[numVertices];
-        int count = 0;
-        for (int at = destino; at != -1; at = prev[at])
-        {
-            caminho[count++] = at;
-        }
-
-        // Imprime o caminho na ordem correta
-        for (int i = count - 1; i >= 0; i--) {
-            // std::cout << caminho[i] + 1;
-            if (i > 0) {
-                // std::cout << " -> ";
-            }
-        }
-        // std::cout << std::endl;
-
-        delete[] caminho;
-    }
 
     delete[] dist;
     delete[] prev;
