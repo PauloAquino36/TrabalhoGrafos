@@ -14,7 +14,6 @@ public:
     ~GrafoMatriz();
 
     // Funcoes auxiliares
-    void atualiza_grafo(int numVertices) override;                              // Redimensiona o grafo
     int grauVertice(int vertice);                                               // Retorna um vertice especifico do grafo
     int get_num_vizinhos(int id) override;                                      // Retorna o numero de vizinhos de um vertice
     void dfs(int id, bool* visitado) override;   

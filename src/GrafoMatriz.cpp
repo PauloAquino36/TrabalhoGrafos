@@ -49,28 +49,6 @@ GrafoMatriz::~GrafoMatriz()
 // #endregion
 
 // #region Funcoes auxiliares
-// Redimensiona o grafo
-void GrafoMatriz::atualiza_grafo(int numVertices)
-{
-    // Verifica se a matrizAdj já foi alocada antes de liberar a memória
-    if (matrizAdj != nullptr)
-    {
-        for (int i = 0; i < this->tamanhoMatriz; i++)
-        {
-            delete[] matrizAdj[i]; // Libera cada linha da matriz
-        }
-        delete[] matrizAdj;  // Libera o array de ponteiros
-        matrizAdj = nullptr; // Evita ponteiro danificado
-    }
-
-    // Aloca uma nova matriz de adjacência com o novo tamanho
-    matrizAdj = new int *[tamanhoMatriz];
-    for (int i = 0; i < tamanhoMatriz; i++)
-    {
-        matrizAdj[i] = new int[tamanhoMatriz](); // Inicializa automaticamente com 0
-    }
-}
-
 // Adiciona um vértice ao grafo
 void GrafoMatriz::adicionar_vertice(int id, int peso)
 {
