@@ -19,8 +19,8 @@ public:
     bool existe_vertice(int id) override;                                                // Verifica se um vertice existe no grafo
     
     // Funcoes de maniplacao de vertices e arestas
-    void adicionar_vertice(int id, int peso = 0) override;                      // Adiciona um vertice no grafo
-    void adicionar_aresta(int origem, int destino, int peso = 0) override;      // Adiciona uma aresta no grafo
+    void adicionar_vertice(int id, float peso = 0.0) override;                  // Adiciona um vertice no grafo
+    void adicionar_aresta(int origem, int destino, float peso = 1.0) override;  // Adiciona uma aresta no grafo
     void remover_vertice(int id) override;                                      // Remove um vertice do grafo
     void remover_aresta(int origem, int destino) override;                      // Remove uma aresta do grafo
     void remover_primeira_aresta(int id) override;                              // Remove a primeira aresta de um vertice

@@ -4,7 +4,7 @@
 using namespace std;
 
 // Construtor
-NoAresta::NoAresta(int idVerticeOrigem, int idVerticeDestino, int peso) {
+NoAresta::NoAresta(int idVerticeOrigem, int idVerticeDestino, float peso) {
     this->idVerticeOrigem = idVerticeOrigem;
     this->idVerticeDestino = idVerticeDestino;
     this->peso = peso;

@@ -5,12 +5,12 @@ class NoAresta {
 private:
     int idVerticeOrigem;                    // Identificador do vertice de origem
     int idVerticeDestino;                   // Identificador do vertice de destino
-    int peso;                               // Peso da aresta
+    float peso;                               // Peso da aresta
     NoAresta* proximo;                      // Ponteiro para o proximo no aresta
 
 public:
     // Construtor e Destrutor
-    NoAresta(int idVerticeOrigem, int idVerticeDestino, int peso);
+    NoAresta(int idVerticeOrigem, int idVerticeDestino, float peso);
     ~NoAresta();
 
     // Getters e Setters

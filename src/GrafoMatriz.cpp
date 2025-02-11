@@ -50,7 +50,7 @@ GrafoMatriz::~GrafoMatriz()
 
 // #region Funcoes auxiliares
 // Adiciona um vértice ao grafo
-void GrafoMatriz::adicionar_vertice(int id, int peso)
+void GrafoMatriz::adicionar_vertice(int id, float peso)
 {
     int novoNumVertices = numVertices + 1;
     numVertices = novoNumVertices;
@@ -172,7 +172,7 @@ void GrafoMatriz::remover_primeira_aresta(int id)
 }
 
 // Adiciona uma aresta ao grafo
-void GrafoMatriz::adicionar_aresta(int origem, int destino, int peso)
+void GrafoMatriz::adicionar_aresta(int origem, int destino, float peso)
 {
     // cout << "Num Vertices:" << numVertices << endl;
     // cout << "Origem: " << origem << " / Destino: " << destino << " / Num Vertices:" << numVertices << endl;

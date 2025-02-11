@@ -46,7 +46,7 @@ NoVertice* ListaAdjVertice::getVertice(int id) {
     return nullptr;
 }
 
-void ListaAdjVertice::adicionar_vertice(int id, int peso) {
+void ListaAdjVertice::adicionar_vertice(int id, float peso) {
     // Adiciona um novo vertice
     NoVertice* novoNo = new NoVertice(id, peso);
     novoNo->setProximo(this->cabeca);
@@ -55,7 +55,7 @@ void ListaAdjVertice::adicionar_vertice(int id, int peso) {
     //cout << "Adicionado Vertice " << novoNo->getIdVertice() << endl;                    /* { DEBUG } */
 }
 
-void ListaAdjVertice::adicionar_aresta(int origem, int destino, int peso) {
+void ListaAdjVertice::adicionar_aresta(int origem, int destino, float peso) {
     NoVertice* atual = this->cabeca;
     while (atual != nullptr) {
         if (atual->getIdVertice() == origem) {

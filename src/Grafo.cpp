@@ -86,7 +86,7 @@ void Grafo::imprime()
 {
     cout << "Excluindo Noh 1..." << endl;
     this->remover_vertice(1);
-    cout << "Excluindo primeira aresta do Noh 2..." << endl;
+    cout << "Excluindo primeira aresta do Noh 2..." << endl << endl;
     this->remover_primeira_aresta(2);
     cout << "Grau: " << get_grau() << endl;
     cout << "Ordem: " << numVertices << endl;
@@ -112,11 +112,9 @@ void Grafo::carrega_grafo(Grafo* grafo, const string& nomeArquivo) {
     grafo->ponderadoVertices = ponderadoVertices;
     grafo->ponderadoArestas = ponderadoArestas;
 
-    //grafo->atualiza_grafo(numVertices);
-
     for(int i = 1; i <= numVertices; i++) {
         if(ponderadoVertices == 1) {
-            int peso;
+            float peso;
             arquivo >> peso;
             grafo->adicionar_vertice(i, peso);
         } else {
@@ -128,7 +126,7 @@ void Grafo::carrega_grafo(Grafo* grafo, const string& nomeArquivo) {
     int origem, destino;
     while (arquivo >> origem >> destino) {
         if (ponderadoArestas == 1) {
-            int peso;
+            float peso;
             arquivo >> peso;
             grafo->adicionar_aresta(origem, destino, peso);
         } else {

@@ -23,7 +23,7 @@ NoAresta* ListaAdjAresta::getCabeca() {
     return this->cabeca;
 }
 
-void ListaAdjAresta::adicionar_aresta(int origem, int destino, int peso) {
+void ListaAdjAresta::adicionar_aresta(int origem, int destino, float peso) {
     // Verifica se a aresta ja existe
     NoAresta* atual = this->cabeca;
     while (atual != nullptr) {

@@ -4,7 +4,7 @@
 using namespace std;
 
 // Construtor
-NoVertice::NoVertice(int idVertice, int peso) {
+NoVertice::NoVertice(int idVertice, float peso) {
     this->idVertice = idVertice;
     this->peso = peso;
     this->proximo = nullptr;
@@ -50,7 +50,7 @@ int NoVertice::getNumVizinhos() {
     return this->arestas->getNumVerticesVizinhos();
 }
 
-void NoVertice::adicionar_aresta(int destino, int peso) {
+void NoVertice::adicionar_aresta(int destino, float peso) {
     this->arestas->adicionar_aresta(this->idVertice, destino, peso);
     this->numArestas++;
 }

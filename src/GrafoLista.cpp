@@ -24,7 +24,7 @@ bool GrafoLista::existe_vertice(int id) {
     return this->listaAdjVertices->getVertice(id) != nullptr;
 }
 
-void GrafoLista::adicionar_vertice(int id, int peso) {
+void GrafoLista::adicionar_vertice(int id, float peso) {
     // Verifica se o vertice ja existe
     if(existe_vertice(id)){
         cout << "Erro: Vertice " << id << " ja existe!" << endl;                                      /* { DEBUG } */
@@ -36,7 +36,7 @@ void GrafoLista::adicionar_vertice(int id, int peso) {
     this->numVertices++;
 }
 
-void GrafoLista::adicionar_aresta(int origem, int destino, int peso) {
+void GrafoLista::adicionar_aresta(int origem, int destino, float peso) {
     // Verifica se o vertice de origem existe
     if(!existe_vertice(origem)){
         cout << "Erro: Vertice " << origem << " nao existe!" << endl;                                 /* { DEBUG } */
@@ -184,7 +184,7 @@ int GrafoLista::calcula_menor_dist(int origem, int destino) {
         NoAresta* atual = listaAdjVertices->getVertice(u)->getArestas()->getCabeca();
         while (atual != nullptr) {
             int v = atual->getDestino();
-            int peso = atual->getPeso();
+            float peso = atual->getPeso();
             if (dist[u] + peso < dist[v]) {
                 dist[v] = dist[u] + peso;
             }
