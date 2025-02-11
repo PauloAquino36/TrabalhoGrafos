@@ -32,23 +32,23 @@ public:
     static void carrega_grafo(Grafo* grafo, const string& nomeArquivo);             // Gera um grafo a partir do arquivo grafo.txt
    
     // Funcao imprime
-    void imprime();        // Imprime os atributos do grafo
+    void imprime();                     // Imprime os atributos do grafo
 
     // Funcoes auxiliares abstratas que serao implementadas nas classes filhas
-    virtual void atualiza_grafo(int numVertices){};                                 // Redimensiona o grafo
     virtual ListaAdjAresta* get_vizinhos(int id) { return nullptr; };               // Retorna os vertices vizinhos de um vertice     
     virtual int get_num_vizinhos(int id) { return 0; };                             // Retorna o numero de vizinhos de um vertice
     virtual void dfs(int v, bool* visitado){};                                      // Realiza a busca em profundidade
+    virtual bool existe_vertice(int id)=0;                                          // Verifica se um vertice existe
 
-    virtual void adicionar_vertice(int id, float peso = 0.0){};                         // Adiciona um vertice no grafo
-    virtual void adicionar_aresta(int origem, int destino, float peso = 1.0){};         // Adiciona uma aresta no grafo
+    // Funcoes de manipulacao de vertices e arestas abstratas que serao implementadas nas classes filhas
+    virtual void adicionar_vertice(int id, float peso = 0.0){};                     // Adiciona um vertice no grafo
+    virtual void adicionar_aresta(int origem, int destino, float peso = 1.0){};     // Adiciona uma aresta no grafo
     virtual void remover_primeira_aresta(int id){};                                 // Remove a primeira aresta de um vertice
     virtual void remover_vertice(int id){};                                         // Remove um vertice do grafo
     virtual void remover_aresta(int origem, int destino){};                         // Remove uma aresta do grafo
 
-    virtual int calcula_menor_dist(int origem, int destino)=0;                     // Calcula a menor distancia entre dois vertices
+    virtual int calcula_menor_dist(int origem, int destino)=0;                      // Calcula a menor distancia entre dois vertices
     virtual int calcula_maior_menor_dist()=0;                                       // Calcula a maior menor distancia entre dois vertices
-    virtual bool existe_vertice(int id)=0;                                          // Verifica se um vertice existe
 };
 
 #endif

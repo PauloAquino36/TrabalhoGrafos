@@ -16,7 +16,7 @@ public:
     // Funcoes auxiliares
     int get_num_vizinhos(int id) override;                                      // Retorna o numero de vizinhos de um vertice do grafo
     void dfs(int id, bool* visitado) override;                                  // Realiza a busca em profundidade no grafo
-    bool existe_vertice(int id) override;                                                // Verifica se um vertice existe no grafo
+    bool existe_vertice(int id) override;                                       // Verifica se um vertice existe no grafo
     
     // Funcoes de maniplacao de vertices e arestas
     void adicionar_vertice(int id, float peso = 0.0) override;                  // Adiciona um vertice no grafo
@@ -27,7 +27,6 @@ public:
 
     int calcula_menor_dist(int origem, int destino);                            // Calcula a menor distancia entre dois vertices
     int calcula_maior_menor_dist();                                             // Calcula a maior entre as menores distancias de um grafo
-
 
     // Funcoes imprime
     void imprimeGrafoLista();                                                   // Imprime as informacoes do grafo

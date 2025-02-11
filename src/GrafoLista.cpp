@@ -17,13 +17,15 @@ GrafoLista::~GrafoLista()
     // Libera a memoria alocada para os vertices
     delete this->listaAdjVertices;
 }
+// #endregion
+
 
 // #region Funcoes auxiliares
-
 bool GrafoLista::existe_vertice(int id) {
     return this->listaAdjVertices->getVertice(id) != nullptr;
 }
 
+// Adiciona um vertice ao grafo
 void GrafoLista::adicionar_vertice(int id, float peso) {
     // Verifica se o vertice ja existe
     if(existe_vertice(id)){
@@ -36,6 +38,7 @@ void GrafoLista::adicionar_vertice(int id, float peso) {
     this->numVertices++;
 }
 
+// Adiciona uma aresta ao grafo
 void GrafoLista::adicionar_aresta(int origem, int destino, float peso) {
     // Verifica se o vertice de origem existe
     if(!existe_vertice(origem)){
@@ -60,6 +63,7 @@ void GrafoLista::adicionar_aresta(int origem, int destino, float peso) {
     }
 }
 
+// Remove uma aresta do grafo
 void GrafoLista::remover_aresta(int origem, int destino) {
     // Verifica se o vertice de origem existe
     if(listaAdjVertices->getVertice(origem) == nullptr){
@@ -79,6 +83,7 @@ void GrafoLista::remover_aresta(int origem, int destino) {
     }
 }
 
+// Remove a primeira aresta de um vertice
 void GrafoLista::remover_primeira_aresta(int id) {
     // Verifica se o vertice existe
     if(listaAdjVertices->getVertice(id) == nullptr){
@@ -90,6 +95,7 @@ void GrafoLista::remover_primeira_aresta(int id) {
     this->listaAdjVertices->remover_primeira_aresta(id);
 }
 
+// Remove um vertice do grafo
 void GrafoLista::remover_vertice(int id){
     // Verifica se o vertice existe
     if(!existe_vertice(id)){
@@ -102,60 +108,7 @@ void GrafoLista::remover_vertice(int id){
     this->numVertices--;
 }
 
-int GrafoLista::get_num_vizinhos(int id) {
-    return this->listaAdjVertices->getVertice(id)->getNumVizinhos();
-}
-
-void GrafoLista::dfs(int id, bool* visitado) {
-    if(listaAdjVertices->getVertice(id) == nullptr){
-        return;
-    }
-    visitado[id] = true;
-    NoAresta* atual = this->listaAdjVertices->getVertice(id)->getArestas()->getCabeca();
-    while(atual != nullptr){
-        if(!visitado[atual->getDestino()]){
-            dfs(atual->getDestino(), visitado);
-        }
-        atual = atual->getProximo();
-    }
-}
-
-// Percorre todos os pares de vértices e busca a maior das menores distâncias
-int GrafoLista::calcula_maior_menor_dist() {
-    int maiorMenorDist = 0;
-    int verticeOrigem = -1, verticeDestino = -1;
-
-    for (int i = 1; i <= numVertices; i++) {
-        for (int j = 1; j <= numVertices; j++) {
-            if (i != j) {
-                int menorDist = calcula_menor_dist(i, j);
-                if (menorDist != -1 && menorDist > maiorMenorDist) {
-                    maiorMenorDist = menorDist;
-                    verticeOrigem = i;
-                    verticeDestino = j;
-                }
-            }
-        }
-    }
-
-    if (verticeOrigem != -1 && verticeDestino != -1) {
-        cout << "Maior menor distancia: (" << verticeOrigem << "-" << verticeDestino << ") = " << maiorMenorDist << endl;
-    } else {
-        cout << "Nao ha caminhos validos no grafo." << endl;
-    }
-
-    return maiorMenorDist;
-}
-
-// #endregion
-
-// #region Funcoes imprime
-void GrafoLista::imprimeListaAdj(){
-    // Imprime a lista de adjacencia
-    listaAdjVertices->imprimir();                                    
-}
-
-
+// Calcula a menor distancia entre dois vertices
 int GrafoLista::calcula_menor_dist(int origem, int destino) {
     const int INF = 1000000;
     int dist[numVertices + 1];
@@ -195,7 +148,63 @@ int GrafoLista::calcula_menor_dist(int origem, int destino) {
     return (dist[destino] == INF) ? -1 : dist[destino];
 }
 
+// Percorre todos os pares de vértices e busca a maior das menores distâncias
+int GrafoLista::calcula_maior_menor_dist() {
+    int maiorMenorDist = 0;
+    int verticeOrigem = -1, verticeDestino = -1;
 
+    for (int i = 1; i <= numVertices; i++) {
+        for (int j = 1; j <= numVertices; j++) {
+            if (i != j) {
+                int menorDist = calcula_menor_dist(i, j);
+                if (menorDist != -1 && menorDist > maiorMenorDist) {
+                    maiorMenorDist = menorDist;
+                    verticeOrigem = i;
+                    verticeDestino = j;
+                }
+            }
+        }
+    }
+
+    if (verticeOrigem != -1 && verticeDestino != -1) {
+        cout << "Maior menor distancia: (" << verticeOrigem << "-" << verticeDestino << ") = " << maiorMenorDist << endl;
+    } else {
+        cout << "Nao ha caminhos validos no grafo." << endl;
+    }
+
+    return maiorMenorDist;
+}
+
+// Retorna a quantidade de vizinhos de um vertice
+int GrafoLista::get_num_vizinhos(int id) {
+    return this->listaAdjVertices->getVertice(id)->getNumVizinhos();
+}
+
+// Funcao de busca em largura
+void GrafoLista::dfs(int id, bool* visitado) {
+    if(listaAdjVertices->getVertice(id) == nullptr){
+        return;
+    }
+    visitado[id] = true;
+    NoAresta* atual = this->listaAdjVertices->getVertice(id)->getArestas()->getCabeca();
+    while(atual != nullptr){
+        if(!visitado[atual->getDestino()]){
+            dfs(atual->getDestino(), visitado);
+        }
+        atual = atual->getProximo();
+    }
+}
+// #endregion
+
+
+// #region Funcoes imprime
+// Imprime a lista de adjacencia
+void GrafoLista::imprimeListaAdj(){
+    // Imprime a lista de adjacencia
+    listaAdjVertices->imprimir();                                    
+}
+
+// Imprime  os atributos do grafo
 void GrafoLista::imprimeGrafoLista(){
     cout << "__________________________________________________________________" << endl;
     cout << endl << "--- Grafo Lista ---" << endl;
@@ -203,3 +212,4 @@ void GrafoLista::imprimeGrafoLista(){
     // Imprime as informacoes do grafo
     imprime();                                                      
 }
+// #endregion

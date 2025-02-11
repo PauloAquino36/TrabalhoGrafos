@@ -4,6 +4,7 @@
 
 using namespace std;
 
+// #region Construtor e Destrutor
 ListaAdjVertice::ListaAdjVertice() {
     this->cabeca = nullptr;
 }
@@ -17,14 +18,16 @@ ListaAdjVertice::~ListaAdjVertice() {
         atual = next;
     }
 }
+// #endregion
 
+
+// Retorna o primeiro no da lista (primeiro vertice do grafo)
 NoVertice* ListaAdjVertice::getCabeca() {
-    // Retorna o primeiro no da lista
     return this->cabeca;
 }
 
+// Retorna a quantidade de vertices na lista / quantidade total de vertices no grafo
 int ListaAdjVertice::getNumVertices() {
-    // Retorna a quantidade de vertices na lista
     int tamanho = 0;
     NoVertice* atual = this->cabeca;
     while (atual != nullptr) {
@@ -34,8 +37,8 @@ int ListaAdjVertice::getNumVertices() {
     return tamanho;
 }
 
+// Retorna o vertice[id] da lista
 NoVertice* ListaAdjVertice::getVertice(int id) {
-    // Retorna o vertice[id] da lista
     NoVertice* atual = this->cabeca;
     while (atual != nullptr) {
         if (atual->getIdVertice() == id) {
@@ -46,8 +49,8 @@ NoVertice* ListaAdjVertice::getVertice(int id) {
     return nullptr;
 }
 
+// Adiciona um vertice a lista
 void ListaAdjVertice::adicionar_vertice(int id, float peso) {
-    // Adiciona um novo vertice
     NoVertice* novoNo = new NoVertice(id, peso);
     novoNo->setProximo(this->cabeca);
     this->cabeca = novoNo;
@@ -55,6 +58,7 @@ void ListaAdjVertice::adicionar_vertice(int id, float peso) {
     //cout << "Adicionado Vertice " << novoNo->getIdVertice() << endl;                    /* { DEBUG } */
 }
 
+// Adiciona uma aresta ao vertice
 void ListaAdjVertice::adicionar_aresta(int origem, int destino, float peso) {
     NoVertice* atual = this->cabeca;
     while (atual != nullptr) {
@@ -65,6 +69,7 @@ void ListaAdjVertice::adicionar_aresta(int origem, int destino, float peso) {
     }
 }
 
+// Remove uma aresta do vertice
 void ListaAdjVertice::remover_aresta(int origem, int destino) {
     NoVertice* atual = this->cabeca;
     while (atual != nullptr) {
@@ -75,6 +80,7 @@ void ListaAdjVertice::remover_aresta(int origem, int destino) {
     }
 }
 
+// Remove a primeira aresta do vertice
 void ListaAdjVertice::remover_primeira_aresta(int id) {
     NoVertice* atual = this->cabeca;
     while (atual != nullptr) {
@@ -85,6 +91,7 @@ void ListaAdjVertice::remover_primeira_aresta(int id) {
     }
 }
 
+// Remove um vertice da lista
 void ListaAdjVertice::remover_vertice(int id) {
     NoVertice* atual = this->cabeca;
     NoVertice* anterior = nullptr;
@@ -132,6 +139,7 @@ void ListaAdjVertice::remover_vertice(int id) {
 
 }
 
+// Imprime a lista de adjacencia
 void ListaAdjVertice::imprimir() {
     // Imprime a lista de adjacencia
     cout << "__________________________________________________________________" << endl;

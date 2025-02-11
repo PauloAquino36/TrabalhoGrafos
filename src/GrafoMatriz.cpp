@@ -48,6 +48,7 @@ GrafoMatriz::~GrafoMatriz()
 }
 // #endregion
 
+
 // #region Funcoes auxiliares
 // Adiciona um vértice ao grafo
 void GrafoMatriz::adicionar_vertice(int id, float peso)
@@ -288,7 +289,7 @@ int GrafoMatriz::calcula_menor_dist(int origem, int destino)
     return menorDist;
 }
 
-// Calcula a maior menor distancia entre todos os pares de vertices
+// Percorre todos os pares de vértices e busca a maior das menores distâncias
 int GrafoMatriz::calcula_maior_menor_dist() {
     int maiorMenorDist = 0;
     int verticeOrigem = -1;

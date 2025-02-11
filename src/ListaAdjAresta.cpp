@@ -4,6 +4,7 @@
 
 using namespace std;
 
+// #region Construtor e Destrutor
 ListaAdjAresta::ListaAdjAresta() {
     this->cabeca = nullptr;
 }
@@ -17,12 +18,15 @@ ListaAdjAresta::~ListaAdjAresta() {
         atual = next;
     }
 }
+// #endregion
 
+// #region Funcoes auxiliares
+// Retorna o primeiro no da lista (primeira aresta do vertice)
 NoAresta* ListaAdjAresta::getCabeca() {
-    // Retorna o primeiro no da lista
     return this->cabeca;
 }
 
+// Adiciona uma aresta a lista
 void ListaAdjAresta::adicionar_aresta(int origem, int destino, float peso) {
     // Verifica se a aresta ja existe
     NoAresta* atual = this->cabeca;
@@ -41,6 +45,7 @@ void ListaAdjAresta::adicionar_aresta(int origem, int destino, float peso) {
     //cout << "Adicionada Aresta " << novaAresta->getOrigem() << " -> " << novaAresta->getDestino() << endl;          /* { DEBUG } */
 }
 
+// Remove uma aresta da lista
 void ListaAdjAresta::remover_aresta(int origem, int destino) {
     NoAresta* atual = this->cabeca;
     NoAresta* anterior = nullptr;
@@ -61,6 +66,7 @@ void ListaAdjAresta::remover_aresta(int origem, int destino) {
     //cout << "Erro: Aresta " << origem << " -> " << destino << " nao existe." <<  endl;                              /* { DEBUG } */
 }
 
+// Remove a primeira aresta da lista
 void ListaAdjAresta::remover_primeira_aresta() {
     if (this->cabeca == nullptr) {
         cout << "Vertice nao possui arestas" << endl;
@@ -79,8 +85,8 @@ void ListaAdjAresta::remover_primeira_aresta() {
     remover_aresta(menor->getOrigem(), menor->getDestino());
 }
 
+// Retorna o tamanho da lista / numero de vertices vizinhos / grau do vertice
 int ListaAdjAresta::getNumVerticesVizinhos() {
-    // Retorna o tamanho da lista / numero de vertices vizinhos / grau do vertice
     int tamanho = 0;
     NoAresta* atual = this->cabeca;
     while (atual != nullptr) {
