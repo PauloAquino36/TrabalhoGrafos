@@ -8,13 +8,13 @@ using namespace std;
 // #region Contrutor e Destrutor
 GrafoLista::GrafoLista(int numVertices, bool direcionado, bool ponderadoVertices, bool ponderadoArestas) : Grafo(numVertices, direcionado, ponderadoVertices, ponderadoArestas)
 {
-    // Inicializa a lista de adjacência
+    // Inicializa a lista de adjacencia
     this->listaAdjVertices = new ListaAdjVertice();                 
 }
 
 GrafoLista::~GrafoLista()
 {
-    // Libera a memória alocada para os vértices
+    // Libera a memoria alocada para os vertices
     delete this->listaAdjVertices;
 }
 
@@ -132,7 +132,7 @@ int GrafoLista::calcula_maior_menor_dist() {
 
 // #region Funcoes imprime
 void GrafoLista::imprimeListaAdj(){
-    // Imprime a lista de adjacência
+    // Imprime a lista de adjacencia
     listaAdjVertices->imprimir();                                    
 }
 
@@ -175,6 +175,6 @@ void GrafoLista::imprimeGrafoLista(){
     cout << "__________________________________________________________________" << endl;
     cout << endl << "--- Grafo Lista ---" << endl;
     cout << "__________________________________________________________________" << endl << endl;
-    // Imprime as informações do grafo
+    // Imprime as informacoes do grafo
     imprime();                                                      
 }

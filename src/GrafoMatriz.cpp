@@ -3,12 +3,12 @@
 #include <iostream>
 #include <cmath>
 #include <string>
-#include <iomanip> // Biblioteca necessária para setw()
+#include <iomanip> // Biblioteca necessaria para setw()
 
 
 using namespace std;
 
-// Contrutor e Destrutor
+// #region Contrutor e Destrutor
 GrafoMatriz::GrafoMatriz(int numVertices, bool direcionado, bool ponderadoVertices, bool ponderadoArestas) : Grafo(numVertices, direcionado, ponderadoVertices, ponderadoArestas)
 {
     tamanhoMatriz = 10;
@@ -37,7 +37,7 @@ GrafoMatriz::GrafoMatriz(int numVertices, bool direcionado, bool ponderadoVertic
 GrafoMatriz::~GrafoMatriz()
 {
     if (matrizAdj != nullptr)
-    { // Verifica se há memória alocada
+    { // Verifica se ha memoria alocada
         for (int i = 0; i < numVertices; i++)
         {
             delete[] matrizAdj[i];
@@ -46,9 +46,10 @@ GrafoMatriz::~GrafoMatriz()
         matrizAdj = nullptr; // Evita ponteiro danificado
     }
 }
+// #endregion
 
-// Funcoes auxiliares
-
+// #region Funcoes auxiliares
+// Redimensiona o grafo
 void GrafoMatriz::atualiza_grafo(int numVertices)
 {
     // Verifica se a matrizAdj já foi alocada antes de liberar a memória
@@ -78,9 +79,9 @@ void GrafoMatriz::adicionar_vertice(int id, int peso)
 
     if (novoNumVertices >= tamanhoMatriz)
     {
-        cout << "Aumentando matriz de adjacência...\n";
+        cout << "Aumentando matriz de adjacencia...\n";
         int antigoTamanhoMatriz = tamanhoMatriz;
-        tamanhoMatriz = max(tamanhoMatriz * 2, novoNumVertices); // Expansão mais segura
+        tamanhoMatriz = max(tamanhoMatriz * 2, novoNumVertices); // Expansao mais segura
         int **novaMatriz = new int *[tamanhoMatriz];
 
         for (int i = 0; i < tamanhoMatriz; i++)
@@ -98,7 +99,7 @@ void GrafoMatriz::adicionar_vertice(int id, int peso)
         }
 
         // Libera a matriz antiga corretamente
-        for (int i = 0; i < antigoTamanhoMatriz; i++) // Correção aqui
+        for (int i = 0; i < antigoTamanhoMatriz; i++) // Correcao aqui
         {
             delete[] matrizAdj[i];
         }
@@ -108,13 +109,12 @@ void GrafoMatriz::adicionar_vertice(int id, int peso)
     }
 }
 
-
-// Remove um vértice do grafo
+// Remove um vertice do grafo
 void GrafoMatriz::remover_vertice(int id)
 {
     if (id < 0 || id >= numVertices)
     {
-        cout << "Erro: índice de vértice inválido.\n";
+        cout << "Erro: indice de vertice invalido.\n";
         return;
     }
 
@@ -126,7 +126,7 @@ void GrafoMatriz::remover_vertice(int id)
         novaMatriz[i] = new int[tamanhoMatriz]();
     }
 
-    // Copia os valores da matriz antiga para a nova, excluindo o vértice removido
+    // Copia os valores da matriz antiga para a nova, excluindo o vertice removido
     for (int i = 0, ni = 0; i < tamanhoMatriz; i++)
     {
         if (i == id)
@@ -153,6 +153,8 @@ void GrafoMatriz::remover_vertice(int id)
     matrizAdj = novaMatriz;
     numVertices = novoNumVertices;
 }
+
+// Remove uma aresta do grafo
 void GrafoMatriz::remover_aresta(int origem, int destino)
 {
     if (origem < 0 || origem >= numVertices || destino < 0 || destino >= numVertices)
@@ -167,6 +169,7 @@ void GrafoMatriz::remover_aresta(int origem, int destino)
         matrizAdj[destino][origem] = 0;
     }
 }
+
 // Adiciona uma aresta ao grafo
 void GrafoMatriz::adicionar_aresta(int origem, int destino, int peso)
 {
@@ -198,6 +201,7 @@ void GrafoMatriz::adicionar_aresta(int origem, int destino, int peso)
         }
     }
 }
+
 // Calcula menor distancia entre dois vertices
 int GrafoMatriz::calcula_menor_dist(int origem, int destino)
 {
@@ -220,7 +224,7 @@ int GrafoMatriz::calcula_menor_dist(int origem, int destino)
     {
         int u = -1;
 
-        // Encontra o vértice não visitado com a menor distância
+        // Encontra o vertice nao visitado com a menor distancia
         for (int j = 0; j < numVertices; j++)
         {
             if (!visitado[j] && (u == -1 || dist[j] < dist[u]))
@@ -229,7 +233,7 @@ int GrafoMatriz::calcula_menor_dist(int origem, int destino)
             }
         }
 
-        // Se a menor distância é infinita, todos os vértices restantes são inacessíveis
+        // Se a menor distancia e infinita, todos os vertices restantes sao inacessiveis
         if (dist[u] == INF)
         {
             break;
@@ -237,7 +241,7 @@ int GrafoMatriz::calcula_menor_dist(int origem, int destino)
 
         visitado[u] = true;
 
-        // Atualiza as distâncias dos vizinhos do vértice atual
+        // Atualiza as distancias dos vizinhos do vertice atual
         for (int v = 0; v < numVertices; v++)
         {
             if (matrizAdj[u][v] != 0 && dist[u] + matrizAdj[u][v] < dist[v])
@@ -249,10 +253,10 @@ int GrafoMatriz::calcula_menor_dist(int origem, int destino)
     }
 
     int menorDist = dist[destino];
-    // Verifica se há um caminho até o destino
+    // Verifica se ha um caminho ate o destino
     if (menorDist == INF)
     {
-        // Não há caminho entre origem e destino
+        // Nao ha caminho entre origem e destino
     }
     else
     {
@@ -283,6 +287,7 @@ int GrafoMatriz::calcula_menor_dist(int origem, int destino)
     return menorDist;
 }
 
+// Calcula a maior menor distancia entre todos os pares de vertices
 int GrafoMatriz::calcula_maior_menor_dist() {
     int maiorMenorDist = 0;
     int verticeOrigem = -1;
@@ -302,60 +307,68 @@ int GrafoMatriz::calcula_maior_menor_dist() {
     }
 
     if (verticeOrigem != -1 && verticeDestino != -1) {
-        std::cout << "Maior menor distância (" << verticeOrigem + 1 << "-" << verticeDestino + 1 << ") = " << maiorMenorDist << std::endl;
+        std::cout << "Maior menor distancia (" << verticeOrigem + 1 << "-" << verticeDestino + 1 << ") = " << maiorMenorDist << std::endl;
     } else {
-        std::cout << "Não há caminhos válidos no grafo." << std::endl;
+        std::cout << "Nao ha caminhos validos no grafo." << std::endl;
     }
 
     return maiorMenorDist;
 }
 
+// Retorna a quantidade de vizinhos de um vertice
 int GrafoMatriz::get_num_vizinhos(int id)
 {
     if (id < 0 || id > numVertices)
     {
-        return 0; // Retorna 0 se o ID do vértice for inválido
+        return 0; // Retorna 0 se o ID do vertice for invalido
     }
 
     int contador = 0;
     for (int i = 0; i <= numVertices; i++)
     {
         if (matrizAdj[id][i] != 0)
-        { // Se houver uma aresta entre os vértices
+        { // Se houver uma aresta entre os vertices
             contador++;
         }
     }
     return contador;
 }
+
+// Funcao de busca em largura
 void GrafoMatriz::dfs(int id, bool *visitado)
 {
     if (id < 0 || id > numVertices || visitado[id])
     {
-        return; // Verifica se o vértice é válido ou já foi visitado
+        return; // Verifica se o vertice eh valido ou ja foi visitado
     }
 
-    visitado[id] = true; // Marca o vértice como visitado
+    visitado[id] = true; // Marca o vertice como visitado
 
     for (int i = 0; i <= numVertices; i++)
     {
         if (matrizAdj[id][i] != 0 && !visitado[i])
-        { // Se houver uma aresta e o vértice não foi visitado
+        { // Se houver uma aresta e o vertice nao foi visitado
             dfs(i, visitado);
         }
     }
 }
 
+// Verifica se o vertice existe no grafo
 bool GrafoMatriz::existe_vertice(int id)
 {
     return (id >= 0 && id <= numVertices);
 }
-// Funcoes de imprimir
+// #endregion
+
+
+// #region Funcoes de imprimir
+// Imprime a matriz de adjacencia
 void GrafoMatriz::imprimirMatrizAdj()
 {
     cout << "__________________________________________________________________" << endl;
     cout << endl << "--- Matriz de Adjacencia ---" << endl << endl;
 
-    // Imprime o cabeçalho dos índices dos vértices
+    // Imprime o cabecalho dos indices dos vertices
     cout << "  V";
     for (int i = 0; i < tamanhoMatriz; i++)
     {
@@ -365,7 +378,7 @@ void GrafoMatriz::imprimirMatrizAdj()
 
     for (int i = 0; i < tamanhoMatriz; i++)
     {
-        // Imprime o índice do vértice na lateral esquerda
+        // Imprime o indice do vertice na lateral esquerda
         cout << std::setw(3) << i;
 
         for (int j = 0; j < tamanhoMatriz; j++)
@@ -376,6 +389,8 @@ void GrafoMatriz::imprimirMatrizAdj()
     }
     cout << "__________________________________________________________________" << endl;
 }
+
+// Imprime os atributos do grafo
 void GrafoMatriz::imprimeGrafoMatriz()
 {
     cout << "__________________________________________________________________" << endl;
@@ -385,3 +400,4 @@ void GrafoMatriz::imprimeGrafoMatriz()
          << endl;
     imprime();
 }
+// #endregion

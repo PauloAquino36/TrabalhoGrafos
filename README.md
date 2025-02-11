@@ -1,6 +1,6 @@
 # Trabalho - Teoria dos Grafos
 
-Este projeto implementa um sistema de manipulação de grafos utilizando duas representações: lista de adjacência e matriz de adjacência. O projeto inclui classes para representar grafos, vértices e arestas, além de funções para carregar grafos a partir de arquivos, adicionar e remover vértices e arestas, e imprimir as representações dos grafos.
+Este projeto implementa um sistema de manipulacao de grafos utilizando duas representacoes: lista de adjacencia e matriz de adjacencia. O projeto inclui classes para representar grafos, vertices e arestas, alem de funcoes para carregar grafos a partir de arquivos, adicionar e remover vertices e arestas, e imprimir as representacoes dos grafos.
 
 ## Estrutura do Projeto
 
@@ -39,28 +39,28 @@ src/
 
 ## Arquivos Principais
 
-- main.cpp: Arquivo principal que contém a função `main` para execução do programa.
-- include: Diretório contendo os arquivos de cabeçalho das classes.
-- src: Diretório contendo as implementações das classes.
-- entradas: Diretório contendo arquivos de entrada para carregar grafos.
+- main.cpp: Arquivo principal que contem a funcao `main` para execucao do programa.
+- include: Diretorio contendo os arquivos de cabecalho das classes.
+- src: Diretorio contendo as implementacoes das classes.
+- entradas: Diretorio contendo arquivos de entrada para carregar grafos.
 
 ## Classes
 
 ### Grafo
 
-Classe base para representar um grafo. Contém atributos e métodos comuns a todas as representações de grafos.
+Classe base para representar um grafo. Contem atributos e metodos comuns a todas as representacoes de grafos.
 
 ### GrafoLista
 
-Classe derivada de `Grafo` que implementa a representação de grafos utilizando listas de adjacência.
+Classe derivada de `Grafo` que implementa a representacao de grafos utilizando listas de adjacencia.
 
 ### GrafoMatriz
 
-Classe derivada de `Grafo` que implementa a representação de grafos utilizando matrizes de adjacência.
+Classe derivada de `Grafo` que implementa a representacao de grafos utilizando matrizes de adjacencia.
 
 ### ListaAdjVertice
 
-Classe para representar uma lista de vértices adjacentes.
+Classe para representar uma lista de vertices adjacentes.
 
 ### ListaAdjAresta
 
@@ -68,17 +68,17 @@ Classe para representar uma lista de arestas adjacentes.
 
 ### NoVertice
 
-Classe para representar um vértice em uma lista de adjacência.
+Classe para representar um vertice em uma lista de adjacencia.
 
 ### NoAresta
 
-Classe para representar uma aresta em uma lista de adjacência.
+Classe para representar uma aresta em uma lista de adjacencia.
 
-## Compilação e Execução
+## Compilacao e Execucao
 
-### Compilação
+### Compilacao
 
-Para compilar o projeto, você pode usar o comando de compilação configurado no Visual Studio Code:
+Para compilar o projeto, voce pode usar o comando de compilacao configurado no Visual Studio Code:
 
 1. Pressione `CTRL+SHIFT+B` para compilar o projeto.
 
@@ -88,7 +88,7 @@ Ou use o comando `g++` no terminal:
 g++ -o main main.cpp src/Grafo.cpp src/GrafoMatriz.cpp src/GrafoLista.cpp src/ListaAdjAresta.cpp src/ListaAdjVertice.cpp src/NoAresta.cpp src/NoVertice.cpp
 ```
 
-### Execução
+### Execucao
 
 Para executar o programa, use o comando:
 
@@ -96,15 +96,15 @@ Para executar o programa, use o comando:
 ./main
 ```
 
-### Considerações
+### Consideracoes
 
 - O programa carrega um grafo a partir do arquivo grafo.txt.
-- O grafo pode ser representado tanto por lista de adjacência quanto por matriz de adjacência.
-- O código contém exemplos comentados de como adicionar e remover vértices e arestas, além de imprimir as representações dos grafos.
+- O grafo pode ser representado tanto por lista de adjacencia quanto por matriz de adjacencia.
+- O codigo contem exemplos comentados de como adicionar e remover vertices e arestas, alem de imprimir as representacoes dos grafos.
 
 ## Exemplo de Uso
 
-O arquivo main.cpp contém exemplos de uso das classes `GrafoLista` e `GrafoMatriz`. Para testar a representação por lista de adjacência, descomente as linhas correspondentes no main.cpp.
+O arquivo main.cpp contem exemplos de uso das classes `GrafoLista` e `GrafoMatriz`. Para testar a representacao por lista de adjacencia, descomente as linhas correspondentes no main.cpp.
 
 ```
 // Exemplo de uso com GrafoLista
@@ -114,7 +114,7 @@ grafoLista.imprimeGrafoLista();
 grafoLista.imprimeListaAdj();
 ```
 
-Para testar a representação por matriz de adjacência, use o código já presente no main.cpp.
+Para testar a representacao por matriz de adjacencia, use o codigo ja presente no main.cpp.
 
 ```
 // Exemplo de uso com GrafoMatriz

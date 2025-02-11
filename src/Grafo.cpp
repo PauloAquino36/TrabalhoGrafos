@@ -36,10 +36,9 @@ int Grafo::n_conexo()
         }
     }
 
-    delete[] visitado; // Agora não vai quebrar
+    delete[] visitado;
     return numComponentes;
 }
-
 
 int Grafo::get_grau()
 {

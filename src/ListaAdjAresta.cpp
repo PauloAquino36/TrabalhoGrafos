@@ -19,7 +19,7 @@ ListaAdjAresta::~ListaAdjAresta() {
 }
 
 NoAresta* ListaAdjAresta::getCabeca() {
-    // Retorna o primeiro nó da lista
+    // Retorna o primeiro no da lista
     return this->cabeca;
 }
 

@@ -19,7 +19,7 @@ ListaAdjVertice::~ListaAdjVertice() {
 }
 
 NoVertice* ListaAdjVertice::getCabeca() {
-    // Retorna o primeiro nó da lista
+    // Retorna o primeiro no da lista
     return this->cabeca;
 }
 
@@ -47,7 +47,7 @@ NoVertice* ListaAdjVertice::getVertice(int id) {
 }
 
 void ListaAdjVertice::adicionar_vertice(int id, int peso) {
-    // Adiciona um novo vértice
+    // Adiciona um novo vertice
     NoVertice* novoNo = new NoVertice(id, peso);
     novoNo->setProximo(this->cabeca);
     this->cabeca = novoNo;

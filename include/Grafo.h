@@ -9,8 +9,8 @@ using namespace std;
 
 class Grafo {
 protected:
-    int numVertices;                    // Número de vértices (ordem) do grafo
-    bool direcionado;                   // Indica se o grafo é direcionado
+    int numVertices;                    // Numero de vertices (ordem) do grafo
+    bool direcionado;                   // Indica se o grafo eh direcionado
     bool ponderadoVertices;             // Indica se o grafo possui peso nos vertices
     bool ponderadoArestas;              // Indica se o grafo possui peso nas arestas
 

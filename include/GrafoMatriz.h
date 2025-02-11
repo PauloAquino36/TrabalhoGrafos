@@ -5,15 +5,15 @@
 
 class GrafoMatriz  : public Grafo {
 protected:
-    int** matrizAdj;  // Matriz de adjacência
-    int tamanhoMatriz;  // Número MXM vértices
+    int** matrizAdj;  // Matriz de adjacencia
+    int tamanhoMatriz;  // Numero MXM vertices
 
 public:
     // Construtor e Destrutor
     GrafoMatriz(int numVertices, bool direcionado, bool ponderadoVertices, bool ponderadoArestas);
     ~GrafoMatriz();
 
-    // Funções auxiliares
+    // Funcoes auxiliares
     void atualiza_grafo(int numVertices) override;                              // Redimensiona o grafo
     int grauVertice(int vertice);                                               // Retorna um vertice especifico do grafo
     int get_num_vizinhos(int id) override;                                      // Retorna o numero de vizinhos de um vertice
@@ -29,7 +29,7 @@ public:
     int calcula_maior_menor_dist()override;                                            // Calcula a maior menor distancia entre dois vertices
     
     // Funcoes de imprimir
-    void imprimirMatrizAdj();                                                   // Imprime a matriz de adjacência
+    void imprimirMatrizAdj();                                                   // Imprime a matriz de adjacencia
     void imprimeGrafoMatriz();                                                  // Imprime os atributos do grafo
 };
 

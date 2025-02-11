@@ -30,7 +30,7 @@ public:
 
     // Funcoes imprime
     void imprimeGrafoLista();                                                   // Imprime as informacoes do grafo
-    void imprimeListaAdj();                                                     // Imprime a lista de adjacência
+    void imprimeListaAdj();                                                     // Imprime a lista de adjacencia
 };
 
 #endif // GRAFOLISTA_H

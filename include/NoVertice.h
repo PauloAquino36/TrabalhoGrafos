@@ -6,10 +6,10 @@
 
 class NoVertice {
 private:
-    int idVertice;              // Identificador do vértice
-    int peso;                   // Peso do vértice
-    int numArestas;             // Número de arestas do vertice (quantidade de vertices vizinhos)
-    NoVertice* proximo;         // Ponteiro para o próximo nó vertice
+    int idVertice;              // Identificador do vertice
+    int peso;                   // Peso do vertice
+    int numArestas;             // Numero de arestas do vertice (quantidade de vertices vizinhos)
+    NoVertice* proximo;         // Ponteiro para o proximo no vertice
     ListaAdjAresta* arestas;    // Lista encadeada de arestas
 
 public:
@@ -18,17 +18,17 @@ public:
     ~NoVertice();
 
     // Getters e Setters
-    int getIdVertice();                                     // Retorna o identificador do vértice
-    int getPesoVertice();                                   // Retorna o peso do vértice
+    int getIdVertice();                                     // Retorna o identificador do vertice
+    int getPesoVertice();                                   // Retorna o peso do vertice
     int getNumArestas();                                    // Retorna a quantidade de arestas do vertice
-    NoVertice* getProximo();                                // Retorna o próximo nó vertice
+    NoVertice* getProximo();                                // Retorna o proximo no vertice
     ListaAdjAresta* getArestas();                           // Retorna a lista encadeada de arestas
     
-    void setProximo(NoVertice* proximo);                    // Define o próximo nó vertice
+    void setProximo(NoVertice* proximo);                    // Define o proximo no vertice
     int setIdVertice(int novoId);                                     // Define o identificador do vertice
     
     // Funcoes auxiliares
-    int getNumVizinhos();                                   // Retorna o número de vizinhos do vértice (número de arestas de saida/ grau do vertice)
+    int getNumVizinhos();                                   // Retorna o numero de vizinhos do vertice (numero de arestas de saida/ grau do vertice)
     void adicionar_aresta(int id, int peso);                // Adiciona uma aresta ao vertice
     void remover_aresta(int destino);                       // Remove uma aresta do vertice
 };
