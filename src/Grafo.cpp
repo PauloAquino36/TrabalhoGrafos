@@ -23,14 +23,14 @@ int Grafo::n_conexo()
 {
     bool* visitado = new bool[numVertices];
 
-    for (int i = 0; i < numVertices; i++) {
+    for (int i = 1; i <= numVertices; i++) {
         visitado[i] = false;
     }
 
     int numComponentes = 0;
 
-    for (int i = 0; i < numVertices; i++) {
-        if (!visitado[i]) {
+    for (int i = 1; i <= numVertices; i++) {
+        if (!visitado[i] && this->existe_vertice(i)) {
             dfs(i, visitado);
             numComponentes++;
         }
@@ -45,7 +45,7 @@ int Grafo::get_grau()
 {
     int grauMax = 0;
     for (int i = 1 ; i <= numVertices; i++) {
-        if (get_num_vizinhos(i) > grauMax) {
+        if (get_num_vizinhos(i) > grauMax && existe_vertice(i)) {
             grauMax = get_num_vizinhos(i);
         }
     }
@@ -108,7 +108,7 @@ void Grafo::carrega_grafo(Grafo* grafo, const string& nomeArquivo) {
     grafo->ponderadoVertices = ponderadoVertices;
     grafo->ponderadoArestas = ponderadoArestas;
 
-    grafo->atualiza_grafo(numVertices);
+    //grafo->atualiza_grafo(numVertices);
 
     for(int i = 1; i <= numVertices; i++) {
         if(ponderadoVertices == 1) {

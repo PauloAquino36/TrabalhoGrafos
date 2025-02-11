@@ -76,7 +76,7 @@ void GrafoMatriz::adicionar_vertice(int id, int peso)
     int novoNumVertices = numVertices + 1;
     numVertices = novoNumVertices;
 
-    if (novoNumVertices > tamanhoMatriz)
+    if (novoNumVertices >= tamanhoMatriz)
     {
         cout << "Aumentando matriz de adjacência...\n";
         int antigoTamanhoMatriz = tamanhoMatriz;
@@ -173,7 +173,7 @@ void GrafoMatriz::adicionar_aresta(int origem, int destino, int peso)
     // cout << "Num Vertices:" << numVertices << endl;
     // cout << "Origem: " << origem << " / Destino: " << destino << " / Num Vertices:" << numVertices << endl;
 
-    if (origem < 0 || origem >= numVertices || destino < 0 || destino >= numVertices)
+    if (origem < 0 || origem > numVertices || destino < 0 || destino > numVertices)
     {
         cout << "Erro: indices de origem ou destino invalidos.\n";
         return;
@@ -312,13 +312,13 @@ int GrafoMatriz::calcula_maior_menor_dist() {
 
 int GrafoMatriz::get_num_vizinhos(int id)
 {
-    if (id < 0 || id >= numVertices)
+    if (id < 0 || id > numVertices)
     {
         return 0; // Retorna 0 se o ID do vértice for inválido
     }
 
     int contador = 0;
-    for (int i = 0; i < numVertices; i++)
+    for (int i = 0; i <= numVertices; i++)
     {
         if (matrizAdj[id][i] != 0)
         { // Se houver uma aresta entre os vértices
@@ -329,14 +329,14 @@ int GrafoMatriz::get_num_vizinhos(int id)
 }
 void GrafoMatriz::dfs(int id, bool *visitado)
 {
-    if (id < 0 || id >= numVertices || visitado[id])
+    if (id < 0 || id > numVertices || visitado[id])
     {
         return; // Verifica se o vértice é válido ou já foi visitado
     }
 
     visitado[id] = true; // Marca o vértice como visitado
 
-    for (int i = 0; i < numVertices; i++)
+    for (int i = 0; i <= numVertices; i++)
     {
         if (matrizAdj[id][i] != 0 && !visitado[i])
         { // Se houver uma aresta e o vértice não foi visitado
@@ -345,6 +345,10 @@ void GrafoMatriz::dfs(int id, bool *visitado)
     }
 }
 
+bool GrafoMatriz::existe_vertice(int id)
+{
+    return (id >= 0 && id <= numVertices);
+}
 // Funcoes de imprimir
 void GrafoMatriz::imprimirMatrizAdj()
 {

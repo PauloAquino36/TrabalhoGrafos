@@ -16,7 +16,7 @@ public:
     // Funcoes auxiliares
     int get_num_vizinhos(int id) override;                                      // Retorna o numero de vizinhos de um vertice do grafo
     void dfs(int id, bool* visitado) override;                                  // Realiza a busca em profundidade no grafo
-    bool existe_vertice(int id);                                                // Verifica se um vertice existe no grafo
+    bool existe_vertice(int id) override;                                                // Verifica se um vertice existe no grafo
     
     // Funcoes de maniplacao de vertices e arestas
     void adicionar_vertice(int id, int peso = 0) override;                      // Adiciona um vertice no grafo

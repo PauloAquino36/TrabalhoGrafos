@@ -47,6 +47,7 @@ public:
 
     virtual int calcula_menor_dist(int origem, int destino)=0;                     // Calcula a menor distancia entre dois vertices
     virtual int calcula_maior_menor_dist()=0;                                       // Calcula a maior menor distancia entre dois vertices
+    virtual bool existe_vertice(int id)=0;                                          // Verifica se um vertice existe
 };
 
 #endif

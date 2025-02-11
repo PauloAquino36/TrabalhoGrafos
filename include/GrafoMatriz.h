@@ -18,6 +18,7 @@ public:
     int grauVertice(int vertice);                                               // Retorna um vertice especifico do grafo
     int get_num_vizinhos(int id) override;                                      // Retorna o numero de vizinhos de um vertice
     void dfs(int id, bool* visitado) override;   
+    bool existe_vertice(int id) override;                                       // Verifica se um vertice existe no grafo
 
     void adicionar_vertice(int id, int peso = 0) override;                      // Adiciona um vertice no grafo
     void adicionar_aresta(int origem, int destino, int peso = 1) override;      // Adiciona uma aresta no grafo
