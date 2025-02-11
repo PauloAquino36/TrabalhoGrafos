@@ -148,32 +148,6 @@ int GrafoLista::calcula_menor_dist(int origem, int destino) {
     return (dist[destino] == INF) ? -1 : dist[destino];
 }
 
-// Percorre todos os pares de vértices e busca a maior das menores distâncias
-int GrafoLista::calcula_maior_menor_dist() {
-    int maiorMenorDist = 0;
-    int verticeOrigem = -1, verticeDestino = -1;
-
-    for (int i = 1; i <= numVertices; i++) {
-        for (int j = 1; j <= numVertices; j++) {
-            if (i != j) {
-                int menorDist = calcula_menor_dist(i, j);
-                if (menorDist != -1 && menorDist > maiorMenorDist) {
-                    maiorMenorDist = menorDist;
-                    verticeOrigem = i;
-                    verticeDestino = j;
-                }
-            }
-        }
-    }
-
-    if (verticeOrigem != -1 && verticeDestino != -1) {
-        cout << "Maior menor distancia: (" << verticeOrigem << "-" << verticeDestino << ") = " << maiorMenorDist << endl;
-    } else {
-        cout << "Nao ha caminhos validos no grafo." << endl;
-    }
-
-    return maiorMenorDist;
-}
 
 // Retorna a quantidade de vizinhos de um vertice
 int GrafoLista::get_num_vizinhos(int id) {

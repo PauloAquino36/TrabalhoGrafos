@@ -27,7 +27,6 @@ public:
     void remover_primeira_aresta(int id) override;                                  // Remove a primeira aresta de um vertice
 
     int calcula_menor_dist(int origem, int destino)override;                        // Calcula a menor distancia entre dois vertices
-    int calcula_maior_menor_dist()override;                                         // Calcula a maior menor distancia entre dois vertices
     
     // Funcoes imprime
     void imprimirMatrizAdj();                                                       // Imprime a matriz de adjacencia

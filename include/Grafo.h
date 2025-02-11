@@ -48,7 +48,7 @@ public:
     virtual void remover_aresta(int origem, int destino){};                         // Remove uma aresta do grafo
 
     virtual int calcula_menor_dist(int origem, int destino)=0;                      // Calcula a menor distancia entre dois vertices
-    virtual int calcula_maior_menor_dist()=0;                                       // Calcula a maior menor distancia entre dois vertices
+    virtual int calcula_maior_menor_dist();                                       // Calcula a maior menor distancia entre dois vertices
 };
 
 #endif

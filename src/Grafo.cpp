@@ -141,3 +141,31 @@ void Grafo::carrega_grafo(Grafo* grafo, const string& nomeArquivo) {
     }
     arquivo.close();
 }
+
+// Percorre todos os pares de vértices e busca a maior das menores distâncias
+int Grafo::calcula_maior_menor_dist() {
+    int maiorMenorDist = 0;
+    int verticeOrigem = -1;
+    int verticeDestino = -1;
+
+    for (int i = 1; i <= numVertices; i++) {
+        for (int j = 1; j <= numVertices; j++) {
+            if (i != j) {
+                int menorDist = calcula_menor_dist(i, j);
+                if (menorDist != 1000000 && menorDist > maiorMenorDist) {
+                    maiorMenorDist = menorDist;
+                    verticeOrigem = i;
+                    verticeDestino = j;
+                }
+            }
+        }
+    }
+
+    if (verticeOrigem != -1 && verticeDestino != -1) {
+        cout << "Maior menor distancia: (" << verticeOrigem << "-" << verticeDestino << ") = " << maiorMenorDist << endl;
+    } else {
+        cout << "Nao ha caminhos validos no grafo." << endl;
+    }
+
+    return maiorMenorDist;
+}
