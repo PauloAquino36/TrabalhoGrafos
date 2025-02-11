@@ -133,7 +133,6 @@ void GrafoMatriz::remover_vertice(int id)
     numVertices = novoNumVertices;
 }
 
-// Remove uma aresta do grafo
 void GrafoMatriz::remover_aresta(int origem, int destino)
 {
     if (origem < 0 || origem >= numVertices || destino < 0 || destino >= numVertices)
@@ -172,19 +171,13 @@ void GrafoMatriz::remover_primeira_aresta(int id)
     }
 }
 
-// Adiciona uma aresta ao grafo
 void GrafoMatriz::adicionar_aresta(int origem, int destino, float peso)
 {
-    // cout << "Num Vertices:" << numVertices << endl;
-    // cout << "Origem: " << origem << " / Destino: " << destino << " / Num Vertices:" << numVertices << endl;
-
     if (origem < 0 || origem > numVertices || destino < 0 || destino > numVertices)
     {
         cout << "Erro: indices de origem ou destino invalidos.\n";
         return;
     }
-
-    // cout << "conluido: " <<  "Origem: " << origem << " / Destino: " << destino << endl;
 
     if (ponderadoArestas)
     {
