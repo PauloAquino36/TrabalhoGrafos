@@ -59,3 +59,8 @@ void NoVertice::remover_aresta(int destino) {
     this->arestas->remover_aresta(this->idVertice, destino);
     this->numArestas--;
 }
+
+void NoVertice::remover_primeira_aresta() {
+    this->arestas->remover_primeira_aresta();
+    this->numArestas--;
+}

@@ -75,6 +75,16 @@ void ListaAdjVertice::remover_aresta(int origem, int destino) {
     }
 }
 
+void ListaAdjVertice::remover_primeira_aresta(int id) {
+    NoVertice* atual = this->cabeca;
+    while (atual != nullptr) {
+        if (atual->getIdVertice() == id) {
+            atual->remover_primeira_aresta();
+        }
+        atual = atual->getProximo();
+    }
+}
+
 void ListaAdjVertice::remover_vertice(int id) {
     NoVertice* atual = this->cabeca;
     NoVertice* anterior = nullptr;

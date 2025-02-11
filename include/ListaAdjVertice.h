@@ -18,6 +18,7 @@ public:
     void adicionar_vertice(int id, int peso);                       // Adiciona um vertice à lista
     void adicionar_aresta(int origem, int destino, int peso);       // Adiciona uma aresta ao vertice
     void remover_aresta(int origem, int destino);                   // Remove uma aresta do vertice
+    void remover_primeira_aresta(int id);                           // Remove a primeira aresta do vertice
     void remover_vertice(int id);                                   // Remove um vertice da lista
 
     // Funcoes de imprimir

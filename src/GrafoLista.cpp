@@ -79,6 +79,17 @@ void GrafoLista::remover_aresta(int origem, int destino) {
     }
 }
 
+void GrafoLista::remover_primeira_aresta(int id) {
+    // Verifica se o vertice existe
+    if(listaAdjVertices->getVertice(id) == nullptr){
+        cout << "Erro: Vertice " << id << " nao existe!" << endl;                                     /* { DEBUG } */
+        return;
+    }
+
+    // Remove a primeira aresta
+    this->listaAdjVertices->remover_primeira_aresta(id);
+}
+
 void GrafoLista::remover_vertice(int id){
     // Verifica se o vertice existe
     if(!existe_vertice(id)){

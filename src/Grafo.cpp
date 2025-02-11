@@ -84,6 +84,10 @@ bool Grafo::eh_completo()
 
 void Grafo::imprime()
 {
+    cout << "Excluindo Noh 1..." << endl;
+    this->remover_vertice(1);
+    cout << "Excluindo primeira aresta do Noh 2..." << endl;
+    this->remover_primeira_aresta(2);
     cout << "Grau: " << get_grau() << endl;
     cout << "Ordem: " << numVertices << endl;
     cout << "Direcionado: " << (eh_direcionado() ? "Sim" : "Nao") << endl;

@@ -42,6 +42,7 @@ public:
 
     virtual void adicionar_vertice(int id, int peso = 0){};                         // Adiciona um vertice no grafo
     virtual void adicionar_aresta(int origem, int destino, int peso = 1){};         // Adiciona uma aresta no grafo
+    virtual void remover_primeira_aresta(int id){};                                 // Remove a primeira aresta de um vertice
     virtual void remover_vertice(int id){};                                         // Remove um vertice do grafo
     virtual void remover_aresta(int origem, int destino){};                         // Remove uma aresta do grafo
 

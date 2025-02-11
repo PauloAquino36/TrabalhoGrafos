@@ -61,6 +61,24 @@ void ListaAdjAresta::remover_aresta(int origem, int destino) {
     cout << "Erro: Aresta " << origem << " -> " << destino << " nao existe." <<  endl;                              /* { DEBUG } */
 }
 
+void ListaAdjAresta::remover_primeira_aresta() {
+    if (this->cabeca == nullptr) {
+        cout << "Vertice nao possui arestas" << endl;
+        return;
+    }
+
+    NoAresta* atual = this->cabeca;
+    NoAresta* menor = this->cabeca;
+
+    while (atual != nullptr) {
+        if (atual->getDestino() < menor->getDestino()) {
+            menor = atual;
+        }
+        atual = atual->getProximo();
+    }
+    remover_aresta(menor->getOrigem(), menor->getDestino());
+}
+
 int ListaAdjAresta::getNumVerticesVizinhos() {
     // Retorna o tamanho da lista / numero de vertices vizinhos / grau do vertice
     int tamanho = 0;
