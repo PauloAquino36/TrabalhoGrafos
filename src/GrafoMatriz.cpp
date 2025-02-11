@@ -207,11 +207,11 @@ void GrafoMatriz::adicionar_aresta(int origem, int destino, int peso)
 int GrafoMatriz::calcula_menor_dist(int origem, int destino)
 {
     const int INF = 1000000; // Valor grande para representar infinito
-    int *dist = new int[numVertices];
-    int *prev = new int[numVertices];
-    bool *visitado = new bool[numVertices];
+    int *dist = new int[numVertices + 1];
+    int *prev = new int[numVertices + 1];
+    bool *visitado = new bool[numVertices + 1];
 
-    for (int i = 0; i < numVertices; i++)
+    for (int i = 1; i <= numVertices; i++)
     {
         dist[i] = INF;
         prev[i] = -1;
@@ -221,12 +221,12 @@ int GrafoMatriz::calcula_menor_dist(int origem, int destino)
     dist[origem] = 0;
 
     // Loop principal do algoritmo de Dijkstra
-    for (int i = 0; i < numVertices; i++)
+    for (int i = 1; i <= numVertices; i++)
     {
         int u = -1;
 
         // Encontra o vertice nao visitado com a menor distancia
-        for (int j = 0; j < numVertices; j++)
+        for (int j = 1; j <= numVertices; j++)
         {
             if (!visitado[j] && (u == -1 || dist[j] < dist[u]))
             {
@@ -243,7 +243,7 @@ int GrafoMatriz::calcula_menor_dist(int origem, int destino)
         visitado[u] = true;
 
         // Atualiza as distancias dos vizinhos do vertice atual
-        for (int v = 0; v < numVertices; v++)
+        for (int v = 1; v <= numVertices; v++)
         {
             if (matrizAdj[u][v] != 0 && dist[u] + matrizAdj[u][v] < dist[v])
             {
@@ -294,8 +294,8 @@ int GrafoMatriz::calcula_maior_menor_dist() {
     int verticeOrigem = -1;
     int verticeDestino = -1;
 
-    for (int i = 0; i < numVertices; i++) {
-        for (int j = 0; j < numVertices; j++) {
+    for (int i = 1; i <= numVertices; i++) {
+        for (int j = 1; j <= numVertices; j++) {
             if (i != j) {
                 int menorDist = calcula_menor_dist(i, j);
                 if (menorDist != 1000000 && menorDist > maiorMenorDist) {
@@ -308,9 +308,9 @@ int GrafoMatriz::calcula_maior_menor_dist() {
     }
 
     if (verticeOrigem != -1 && verticeDestino != -1) {
-        std::cout << "Maior menor distancia (" << verticeOrigem + 1 << "-" << verticeDestino + 1 << ") = " << maiorMenorDist << std::endl;
+        cout << "Maior menor distancia: (" << verticeOrigem << "-" << verticeDestino << ") = " << maiorMenorDist << endl;
     } else {
-        std::cout << "Nao ha caminhos validos no grafo." << std::endl;
+        cout << "Nao ha caminhos validos no grafo." << endl;
     }
 
     return maiorMenorDist;

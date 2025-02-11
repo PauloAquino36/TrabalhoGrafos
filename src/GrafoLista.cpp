@@ -120,12 +120,13 @@ void GrafoLista::dfs(int id, bool* visitado) {
     }
 }
 
+// Percorre todos os pares de vértices e busca a maior das menores distâncias
 int GrafoLista::calcula_maior_menor_dist() {
     int maiorMenorDist = 0;
-    int verticeOrigem = -1;
-    int verticeDestino = -1;
-    for (int i = 0; i < numVertices; i++) {
-        for (int j = 0; j < numVertices; j++) {
+    int verticeOrigem = -1, verticeDestino = -1;
+
+    for (int i = 1; i <= numVertices; i++) {
+        for (int j = 1; j <= numVertices; j++) {
             if (i != j) {
                 int menorDist = calcula_menor_dist(i, j);
                 if (menorDist != -1 && menorDist > maiorMenorDist) {
@@ -136,6 +137,13 @@ int GrafoLista::calcula_maior_menor_dist() {
             }
         }
     }
+
+    if (verticeOrigem != -1 && verticeDestino != -1) {
+        cout << "Maior menor distancia: (" << verticeOrigem << "-" << verticeDestino << ") = " << maiorMenorDist << endl;
+    } else {
+        cout << "Nao ha caminhos validos no grafo." << endl;
+    }
+
     return maiorMenorDist;
 }
 
@@ -150,23 +158,28 @@ void GrafoLista::imprimeListaAdj(){
 
 int GrafoLista::calcula_menor_dist(int origem, int destino) {
     const int INF = 1000000;
-    int dist[numVertices];
-    bool visitado[numVertices];
-    for (int i = 0; i < numVertices; i++) {
+    int dist[numVertices + 1];
+    bool visitado[numVertices + 1];
+
+    for (int i = 1; i <= numVertices; i++) {
         dist[i] = INF;
         visitado[i] = false;
     }
+
     dist[origem] = 0;
-    for (int i = 0; i < numVertices; i++) {
+
+    for (int i = 1; i <= numVertices; i++) {
         int u = -1;
-        for (int j = 0; j < numVertices; j++) {
+        for (int j = 1; j <= numVertices; j++) {
             if (!visitado[j] && (u == -1 || dist[j] < dist[u])) {
                 u = j;
             }
         }
+
         if (dist[u] == INF) {
             break;
         }
+
         visitado[u] = true;
         NoAresta* atual = listaAdjVertices->getVertice(u)->getArestas()->getCabeca();
         while (atual != nullptr) {
@@ -178,6 +191,7 @@ int GrafoLista::calcula_menor_dist(int origem, int destino) {
             atual = atual->getProximo();
         }
     }
+
     return (dist[destino] == INF) ? -1 : dist[destino];
 }
 

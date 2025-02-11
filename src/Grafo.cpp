@@ -95,6 +95,7 @@ void Grafo::imprime()
     cout << "Vertices ponderados: " << (vertice_ponderado() ? "Sim" : "Nao") << endl;
     cout << "Arestas ponderadas: " << (aresta_ponderada() ? "Sim" : "Nao") << endl;
     cout << "Completo: " << (eh_completo() ? "Sim" : "Nao") << endl;
+    this->calcula_maior_menor_dist();
     cout << "__________________________________________________________________" << endl << endl;
 }
 
