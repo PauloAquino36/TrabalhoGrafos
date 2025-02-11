@@ -61,7 +61,6 @@ int Grafo::get_ordem()
     return numVertices;
 }
 
-
 // Retorna se o grafo eh direcionado
 bool Grafo::eh_direcionado()
 {

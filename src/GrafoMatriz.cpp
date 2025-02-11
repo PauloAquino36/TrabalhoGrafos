@@ -48,7 +48,6 @@ GrafoMatriz::~GrafoMatriz()
 }
 // #endregion
 
-
 // #region Funcoes auxiliares
 // Adiciona um vértice ao grafo
 void GrafoMatriz::adicionar_vertice(int id, float peso)
@@ -256,8 +255,6 @@ int GrafoMatriz::calcula_menor_dist(int origem, int destino)
     return menorDist;
 }
 
-
-
 // Retorna a quantidade de vizinhos de um vertice
 int GrafoMatriz::get_num_vizinhos(int id)
 {
@@ -302,7 +299,6 @@ bool GrafoMatriz::existe_vertice(int id)
     return (id >= 0 && id <= numVertices);
 }
 // #endregion
-
 
 // #region Funcoes de imprimir
 // Imprime a matriz de adjacencia

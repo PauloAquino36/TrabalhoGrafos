@@ -20,7 +20,6 @@ ListaAdjVertice::~ListaAdjVertice() {
 }
 // #endregion
 
-
 // Retorna o primeiro no da lista (primeiro vertice do grafo)
 NoVertice* ListaAdjVertice::getCabeca() {
     return this->cabeca;

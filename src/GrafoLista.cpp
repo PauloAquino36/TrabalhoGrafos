@@ -19,7 +19,6 @@ GrafoLista::~GrafoLista()
 }
 // #endregion
 
-
 // #region Funcoes auxiliares
 bool GrafoLista::existe_vertice(int id) {
     return this->listaAdjVertices->getVertice(id) != nullptr;
@@ -148,7 +147,6 @@ int GrafoLista::calcula_menor_dist(int origem, int destino) {
     return (dist[destino] == INF) ? -1 : dist[destino];
 }
 
-
 // Retorna a quantidade de vizinhos de um vertice
 int GrafoLista::get_num_vizinhos(int id) {
     return this->listaAdjVertices->getVertice(id)->getNumVizinhos();
@@ -169,7 +167,6 @@ void GrafoLista::dfs(int id, bool* visitado) {
     }
 }
 // #endregion
-
 
 // #region Funcoes imprime
 // Imprime a lista de adjacencia
