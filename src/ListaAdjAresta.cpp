@@ -28,7 +28,7 @@ void ListaAdjAresta::adicionar_aresta(int origem, int destino, float peso) {
     NoAresta* atual = this->cabeca;
     while (atual != nullptr) {
         if (atual->getOrigem() == origem && atual->getDestino() == destino) {
-            cout << "Erro: Aresta " << origem << " -> " << destino << " ja existe. Nao eh possivel multiarestas" <<  endl;                       /* { DEBUG } */
+            //cout << "Erro: Aresta " << origem << " -> " << destino << " ja existe. Nao eh possivel multiarestas" <<  endl;                       /* { DEBUG } */
             return;
         }
         atual = atual->getProximo();
@@ -58,7 +58,7 @@ void ListaAdjAresta::remover_aresta(int origem, int destino) {
         anterior = atual;
         atual = atual->getProximo();
     }
-    cout << "Erro: Aresta " << origem << " -> " << destino << " nao existe." <<  endl;                              /* { DEBUG } */
+    //cout << "Erro: Aresta " << origem << " -> " << destino << " nao existe." <<  endl;                              /* { DEBUG } */
 }
 
 void ListaAdjAresta::remover_primeira_aresta() {
