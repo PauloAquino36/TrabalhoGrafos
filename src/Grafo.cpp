@@ -24,7 +24,7 @@ Grafo::~Grafo()
 // Retorna a quantidade de componentes conexas do grafo
 int Grafo::n_conexo()
 {
-    bool* visitado = new bool[numVertices];
+    bool visitado[numVertices];
 
     for (int i = 1; i <= numVertices; i++) {
         visitado[i] = false;
@@ -38,8 +38,6 @@ int Grafo::n_conexo()
             numComponentes++;
         }
     }
-
-    delete[] visitado;
     return numComponentes;
 }
 
