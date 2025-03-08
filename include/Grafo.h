@@ -1,8 +1,7 @@
 #ifndef GRAFO_H
 #define GRAFO_H
 
-#include "../include/ListaAdjAresta.h"
-#include "../include/ListaAdjVertice.h"
+#include "ListaAdjAresta.h"
 #include <iostream>
 
 using namespace std;
@@ -10,6 +9,7 @@ using namespace std;
 class Grafo {
 protected:
     int numVertices;                    // Numero de vertices (ordem) do grafo
+    int numArestasGrafo;                     // Numero de arestas do grafo
     bool direcionado;                   // Indica se o grafo eh direcionado
     bool ponderadoVertices;             // Indica se o grafo possui peso nos vertices
     bool ponderadoArestas;              // Indica se o grafo possui peso nas arestas
@@ -39,6 +39,7 @@ public:
     virtual int get_num_vizinhos(int id) { return 0; };                             // Retorna o numero de vizinhos de um vertice
     virtual void dfs(int v, bool* visitado){};                                      // Realiza a busca em profundidade
     virtual bool existe_vertice(int id)=0;                                          // Verifica se um vertice existe
+    int getNumArestasGrafo() { return numArestasGrafo; };                    // Retorna o numero de arestas do grafo
 
     // Funcoes de manipulacao de vertices e arestas abstratas que serao implementadas nas classes filhas
     virtual void adicionar_vertice(int id, float peso = 0.0){};                     // Adiciona um vertice no grafo

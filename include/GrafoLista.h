@@ -3,9 +3,8 @@
 
 #include "Grafo.h"
 #include "ListaAdjVertice.h"
-#include "ListaAdjAresta.h"
 
-class GrafoLista : public Grafo {
+class GrafoLista : public Grafo{
 protected:
     ListaAdjVertice* listaAdjVertices;                                          // Lista encadeada de vertices
 public:
@@ -24,12 +23,18 @@ public:
     void remover_vertice(int id) override;                                      // Remove um vertice do grafo
     void remover_aresta(int origem, int destino) override;                      // Remove uma aresta do grafo
     void remover_primeira_aresta(int id) override;                              // Remove a primeira aresta de um vertice
+    int getIdAresta(int origem, int destino);                                   // Retorna o ID da aresta entre dois vertices
+    void decrementar_num_arestas(){this->numArestasGrafo--;};                                             // Decrementa o numero de arestas do grafo
+    void incrementar_num_arestas(){this->numArestasGrafo++;};                                             // Decrementa o numero de arestas do grafo
 
     int calcula_menor_dist(int origem, int destino);                            // Calcula a menor distancia entre dois vertices
 
     // Funcoes imprime
     void imprimeGrafoLista();                                                   // Imprime as informacoes do grafo
     void imprimeListaAdj();                                                     // Imprime a lista de adjacencia
+
+    // Algoritmos gulosos
+    void alg_guloso_cobertura_vertices();                                                       // Algoritmo guloso para cobertura de vertices
 };
 
 #endif // GRAFOLISTA_H

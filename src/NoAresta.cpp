@@ -4,11 +4,12 @@
 using namespace std;
 
 // #region Construtor e Destrutor
-NoAresta::NoAresta(int idVerticeOrigem, int idVerticeDestino, float peso) {
+NoAresta::NoAresta(int idVerticeOrigem, int idVerticeDestino, float peso, int idAresta) {
     this->idVerticeOrigem = idVerticeOrigem;
     this->idVerticeDestino = idVerticeDestino;
     this->peso = peso;
     this->proximo = nullptr;
+    this->idAresta = idAresta;
 }
 
 NoAresta::~NoAresta() {
@@ -31,6 +32,9 @@ float NoAresta::getPeso() {
     return peso;
 }
 
+int NoAresta::getIdAresta() {
+    return idAresta;
+}  
 // Retorna o proximo Noh aresta
 NoAresta* NoAresta::getProximo() {
     return proximo;

@@ -1,11 +1,11 @@
 #include "../include/ListaAdjAresta.h"
-#include "../include/NoAresta.h"
 #include <iostream>
 
 using namespace std;
 
 // #region Construtor e Destrutor
-ListaAdjAresta::ListaAdjAresta() {
+ListaAdjAresta::ListaAdjAresta(GrafoLista* grafo) {
+    this->grafo = grafo;
     this->cabeca = nullptr;
 }
 
@@ -39,7 +39,8 @@ void ListaAdjAresta::adicionar_aresta(int origem, int destino, float peso) {
     }
 
     // Adiciona uma nova aresta
-    NoAresta* novaAresta = new NoAresta(origem, destino, peso);
+    NoAresta* novaAresta = new NoAresta(origem, destino, peso, grafo->getNumArestasGrafo()+1);
+    this->grafo->incrementar_num_arestas();
     novaAresta->setProximo(this->cabeca);
     this->cabeca = novaAresta;
     //cout << "Adicionada Aresta " << novaAresta->getOrigem() << " -> " << novaAresta->getDestino() << endl;          /* { DEBUG } */
@@ -57,12 +58,14 @@ void ListaAdjAresta::remover_aresta(int origem, int destino) {
                 anterior->setProximo(atual->getProximo());
             }
             delete atual;
+            this->grafo->decrementar_num_arestas();
             //cout << "Removida Aresta " << origem << " -> " << destino << endl;                                      /* { DEBUG } */
             return;
         }
         anterior = atual;
         atual = atual->getProximo();
     }
+
     //cout << "Erro: Aresta " << origem << " -> " << destino << " nao existe." <<  endl;                              /* { DEBUG } */
 }
 
@@ -94,4 +97,15 @@ int ListaAdjAresta::getNumVerticesVizinhos() {
         atual = atual->getProximo();
     }
     return tamanho;
+}
+
+int ListaAdjAresta::getIdAresta(int destino) {
+    NoAresta* atual = this->cabeca;
+    while (atual != nullptr) {
+        if (atual->getDestino() == destino) {
+            return atual->getIdAresta();
+        }
+        atual = atual->getProximo();
+    }
+    return -1;
 }

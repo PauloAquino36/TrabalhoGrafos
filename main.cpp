@@ -25,6 +25,7 @@ int main(int argc, char* argv[]) {
         cout << "Excluindo primeira aresta do Noh 2..." << endl;
         grafoMatriz.remover_primeira_aresta(2);
         grafoMatriz.imprimeGrafoMatriz();
+        cout << "NumArestas:" << grafoMatriz.getNumArestasGrafo() << endl;
         grafoMatriz.calcula_maior_menor_dist();
         cout << endl << "============================== FIM MATRIZ ==============================" << endl << endl;
     } else if (modo == "-l") {
@@ -36,6 +37,7 @@ int main(int argc, char* argv[]) {
         cout << "Excluindo primeira aresta do Noh 2..." << endl ;
         grafoLista.remover_primeira_aresta(2);
         grafoLista.imprimeGrafoLista();
+        cout << "NumArestas:" << grafoLista.getNumArestasGrafo() << endl;
         grafoLista.calcula_maior_menor_dist();
         cout << endl << "============================== FIM LISTA ==============================" << endl << endl;
     } else {

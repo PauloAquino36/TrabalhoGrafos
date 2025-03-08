@@ -141,9 +141,11 @@ void GrafoMatriz::remover_aresta(int origem, int destino)
     }
 
     matrizAdj[origem][destino] = 0;
+    this->numArestasGrafo--;
     if (!direcionado)
     {
         matrizAdj[destino][origem] = 0;
+        this->numArestasGrafo--;
     }
 }
 
@@ -161,9 +163,11 @@ void GrafoMatriz::remover_primeira_aresta(int id)
         if (matrizAdj[id][i] != 0)
         {
             matrizAdj[id][i] = 0;
+            this->numArestasGrafo--;
             if (!direcionado)
             {
                 matrizAdj[i][id] = 0;
+                this->numArestasGrafo--;
             }
             return;
         }
@@ -181,17 +185,21 @@ void GrafoMatriz::adicionar_aresta(int origem, int destino, float peso)
     if (ponderadoArestas)
     {
         matrizAdj[origem][destino] = peso;
+        this->numArestasGrafo++;
         if (!direcionado)
         {
             matrizAdj[destino][origem] = peso;
+            this->numArestasGrafo++;
         }
     }
     else
     {
         matrizAdj[origem][destino] = 1;
+        this->numArestasGrafo++;
         if (!direcionado)
         {
             matrizAdj[destino][origem] = 1;
+            this->numArestasGrafo++;
         }
     }
 }

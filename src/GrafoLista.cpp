@@ -9,19 +9,19 @@ using namespace std;
 GrafoLista::GrafoLista(int numVertices, bool direcionado, bool ponderadoVertices, bool ponderadoArestas) : Grafo(numVertices, direcionado, ponderadoVertices, ponderadoArestas)
 {
     // Inicializa a lista de adjacencia
-    this->listaAdjVertices = new ListaAdjVertice();                 
+    listaAdjVertices = new ListaAdjVertice(this);                 
 }
 
 GrafoLista::~GrafoLista()
 {
     // Libera a memoria alocada para os vertices
-    delete this->listaAdjVertices;
+    delete listaAdjVertices;
 }
 // #endregion
 
 // #region Funcoes auxiliares
 bool GrafoLista::existe_vertice(int id) {
-    return this->listaAdjVertices->getVertice(id) != nullptr;
+    return listaAdjVertices->getVertice(id) != nullptr;
 }
 
 // Adiciona um vertice ao grafo
@@ -33,8 +33,8 @@ void GrafoLista::adicionar_vertice(int id, float peso) {
     }
 
     // Adiciona o vertice
-    this->listaAdjVertices->adicionar_vertice(id, peso);
-    this->numVertices++;
+    listaAdjVertices->adicionar_vertice(id, peso);
+    numVertices++;
 }
 
 // Adiciona uma aresta ao grafo
@@ -56,9 +56,9 @@ void GrafoLista::adicionar_aresta(int origem, int destino, float peso) {
     }
 
     // Adiciona a aresta
-    this->listaAdjVertices->adicionar_aresta(origem, destino, peso);
+    listaAdjVertices->adicionar_aresta(origem, destino, peso);
     if(!direcionado){
-        this->listaAdjVertices->adicionar_aresta(destino, origem, peso);
+        listaAdjVertices->adicionar_aresta(destino, origem, peso);
     }
 }
 
@@ -76,9 +76,9 @@ void GrafoLista::remover_aresta(int origem, int destino) {
     }
 
     // Remove a aresta
-    this->listaAdjVertices->remover_aresta(origem, destino);
+    listaAdjVertices->remover_aresta(origem, destino);
     if(!direcionado){
-        this->listaAdjVertices->remover_aresta(destino, origem);
+        listaAdjVertices->remover_aresta(destino, origem);
     }
 }
 
@@ -91,7 +91,7 @@ void GrafoLista::remover_primeira_aresta(int id) {
     }
 
     // Remove a primeira aresta
-    this->listaAdjVertices->remover_primeira_aresta(id);
+    listaAdjVertices->remover_primeira_aresta(id);
 }
 
 // Remove um vertice do grafo
@@ -103,12 +103,17 @@ void GrafoLista::remover_vertice(int id){
     }
 
     // Remove o vertice
-    this->listaAdjVertices->remover_vertice(id);
-    this->numVertices--;
+    listaAdjVertices->remover_vertice(id);
+    numVertices--;
+}
+
+int GrafoLista::getIdAresta(int origem, int destino) {
+    return listaAdjVertices->getVertice(origem)->getArestas()->getIdAresta(destino);
 }
 
 // Calcula a menor distancia entre dois vertices
 int GrafoLista::calcula_menor_dist(int origem, int destino) {
+    cout << "Aresta(" << getIdAresta(origem, destino) << "): " << origem << " -> " << destino << endl;                                         /* { DEBUG } */
     const int INF = 1000000;
     int dist[numVertices + 1];
     bool visitado[numVertices + 1];
@@ -149,7 +154,7 @@ int GrafoLista::calcula_menor_dist(int origem, int destino) {
 
 // Retorna a quantidade de vizinhos de um vertice
 int GrafoLista::get_num_vizinhos(int id) {
-    return this->listaAdjVertices->getVertice(id)->getNumVizinhos();
+    return listaAdjVertices->getVertice(id)->getNumVizinhos();
 }
 
 // Funcao de busca em largura
@@ -158,7 +163,7 @@ void GrafoLista::dfs(int id, bool* visitado) {
         return;
     }
     visitado[id] = true;
-    NoAresta* atual = this->listaAdjVertices->getVertice(id)->getArestas()->getCabeca();
+    NoAresta* atual = listaAdjVertices->getVertice(id)->getArestas()->getCabeca();
     while(atual != nullptr){
         if(!visitado[atual->getDestino()]){
             dfs(atual->getDestino(), visitado);
@@ -184,3 +189,57 @@ void GrafoLista::imprimeGrafoLista(){
     imprime();                                                      
 }
 // #endregion
+
+// #region Algoritmos gulosos para cobertura de vertice
+void GrafoLista::alg_guloso_cobertura_vertices(){
+    // Inicializa o vetor de visitados
+    bool visitado[numVertices + 1];
+    for(int i = 1; i <= numVertices; i++){
+        visitado[i] = false;
+    }
+
+    // Inicializa o vetor de cobertura
+    bool cobertura[numVertices + 1];
+    for(int i = 1; i <= numVertices; i++){
+        cobertura[i] = false;
+    }
+
+    // Enquanto existirem vertices nao visitados
+    while(true){
+        // Encontra o vertice com maior grau
+        int maxGrau = -1;
+        int idMaxGrau = -1;
+        for(int i = 1; i <= numVertices; i++){
+            if(!visitado[i] && get_num_vizinhos(i) > maxGrau){
+                maxGrau = get_num_vizinhos(i);
+                idMaxGrau = i;
+            }
+        }
+
+        // Se nao existir mais vertices nao visitados
+        if(idMaxGrau == -1){
+            break;
+        }
+
+        // Marca o vertice com maior grau como visitado
+        visitado[idMaxGrau] = true;
+        cobertura[idMaxGrau] = true;
+
+        // Marca os vizinhos do vertice como visitados
+        NoAresta* atual = listaAdjVertices->getVertice(idMaxGrau)->getArestas()->getCabeca();
+        while(atual != nullptr){
+            visitado[atual->getDestino()] = true;
+            atual = atual->getProximo();
+        }
+    }
+
+    // Imprime a cobertura
+    cout << "Cobertura de vertices: ";
+    for(int i = 1; i <= numVertices; i++){
+        if(cobertura[i]){
+            cout << i << " ";
+        }
+    }
+    cout << endl;
+
+}

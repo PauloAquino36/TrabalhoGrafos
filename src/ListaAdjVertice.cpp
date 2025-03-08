@@ -1,11 +1,11 @@
 #include "../include/ListaAdjVertice.h"
-#include "../include/NoVertice.h"
 #include <iostream>
 
 using namespace std;
 
 // #region Construtor e Destrutor
-ListaAdjVertice::ListaAdjVertice() {
+ListaAdjVertice::ListaAdjVertice(GrafoLista* grafo) {
+    this->grafo = grafo;
     this->cabeca = nullptr;
 }
 
@@ -50,7 +50,7 @@ NoVertice* ListaAdjVertice::getVertice(int id) {
 
 // Adiciona um vertice a lista
 void ListaAdjVertice::adicionar_vertice(int id, float peso) {
-    NoVertice* novoNo = new NoVertice(id, peso);
+    NoVertice* novoNo = new NoVertice(id, peso, grafo);
     novoNo->setProximo(this->cabeca);
     this->cabeca = novoNo;
 
@@ -106,6 +106,7 @@ void ListaAdjVertice::remover_vertice(int id) {
         }
         // Remove as arestas que apontam para o vertice a ser removido
         atual->remover_aresta(id);
+        
         // Atualiza os ponteiros
         anterior = atual;
         atual = atual->getProximo();
