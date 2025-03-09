@@ -9,7 +9,7 @@ NoVertice::NoVertice(int idVertice, float peso, GrafoLista* grafo) {
     this->idVertice = idVertice;
     this->peso = peso;
     this->proximo = nullptr;
-    this->numArestas = 0;
+    this->numArestasVertice = 0;
     this->grafo = grafo;
     this->arestas = new ListaAdjAresta(grafo);
 }
@@ -51,7 +51,7 @@ ListaAdjAresta* NoVertice::getArestas() {
 }
 
 // Retorna a quantidade de arestas do vertice
-int NoVertice::getNumArestas() {
+int NoVertice::getNumArestasVertice() {
     return this->numArestasVertice;
 }
 
