@@ -1,11 +1,13 @@
 #include "../include/ListaAdjAresta.h"
 #include "../include/NoAresta.h"
+#include "../include/GrafoLista.h"
 #include <iostream>
 
 using namespace std;
 
 // #region Construtor e Destrutor
-ListaAdjAresta::ListaAdjAresta() {
+ListaAdjAresta::ListaAdjAresta(GrafoLista* grafo) {
+    this->grafo = grafo;
     this->cabeca = nullptr;
 }
 
@@ -39,10 +41,12 @@ void ListaAdjAresta::adicionar_aresta(int origem, int destino, float peso) {
     }
 
     // Adiciona uma nova aresta
-    NoAresta* novaAresta = new NoAresta(origem, destino, peso);
+    grafo->incrementa_num_arestas_grafos();
+    NoAresta* novaAresta = new NoAresta(origem, destino, peso, grafo->get_num_arestas_grafo());
+    
     novaAresta->setProximo(this->cabeca);
     this->cabeca = novaAresta;
-    //cout << "Adicionada Aresta " << novaAresta->getOrigem() << " -> " << novaAresta->getDestino() << endl;          /* { DEBUG } */
+    //cout << "Adicionada Aresta(" << novaAresta->getIdAresta() << "): " << novaAresta->getOrigem() << " -> " << novaAresta->getDestino() << endl;          /* { DEBUG } */
 }
 
 // Remove uma aresta da lista
@@ -56,8 +60,9 @@ void ListaAdjAresta::remover_aresta(int origem, int destino) {
             } else {
                 anterior->setProximo(atual->getProximo());
             }
+            //cout << "Removida Aresta("<< atual->getIdAresta() <<"): " << origem << " -> " << destino << endl;                                      /* { DEBUG } */
             delete atual;
-            //cout << "Removida Aresta " << origem << " -> " << destino << endl;                                      /* { DEBUG } */
+            grafo->decrementa_num_arestas_grafos();
             return;
         }
         anterior = atual;
@@ -87,6 +92,7 @@ void ListaAdjAresta::remover_primeira_aresta() {
 
 // Retorna o tamanho da lista / numero de vertices vizinhos / grau do vertice
 int ListaAdjAresta::getNumVerticesVizinhos() {
+    
     int tamanho = 0;
     NoAresta* atual = this->cabeca;
     while (atual != nullptr) {

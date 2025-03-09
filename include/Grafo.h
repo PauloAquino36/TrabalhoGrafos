@@ -10,6 +10,7 @@ using namespace std;
 class Grafo {
 protected:
     int numVertices;                    // Numero de vertices (ordem) do grafo
+    int numArestasGrafo;                // Numero de arestas do grafo
     bool direcionado;                   // Indica se o grafo eh direcionado
     bool ponderadoVertices;             // Indica se o grafo possui peso nos vertices
     bool ponderadoArestas;              // Indica se o grafo possui peso nas arestas
@@ -39,6 +40,12 @@ public:
     virtual int get_num_vizinhos(int id) { return 0; };                             // Retorna o numero de vizinhos de um vertice
     virtual void dfs(int v, bool* visitado){};                                      // Realiza a busca em profundidade
     virtual bool existe_vertice(int id)=0;                                          // Verifica se um vertice existe
+    int get_num_arestas_grafo();                                                    // Retorna o numero de arestas do grafo
+    void incrementa_num_vertices_grafo();                                          // Incrementa o numero de vertices do grafo
+    void decrementa_num_vertices_grafo();                                          // Decrementa o numero de vertices do grafo
+    void incrementa_num_arestas_grafos();                                           // Incrementa o numero de arestas do grafo
+    void decrementa_num_arestas_grafos();                                           // Decrementa o numero de arestas do grafo
+    void diminui_num_arestas_grafos(int valor);                                     // Diminui o numero de arestas do grafo
 
     // Funcoes de manipulacao de vertices e arestas abstratas que serao implementadas nas classes filhas
     virtual void adicionar_vertice(int id, float peso = 0.0){};                     // Adiciona um vertice no grafo

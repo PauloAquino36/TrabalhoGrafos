@@ -9,7 +9,7 @@ using namespace std;
 GrafoLista::GrafoLista(int numVertices, bool direcionado, bool ponderadoVertices, bool ponderadoArestas) : Grafo(numVertices, direcionado, ponderadoVertices, ponderadoArestas)
 {
     // Inicializa a lista de adjacencia
-    this->listaAdjVertices = new ListaAdjVertice();                 
+    this->listaAdjVertices = new ListaAdjVertice(this);                 
 }
 
 GrafoLista::~GrafoLista()
@@ -34,7 +34,6 @@ void GrafoLista::adicionar_vertice(int id, float peso) {
 
     // Adiciona o vertice
     this->listaAdjVertices->adicionar_vertice(id, peso);
-    this->numVertices++;
 }
 
 // Adiciona uma aresta ao grafo
@@ -104,7 +103,6 @@ void GrafoLista::remover_vertice(int id){
 
     // Remove o vertice
     this->listaAdjVertices->remover_vertice(id);
-    this->numVertices--;
 }
 
 // Calcula a menor distancia entre dois vertices

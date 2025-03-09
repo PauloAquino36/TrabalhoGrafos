@@ -2,14 +2,16 @@
 #define LISTA_ADJ_VERTICE_H
 
 #include "NoVertice.h"
+class GrafoLista;
 
 class ListaAdjVertice {
 private:
     NoVertice* cabeca;          // Ponteiro para o primeiro no da lista
+    GrafoLista* grafo;
 
 public:
     // Construtor e Destrutor
-    ListaAdjVertice();
+    ListaAdjVertice(GrafoLista* grafo);
     ~ListaAdjVertice();
 
     NoVertice* getCabeca();                                         // Retorna a cabeca da lista de adjacencia de arestas

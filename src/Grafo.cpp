@@ -14,6 +14,7 @@ Grafo::Grafo(int numVertices, bool direcionado, bool ponderadoVertices, bool pon
     this->direcionado = direcionado;
     this->ponderadoVertices = ponderadoVertices;
     this->ponderadoArestas = ponderadoArestas;
+    this->numArestasGrafo = 0;
 }
 
 Grafo::~Grafo()
@@ -87,6 +88,42 @@ bool Grafo::eh_completo()
         }
     }
     return true;
+}
+
+// Retrna o numero de arestas do grafo
+int Grafo::get_num_arestas_grafo()
+{
+    return numArestasGrafo;
+}
+
+// Incrementa o numero de arestas do grafo
+void Grafo::incrementa_num_arestas_grafos()
+{
+    numArestasGrafo++;
+}
+
+// Decrementa o numero de arestas do grafo 
+void Grafo::decrementa_num_arestas_grafos()
+{
+    numArestasGrafo--;
+}
+
+// Diminui o numero de arestas do grafo 
+void Grafo::diminui_num_arestas_grafos(int valor)
+{
+    numArestasGrafo = numArestasGrafo - valor;
+}
+
+// Incrementa o numero de vertices do grafo
+void Grafo::incrementa_num_vertices_grafo()
+{
+    numVertices++;
+}
+
+// Decrementa o numero de vertices do grafo
+void Grafo::decrementa_num_vertices_grafo()
+{
+    numVertices--;
 }
 
 // Imprime os atributos do grafo

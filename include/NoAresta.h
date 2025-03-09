@@ -3,6 +3,7 @@
 
 class NoAresta {
 private:
+    int idAresta;                           // Identificador da aresta
     int idVerticeOrigem;                    // Identificador do vertice de origem
     int idVerticeDestino;                   // Identificador do vertice de destino
     float peso;                             // Peso da aresta
@@ -10,10 +11,11 @@ private:
 
 public:
     // Construtor e Destrutor
-    NoAresta(int idVerticeOrigem, int idVerticeDestino, float peso);
+    NoAresta(int idVerticeOrigem, int idVerticeDestino, float peso, int idAresta);
     ~NoAresta();
 
     // Getters e Setters
+    int getIdAresta();                      // Retorna o identificador da aresta
     int getOrigem();                        // Retorna o vertice de origem
     int getDestino();                       // Retorna o vertice de destino
     float getPeso();                        // Retorna o peso da aresta

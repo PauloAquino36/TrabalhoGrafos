@@ -3,24 +3,26 @@
 
 #include "ListaAdjAresta.h"
 #include "NoAresta.h"
+class GrafoLista;
 
 class NoVertice {
 private:
     int idVertice;              // Identificador do vertice
     float peso;                   // Peso do vertice
-    int numArestas;             // Numero de arestas do vertice (quantidade de vertices vizinhos)
+    int numArestasVertice;             // Numero de arestas do vertice (quantidade de vertices vizinhos)
     NoVertice* proximo;         // Ponteiro para o proximo no vertice
     ListaAdjAresta* arestas;    // Lista encadeada de arestas
+    GrafoLista* grafo;          // Ponteiro para o grafo
 
 public:
     // Construtor e Destrutor
-    NoVertice(int vertice, float peso);
+    NoVertice(int vertice, float peso, GrafoLista* grafo);
     ~NoVertice();
 
     // Getters e Setters
     int getIdVertice();                                     // Retorna o identificador do vertice
     float getPesoVertice();                                 // Retorna o peso do vertice
-    int getNumArestas();                                    // Retorna a quantidade de arestas do vertice
+    int getNumArestasVertice();                                    // Retorna a quantidade de arestas do vertice
     NoVertice* getProximo();                                // Retorna o proximo no vertice
     ListaAdjAresta* getArestas();                           // Retorna a lista encadeada de arestas
     

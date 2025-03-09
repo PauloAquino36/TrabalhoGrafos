@@ -2,14 +2,15 @@
 #define LISTA_ADJ_ARESTA_H
 
 #include "NoAresta.h"
-
+class GrafoLista;
 class ListaAdjAresta {
 private:
     NoAresta* cabeca;           // Ponteiro para o primeiro no da lista
+    GrafoLista* grafo;
 
 public:
     // Construtor e Destrutor
-    ListaAdjAresta();
+    ListaAdjAresta(GrafoLista* grafo);
     ~ListaAdjAresta();
 
     NoAresta* getCabeca();                                              // Retorna a cabeca da lista de adjacencia de arestas

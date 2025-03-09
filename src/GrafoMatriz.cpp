@@ -95,7 +95,22 @@ void GrafoMatriz::remover_vertice(int id)
         cout << "Erro: indice de vertice invalido.\n";
         return;
     }
-
+    // Atualiza o contador de arestas
+    for (int i = 0; i < numVertices; i++)
+    {
+        if (matrizAdj[id][i] != 0)
+        {
+            decrementa_num_arestas_grafos();
+            if (!direcionado)
+            {
+                decrementa_num_arestas_grafos();
+            }
+        }
+        if (matrizAdj[i][id] != 0 && i != id)
+        {
+            decrementa_num_arestas_grafos();
+        }
+    }
     int novoNumVertices = numVertices - 1;
     int **novaMatriz = new int *[tamanhoMatriz];
 
@@ -141,9 +156,11 @@ void GrafoMatriz::remover_aresta(int origem, int destino)
     }
 
     matrizAdj[origem][destino] = 0;
+    decrementa_num_arestas_grafos();
     if (!direcionado)
     {
         matrizAdj[destino][origem] = 0;
+        decrementa_num_arestas_grafos();
     }
 }
 
@@ -161,9 +178,11 @@ void GrafoMatriz::remover_primeira_aresta(int id)
         if (matrizAdj[id][i] != 0)
         {
             matrizAdj[id][i] = 0;
+            decrementa_num_arestas_grafos();
             if (!direcionado)
             {
                 matrizAdj[i][id] = 0;
+                decrementa_num_arestas_grafos();
             }
             return;
         }
@@ -181,17 +200,21 @@ void GrafoMatriz::adicionar_aresta(int origem, int destino, float peso)
     if (ponderadoArestas)
     {
         matrizAdj[origem][destino] = peso;
+        incrementa_num_arestas_grafos();
         if (!direcionado)
         {
             matrizAdj[destino][origem] = peso;
+            incrementa_num_arestas_grafos();
         }
     }
     else
     {
         matrizAdj[origem][destino] = 1;
+        incrementa_num_arestas_grafos();
         if (!direcionado)
         {
             matrizAdj[destino][origem] = 1;
+            incrementa_num_arestas_grafos();
         }
     }
 }
