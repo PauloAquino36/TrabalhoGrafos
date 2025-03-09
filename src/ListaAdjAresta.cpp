@@ -1,4 +1,6 @@
 #include "../include/ListaAdjAresta.h"
+#include "../include/NoAresta.h"
+#include "../include/GrafoLista.h"
 #include <iostream>
 
 using namespace std;
@@ -40,7 +42,7 @@ void ListaAdjAresta::adicionar_aresta(int origem, int destino, float peso) {
 
     // Adiciona uma nova aresta
     NoAresta* novaAresta = new NoAresta(origem, destino, peso, grafo->getNumArestasGrafo()+1);
-    this->grafo->incrementar_num_arestas();
+    grafo->incrementaNumArestasGrafo();
     novaAresta->setProximo(this->cabeca);
     this->cabeca = novaAresta;
     //cout << "Adicionada Aresta " << novaAresta->getOrigem() << " -> " << novaAresta->getDestino() << endl;          /* { DEBUG } */
@@ -58,7 +60,7 @@ void ListaAdjAresta::remover_aresta(int origem, int destino) {
                 anterior->setProximo(atual->getProximo());
             }
             delete atual;
-            this->grafo->decrementar_num_arestas();
+            grafo->decrementaNumArestasGrafo();
             //cout << "Removida Aresta " << origem << " -> " << destino << endl;                                      /* { DEBUG } */
             return;
         }

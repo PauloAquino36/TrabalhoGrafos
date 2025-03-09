@@ -2,10 +2,11 @@
 #define LISTA_ADJ_VERTICE_H
 
 #include "NoVertice.h"
-#include "GrafoLista.h"
+class GrafoLista; // Forward declaration
 
 class ListaAdjVertice {
 private:
+    GrafoLista* grafo;          // Ponteiro para o grafo
     NoVertice* cabeca;          // Ponteiro para o primeiro no da lista
     GrafoLista* grafo;               // Ponteiro para o grafo
 

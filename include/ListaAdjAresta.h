@@ -3,11 +3,12 @@
 
 #include "GrafoLista.h"
 #include "NoAresta.h"
+class GrafoLista; // Forward declaration
 
 class ListaAdjAresta {
 private:
     NoAresta* cabeca;           // Ponteiro para o primeiro no da lista
-    GrafoLista* grafo;               // Ponteiro para o grafo
+    GrafoLista* grafo;          // Ponteiro para o grafo
 
 public:
     // Construtor e Destrutor

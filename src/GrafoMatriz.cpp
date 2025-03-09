@@ -96,6 +96,23 @@ void GrafoMatriz::remover_vertice(int id)
         return;
     }
 
+    // Atualiza o contador de arestas
+    for (int i = 0; i < numVertices; i++)
+    {
+        if (matrizAdj[id][i] != 0)
+        {
+            numArestasGrafo--;
+            if (!direcionado)
+            {
+                numArestasGrafo--;
+            }
+        }
+        if (matrizAdj[i][id] != 0 && i != id)
+        {
+            numArestasGrafo--;
+        }
+    }
+
     int novoNumVertices = numVertices - 1;
     int **novaMatriz = new int *[tamanhoMatriz];
 
@@ -141,11 +158,11 @@ void GrafoMatriz::remover_aresta(int origem, int destino)
     }
 
     matrizAdj[origem][destino] = 0;
-    this->numArestasGrafo--;
+    numArestasGrafo--;
     if (!direcionado)
     {
         matrizAdj[destino][origem] = 0;
-        this->numArestasGrafo--;
+        numArestasGrafo--;
     }
 }
 
@@ -163,11 +180,11 @@ void GrafoMatriz::remover_primeira_aresta(int id)
         if (matrizAdj[id][i] != 0)
         {
             matrizAdj[id][i] = 0;
-            this->numArestasGrafo--;
+            numArestasGrafo--;
             if (!direcionado)
             {
                 matrizAdj[i][id] = 0;
-                this->numArestasGrafo--;
+                numArestasGrafo--;
             }
             return;
         }
@@ -185,21 +202,21 @@ void GrafoMatriz::adicionar_aresta(int origem, int destino, float peso)
     if (ponderadoArestas)
     {
         matrizAdj[origem][destino] = peso;
-        this->numArestasGrafo++;
+        numArestasGrafo++;
         if (!direcionado)
         {
             matrizAdj[destino][origem] = peso;
-            this->numArestasGrafo++;
+            numArestasGrafo++;
         }
     }
     else
     {
         matrizAdj[origem][destino] = 1;
-        this->numArestasGrafo++;
+        numArestasGrafo++;
         if (!direcionado)
         {
             matrizAdj[destino][origem] = 1;
-            this->numArestasGrafo++;
+            numArestasGrafo++;
         }
     }
 }

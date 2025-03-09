@@ -1,4 +1,5 @@
 #include "../include/NoVertice.h"
+#include "../include/GrafoLista.h"
 #include <iostream>
 
 using namespace std;
@@ -8,7 +9,7 @@ NoVertice::NoVertice(int idVertice, float peso, GrafoLista* grafo) {
     this->idVertice = idVertice;
     this->peso = peso;
     this->proximo = nullptr;
-    this->numArestasVertice = 0;
+    this->numArestas = 0;
     this->grafo = grafo;
     this->arestas = new ListaAdjAresta(grafo);
 }

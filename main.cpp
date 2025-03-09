@@ -21,24 +21,24 @@ int main(int argc, char* argv[]) {
         GrafoMatriz grafoMatriz(0, false, false, false);
         grafoMatriz.carrega_grafo(&grafoMatriz, arquivo);
         cout << "Excluindo Noh 1..." << endl;
-        grafoMatriz.remover_vertice(1);
+        //grafoMatriz.remover_vertice(1);
         cout << "Excluindo primeira aresta do Noh 2..." << endl;
-        grafoMatriz.remover_primeira_aresta(2);
+        //grafoMatriz.remover_primeira_aresta(2);
         grafoMatriz.imprimeGrafoMatriz();
-        cout << "NumArestas:" << grafoMatriz.getNumArestasGrafo() << endl;
-        grafoMatriz.calcula_maior_menor_dist();
+        //grafoMatriz.calcula_maior_menor_dist();
+        cout << "Numero de Arestas no Grafo: " << grafoMatriz.getNumArestasGrafo();
         cout << endl << "============================== FIM MATRIZ ==============================" << endl << endl;
     } else if (modo == "-l") {
         cout << endl << "============================== LISTA ==============================" << endl << endl;
         GrafoLista grafoLista(0, false, false, false);
         grafoLista.carrega_grafo(&grafoLista, arquivo);
         cout << "Excluindo Noh 1..." << endl;
-        grafoLista.remover_vertice(1);
+        //grafoLista.remover_vertice(1);
         cout << "Excluindo primeira aresta do Noh 2..." << endl ;
-        grafoLista.remover_primeira_aresta(2);
+        //grafoLista.remover_primeira_aresta(2);
         grafoLista.imprimeGrafoLista();
-        cout << "NumArestas:" << grafoLista.getNumArestasGrafo() << endl;
-        grafoLista.calcula_maior_menor_dist();
+        //grafoLista.calcula_maior_menor_dist();
+        cout << "Numero de Arestas no Grafo: " << grafoLista.getNumArestasGrafo();
         cout << endl << "============================== FIM LISTA ==============================" << endl << endl;
     } else {
         cerr << "Use ./main -d -m grafo.txt  ou ./main -d -l grafo.txt" << endl;

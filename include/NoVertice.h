@@ -3,6 +3,8 @@
 
 #include "GrafoLista.h"
 #include "ListaAdjAresta.h"
+#include "NoAresta.h"
+class GrafoLista; // Forward declaration
 
 class NoVertice {
 private:
@@ -11,7 +13,7 @@ private:
     int numArestasVertice;             // Numero de arestas do vertice (quantidade de vertices vizinhos)
     NoVertice* proximo;         // Ponteiro para o proximo no vertice
     ListaAdjAresta* arestas;    // Lista encadeada de arestas
-    GrafoLista* grafo;                // Ponteiro para o grafo
+    GrafoLista* grafo;          // Ponteiro para o grafo
 
 public:
     // Construtor e Destrutor

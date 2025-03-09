@@ -9,7 +9,7 @@ using namespace std;
 GrafoLista::GrafoLista(int numVertices, bool direcionado, bool ponderadoVertices, bool ponderadoArestas) : Grafo(numVertices, direcionado, ponderadoVertices, ponderadoArestas)
 {
     // Inicializa a lista de adjacencia
-    listaAdjVertices = new ListaAdjVertice(this);                 
+    this->listaAdjVertices = new ListaAdjVertice(this);                 
 }
 
 GrafoLista::~GrafoLista()

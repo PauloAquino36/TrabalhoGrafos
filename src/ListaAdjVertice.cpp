@@ -1,4 +1,6 @@
 #include "../include/ListaAdjVertice.h"
+#include "../include/NoVertice.h"
+#include "../include/GrafoLista.h"
 #include <iostream>
 
 using namespace std;

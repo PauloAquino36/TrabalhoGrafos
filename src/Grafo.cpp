@@ -14,6 +14,7 @@ Grafo::Grafo(int numVertices, bool direcionado, bool ponderadoVertices, bool pon
     this->direcionado = direcionado;
     this->ponderadoVertices = ponderadoVertices;
     this->ponderadoArestas = ponderadoArestas;
+    this->numArestasGrafo = 0;
 }
 
 Grafo::~Grafo()
