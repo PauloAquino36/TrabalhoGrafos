@@ -362,4 +362,78 @@ void GrafoMatriz::imprimeGrafoMatriz()
          << endl;
     imprime();
 }
+
+void GrafoMatriz::coberturaVerticesGulosa()
+{
+    // Cria e inicializa o vetor que marca se o vértice já foi escolhido para a cobertura
+    bool *verticeEscolhido = new bool[numVertices];
+    for (int i = 0; i < numVertices; i++)
+    {
+        verticeEscolhido[i] = false;
+    }
+
+    // Função lambda para contar o número de arestas não cobertas.
+    // Para grafos não direcionados, contamos cada aresta uma única vez (i < j).
+    auto countUncoveredEdges = [this, verticeEscolhido]() -> int {
+        int count = 0;
+        for (int i = 0; i < numVertices; i++)
+        {
+            for (int j = i + 1; j < numVertices; j++)
+            {
+                if (matrizAdj[i][j] != 0 && !verticeEscolhido[i] && !verticeEscolhido[j])
+                {
+                    count++;
+                }
+            }
+        }
+        return count;
+    };
+
+    int arestasNaoCobertas = countUncoveredEdges();
+    cout << "--- Vértices escolhidos (em ordem de escolha): ---" << endl;
+
+    // Enquanto houver arestas não cobertas, escolha um vértice que cubra o máximo delas.
+    while (arestasNaoCobertas > 0)
+    {
+        int melhorVertice = -1;
+        int melhorCobertura = 0;
+
+        // Para cada vértice não escolhido, calcula quantas arestas incidentes estão "descobertas"
+        // ou seja, para cada vizinho j, se há aresta (i, j) e nenhum dos dois já foi escolhido.
+        for (int i = 0; i < numVertices; i++)
+        {
+            if (!verticeEscolhido[i])
+            {
+                int coberturaAtual = 0;
+                for (int j = 0; j < numVertices; j++)
+                {
+                    if (matrizAdj[i][j] != 0 && !verticeEscolhido[j])
+                    {
+                        coberturaAtual++;
+                    }
+                }
+                if (coberturaAtual > melhorCobertura)
+                {
+                    melhorCobertura = coberturaAtual;
+                    melhorVertice = i;
+                }
+            }
+        }
+
+        // Se nenhum vértice contribui para cobrir novas arestas, interrompe a execução
+        if (melhorCobertura == 0)
+            break;
+
+        // Adiciona o vértice escolhido à solução e atualiza a cobertura
+        verticeEscolhido[melhorVertice] = true;
+        cout << "Vértice " << melhorVertice << " foi escolhido." << endl;
+
+        arestasNaoCobertas = countUncoveredEdges();
+    }
+
+    delete[] verticeEscolhido;
+}
+
+
+
 // #endregion

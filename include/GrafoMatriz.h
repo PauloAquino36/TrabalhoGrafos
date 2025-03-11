@@ -2,7 +2,7 @@
 #define GRAFOMATRIZ_H
 
 #include "Grafo.h"
-
+#include <vector>
 class GrafoMatriz  : public Grafo {
 protected:
     int** matrizAdj;                    // Matriz de adjacencia
@@ -31,6 +31,8 @@ public:
     // Funcoes imprime
     void imprimirMatrizAdj();                                                       // Imprime a matriz de adjacencia
     void imprimeGrafoMatriz();                                                      // Imprime os atributos do grafo
+    void coberturaVerticesGulosa();
+    
 };
 
 #endif // GRAFOMATRIZ_H

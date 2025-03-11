@@ -27,6 +27,7 @@ int main(int argc, char* argv[]) {
         grafoMatriz.imprimeGrafoMatriz();
         //grafoMatriz.calcula_maior_menor_dist();
         cout << "Quantidade de Arestas no grafo: " << grafoMatriz.get_num_arestas_grafo() << endl;
+        grafoMatriz.coberturaVerticesGulosa();
         cout << endl << "============================== FIM MATRIZ ==============================" << endl << endl;
     } else if (modo == "-l") {
         cout << endl << "============================== LISTA ==============================" << endl << endl;
