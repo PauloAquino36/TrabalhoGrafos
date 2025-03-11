@@ -415,7 +415,7 @@ void GrafoMatriz::coberturaVerticesGulosa() {
         if (melhorVertice == -1) break;
 
         verticeEscolhido[melhorVertice] = true;
-        cout << "Vértice " << melhorVertice << " escolhido." << endl;
+        //cout << "Vertice " << melhorVertice << " escolhido." << endl;
 
         // Atualiza graus e arestas cobertas
         for (int j = 1; j < numVertices; j++) {
@@ -424,7 +424,6 @@ void GrafoMatriz::coberturaVerticesGulosa() {
                     arestaCoberta[melhorVertice][j] = true;
                     if (!direcionado){
                         arestaCoberta[j][melhorVertice] = true;
-                        cout << "TESTE1"; // Marca ambas as direções
                     }
                     graus[j]--;
                 }
@@ -443,6 +442,16 @@ void GrafoMatriz::coberturaVerticesGulosa() {
         if (todasCobertas) break;
     }
 
+    // Imprime o conjunto solução
+    int qtdVerticesSolucao = 0;
+    cout << "Cobertura de Vertices: ";
+    for (int i = 1; i <= numVertices; i++) {
+        if (verticeEscolhido[i]) {
+            qtdVerticesSolucao++;
+            cout << i << " ";
+        }
+    }
+    cout << endl << "Quantidade de Vertices na solucao: " << qtdVerticesSolucao;
 
     // Limpeza de memória
     for (int i = 0; i < numVertices; i++) {

@@ -1,7 +1,7 @@
 import random
 
-num_vertices = 3000  # Número de vértices desejado#
-num_arestas = 20000  # Número de arestas desejado
+num_vertices = 20   # Número de vértices desejado
+num_arestas = 30    # Número de arestas desejado
 
 # Gerar arestas aleatórias
 arestas = set()

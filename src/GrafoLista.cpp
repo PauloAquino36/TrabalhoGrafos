@@ -185,94 +185,88 @@ void GrafoLista::imprimeGrafoLista(){
 
 
 void GrafoLista::alg_guloso_cobertura_vertice() {
-    bool* arestasCobertas = new bool[numArestasGrafo + 1];      // Armazenar as arestas cobertas
-    for (int i = 1; i <= numArestasGrafo; i++) {
-        arestasCobertas[i] = false;
-    }
+    bool verticeEscolhido[numVertices + 1] = {false};
+    bool arestaCoberta[numArestasGrafo] = {false};  // Marcar arestas cobertas
+    int graus[numVertices + 1] = {0};
+    int somaVizinhos[numVertices + 1] = {0};  // Soma dos graus dos vizinhos
+    int arestasCobertas = 0;
 
-    int* impacto = new int[numVertices + 1];                    // Armazenar o impacto de cada vértice
+    // Inicializa graus e soma dos vizinhos
     for (int i = 1; i <= numVertices; i++) {
-        impacto[i] = 0;
+        NoAresta* arestaAtual = listaAdjVertices->getVertice(i)->getArestas()->getCabeca();
+        while (arestaAtual != nullptr) {
+            graus[i]++;
+            somaVizinhos[i] += graus[arestaAtual->getDestino()];
+            arestaAtual = arestaAtual->getProximo();
+        }
     }
 
-    int* qtdArestasCobertasVertice = new int[numVertices + 1];   // Armazenar a quantidade de arestas cobertas por cada vertice
-    for (int i = 1; i <= numVertices; i++) {
-        qtdArestasCobertasVertice[i] = 0;
-    }
+    // Algoritmo guloso otimizado
+    while (arestasCobertas < numArestasGrafo) {
+        int melhorVertice = -1;
+        int melhorSoma = -1;
+        int melhorGrau = -1;
 
-    int* conjuntoSolucao = new int[numVertices + 1];            // Armazenar os vértices que fazem parte da solução
-    int tamanhoSolucao = 0;                                     // Tamanho atual do conjunto de solução
-
-    while (true) {
-        // Calcular impacto de cada vértice
-        int maxImpacto = -1;
-        int verticeMaxImpacto = -1;
+        // Escolhe o melhor vértice sem usar bibliotecas externas
         for (int i = 1; i <= numVertices; i++) {
-            if (!existe_vertice(i)) continue;
-            impacto[i] = 0;
-            NoAresta* atual = listaAdjVertices->getVertice(i)->getArestas()->getCabeca();
-            while (atual != nullptr) {
-                if (! arestasCobertas[atual->getIdAresta()]) {
-                    impacto[i]++;
+            if (!verticeEscolhido[i]) {
+                int somaAtual = somaVizinhos[i];
+                int grauAtual = graus[i];
+
+                // Critério de desempate
+                if (somaAtual > melhorSoma || 
+                   (somaAtual == melhorSoma && grauAtual > melhorGrau) ||
+                   (somaAtual == melhorSoma && grauAtual == melhorGrau && i < melhorVertice)) {
+                    melhorSoma = somaAtual;
+                    melhorGrau = grauAtual;
+                    melhorVertice = i;
                 }
-                //cout << "Vertice (" << i << ") Impacto: " << impacto[i] << endl;              /* { DEBUG } */
-                atual = atual->getProximo();
-            }
-            // Armazena o vértice com maior impacto
-            if (impacto[i] > maxImpacto) {
-                maxImpacto = impacto[i];
-                verticeMaxImpacto = i;
             }
         }
 
-    
-        if (maxImpacto == 0) break;  // Todas as arestas estão cobertas
+        if (melhorVertice == -1) break;
 
-        // Adicionar o vértice com maior impacto ao conjunto de solução
-        cout << "Vertice de maior impacto: " << verticeMaxImpacto << " / " << maxImpacto << endl;                    /* { DEBUG } */
-        conjuntoSolucao[tamanhoSolucao++] = verticeMaxImpacto;
+        verticeEscolhido[melhorVertice] = true;
 
-        // Marcar as arestas conectadas ao vértice de maior impacto como cobertas
-        NoAresta* atual = listaAdjVertices->getVertice(verticeMaxImpacto)->getArestas()->getCabeca();
-        while (atual != nullptr) {
-            if(!(arestasCobertas[atual->getIdAresta()])){
-                arestasCobertas[atual->getIdAresta()] = true;
-                qtdArestasCobertasVertice[atual->getOrigem()]++;
-                cout << "Aresta (" << atual->getIdAresta() << ") coberta por vertice (" << atual->getOrigem() << ")" << endl;  /* { DEBUG } */
-                if(!direcionado){
-                    NoAresta* atualContraria = listaAdjVertices->getVertice(atual->getDestino())->getArestas()->getCabeca();
-                    while(atualContraria != nullptr){
-                        if(atualContraria->getDestino() == verticeMaxImpacto && !arestasCobertas[atualContraria->getIdAresta()]){
-                            if(!arestasCobertas[atualContraria->getIdAresta()]){
-                                arestasCobertas[atualContraria->getIdAresta()] = true;
-                                qtdArestasCobertasVertice[atualContraria->getDestino()]++;
-                                cout << "Aresta (" << atualContraria->getIdAresta() << ") coberta por vertice (" << atualContraria->getDestino() << ")" << endl;  /* { DEBUG } */
-                            }
+        // Atualiza graus e arestas cobertas
+        NoAresta* arestaAtual = listaAdjVertices->getVertice(melhorVertice)->getArestas()->getCabeca();
+        while (arestaAtual != nullptr) {
+            int destino = arestaAtual->getDestino();
+            int idAresta = arestaAtual->getIdAresta();
+
+            if (!arestaCoberta[idAresta]) {
+                arestaCoberta[idAresta] = true;
+                arestasCobertas++;
+
+                if (!direcionado) {
+                    // Marcar a aresta reversa como coberta
+                    NoAresta* reversa = listaAdjVertices->getVertice(destino)->getArestas()->getCabeca();
+                    while (reversa != nullptr) {
+                        if (reversa->getDestino() == melhorVertice) {
+                            arestaCoberta[reversa->getIdAresta()] = true;
+                            arestasCobertas++;
                             break;
                         }
-                        atualContraria = atualContraria->getProximo();
+                        reversa = reversa->getProximo();
                     }
                 }
+
+                graus[destino]--;
+                somaVizinhos[destino] -= graus[melhorVertice];  // Atualiza soma dos vizinhos
             }
-            atual = atual->getProximo();
+
+            arestaAtual = arestaAtual->getProximo();
         }
     }
 
-    // Imprimir o conjunto de cobertura (solução)
-    cout << "Conjunto de cobertura (solucao): ";
-    int totalArestasCobertas = 0;
-    for (int i = 0; i < tamanhoSolucao; i++) {
-        cout << conjuntoSolucao[i] << "(" << qtdArestasCobertasVertice[conjuntoSolucao[i]] << ") " << "  ";
-        totalArestasCobertas += qtdArestasCobertasVertice[conjuntoSolucao[i]];
+    // Imprime o conjunto solução
+    cout << "Cobertura de Vertices: ";
+    int qtdVerticesSolucao = 0;
+    for (int i = 1; i <= numVertices; i++) {
+        if (verticeEscolhido[i]) {
+            qtdVerticesSolucao++;
+            cout << i << " ";
+        }
     }
-    cout << endl;
-
-    // Imprimir a quantidade de vértices selecionados
-    cout << "Quantidade de vertices selecionados: " << tamanhoSolucao << endl;
-    cout << "Total de arestas cobertas: " << totalArestasCobertas << endl;
-    cout << "Total arestas do grafo: " << numArestasGrafo << endl;
-
-    delete[] arestasCobertas;
-    delete[] impacto;
-    delete[] conjuntoSolucao;
+    cout << endl << "Quantidade de Vertices na solucao: " << qtdVerticesSolucao << endl;
 }
