@@ -30,6 +30,7 @@ int main(int argc, char* argv[]) {
         grafoLista.carrega_grafo(&grafoLista, arquivo);
         grafoLista.imprimeGrafoLista();
         grafoLista.alg_guloso_cobertura_vertice();
+        grafoLista.alg_randomizado_cobertura_vertice();
         cout << "Quantidade de Arestas no grafo: " << grafoLista.get_num_arestas_grafo() << endl;
         cout << endl << "============================== FIM LISTA ==============================" << endl << endl;
     } else {
