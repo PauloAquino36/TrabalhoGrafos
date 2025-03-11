@@ -32,6 +32,8 @@ public:
     void imprimirMatrizAdj();                                                       // Imprime a matriz de adjacencia
     void imprimeGrafoMatriz();                                                      // Imprime os atributos do grafo
     void coberturaVerticesGulosa();
+    int contarArestasCobertas(bool* verticeEscolhido);
+    void listarArestasNaoCobertas(bool* verticeEscolhido);
     
 };
 

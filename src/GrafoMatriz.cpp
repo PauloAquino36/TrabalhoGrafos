@@ -363,77 +363,95 @@ void GrafoMatriz::imprimeGrafoMatriz()
     imprime();
 }
 
-void GrafoMatriz::coberturaVerticesGulosa()
-{
-    // Cria e inicializa o vetor que marca se o vértice já foi escolhido para a cobertura
+void GrafoMatriz::coberturaVerticesGulosa() {
     bool *verticeEscolhido = new bool[numVertices];
-    for (int i = 0; i < numVertices; i++)
-    {
+    bool **arestaCoberta = new bool*[numVertices];
+    int *graus = new int[numVertices];
+
+    // Inicializa estruturas
+    for (int i = 0; i < numVertices; i++) {
         verticeEscolhido[i] = false;
+        arestaCoberta[i] = new bool[numVertices];
+        graus[i] = 0;
+        for (int j = 0; j < numVertices; j++) {
+            arestaCoberta[i][j] = false;
+            if (matrizAdj[i][j] != 0) graus[i]++;
+        }
     }
 
-    // Função lambda para contar o número de arestas não cobertas.
-    // Para grafos não direcionados, contamos cada aresta uma única vez (i < j).
-    auto countUncoveredEdges = [this, verticeEscolhido]() -> int {
-        int count = 0;
-        for (int i = 0; i < numVertices; i++)
-        {
-            for (int j = i + 1; j < numVertices; j++)
-            {
-                if (matrizAdj[i][j] != 0 && !verticeEscolhido[i] && !verticeEscolhido[j])
-                {
-                    count++;
-                }
+    // Função para calcular soma dos graus dos vizinhos não cobertos
+    auto calcularSomaVizinhos = [&](int v) {
+        int soma = 0;
+        for (int u = 1; u < numVertices; u++) {
+            if (matrizAdj[v][u] != 0 && !verticeEscolhido[u] && !arestaCoberta[v][u]) {
+                soma += graus[u];
             }
         }
-        return count;
+        return soma;
     };
 
-    int arestasNaoCobertas = countUncoveredEdges();
-    cout << "--- Vértices escolhidos (em ordem de escolha): ---" << endl;
-
-    // Enquanto houver arestas não cobertas, escolha um vértice que cubra o máximo delas.
-    while (arestasNaoCobertas > 0)
-    {
+    // Algoritmo guloso
+    while (true) {
         int melhorVertice = -1;
-        int melhorCobertura = 0;
+        int melhorSoma = -1;
+        int melhorGrau = -1;
 
-        // Para cada vértice não escolhido, calcula quantas arestas incidentes estão "descobertas"
-        // ou seja, para cada vizinho j, se há aresta (i, j) e nenhum dos dois já foi escolhido.
-        for (int i = 0; i < numVertices; i++)
-        {
-            if (!verticeEscolhido[i])
-            {
-                int coberturaAtual = 0;
-                for (int j = 0; j < numVertices; j++)
-                {
-                    if (matrizAdj[i][j] != 0 && !verticeEscolhido[j])
-                    {
-                        coberturaAtual++;
-                    }
-                }
-                if (coberturaAtual > melhorCobertura)
-                {
-                    melhorCobertura = coberturaAtual;
+        for (int i = 1; i < numVertices; i++) {
+            if (!verticeEscolhido[i]) {
+                int somaAtual = calcularSomaVizinhos(i);
+                int grauAtual = graus[i];
+
+                // Critério de desempate
+                if (somaAtual > melhorSoma || 
+                   (somaAtual == melhorSoma && grauAtual > melhorGrau) ||
+                   (somaAtual == melhorSoma && grauAtual == melhorGrau && i < melhorVertice)) {
+                    melhorSoma = somaAtual;
+                    melhorGrau = grauAtual;
                     melhorVertice = i;
                 }
             }
         }
 
-        // Se nenhum vértice contribui para cobrir novas arestas, interrompe a execução
-        if (melhorCobertura == 0)
-            break;
+        if (melhorVertice == -1) break;
 
-        // Adiciona o vértice escolhido à solução e atualiza a cobertura
         verticeEscolhido[melhorVertice] = true;
-        cout << "Vértice " << melhorVertice << " foi escolhido." << endl;
+        cout << "Vértice " << melhorVertice << " escolhido." << endl;
 
-        arestasNaoCobertas = countUncoveredEdges();
+        // Atualiza graus e arestas cobertas
+        for (int j = 1; j < numVertices; j++) {
+            if (matrizAdj[melhorVertice][j] != 0) {
+                if (!arestaCoberta[melhorVertice][j]) {
+                    arestaCoberta[melhorVertice][j] = true;
+                    if (!direcionado){
+                        arestaCoberta[j][melhorVertice] = true;
+                        cout << "TESTE1"; // Marca ambas as direções
+                    }
+                    graus[j]--;
+                }
+            }
+        }
+
+        // Verifica se todas as arestas estão cobertas
+        bool todasCobertas = true;
+        for (int i = 0; i < numVertices && todasCobertas; i++) {
+            for (int j = 0; j < numVertices && todasCobertas; j++) {
+                if (matrizAdj[i][j] != 0 && !arestaCoberta[i][j]) {
+                    todasCobertas = false;
+                }
+            }
+        }
+        if (todasCobertas) break;
     }
 
-    delete[] verticeEscolhido;
-}
 
+    // Limpeza de memória
+    for (int i = 0; i < numVertices; i++) {
+        delete[] arestaCoberta[i];
+    }
+    delete[] arestaCoberta;
+    delete[] verticeEscolhido;
+    delete[] graus;
+}
 
 
 // #endregion
