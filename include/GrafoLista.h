@@ -30,6 +30,7 @@ public:
     // Funcoes imprime
     void imprimeGrafoLista();                                                   // Imprime as informacoes do grafo
     void imprimeListaAdj();                                                     // Imprime a lista de adjacencia
+    void alg_guloso_cobertura_vertice();                                        // Algoritmo guloso para cobertura de vertices
 };
 
 #endif // GRAFOLISTA_H

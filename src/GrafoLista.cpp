@@ -182,3 +182,97 @@ void GrafoLista::imprimeGrafoLista(){
     imprime();                                                      
 }
 // #endregion
+
+
+void GrafoLista::alg_guloso_cobertura_vertice() {
+    bool* arestasCobertas = new bool[numArestasGrafo + 1];      // Armazenar as arestas cobertas
+    for (int i = 1; i <= numArestasGrafo; i++) {
+        arestasCobertas[i] = false;
+    }
+
+    int* impacto = new int[numVertices + 1];                    // Armazenar o impacto de cada vértice
+    for (int i = 1; i <= numVertices; i++) {
+        impacto[i] = 0;
+    }
+
+    int* qtdArestasCobertasVertice = new int[numVertices + 1];   // Armazenar a quantidade de arestas cobertas por cada vertice
+    for (int i = 1; i <= numVertices; i++) {
+        qtdArestasCobertasVertice[i] = 0;
+    }
+
+    int* conjuntoSolucao = new int[numVertices + 1];            // Armazenar os vértices que fazem parte da solução
+    int tamanhoSolucao = 0;                                     // Tamanho atual do conjunto de solução
+
+    while (true) {
+        // Calcular impacto de cada vértice
+        int maxImpacto = -1;
+        int verticeMaxImpacto = -1;
+        for (int i = 1; i <= numVertices; i++) {
+            if (!existe_vertice(i)) continue;
+            impacto[i] = 0;
+            NoAresta* atual = listaAdjVertices->getVertice(i)->getArestas()->getCabeca();
+            while (atual != nullptr) {
+                if (! arestasCobertas[atual->getIdAresta()]) {
+                    impacto[i]++;
+                }
+                //cout << "Vertice (" << i << ") Impacto: " << impacto[i] << endl;              /* { DEBUG } */
+                atual = atual->getProximo();
+            }
+            // Armazena o vértice com maior impacto
+            if (impacto[i] > maxImpacto) {
+                maxImpacto = impacto[i];
+                verticeMaxImpacto = i;
+            }
+        }
+
+    
+        if (maxImpacto == 0) break;  // Todas as arestas estão cobertas
+
+        // Adicionar o vértice com maior impacto ao conjunto de solução
+        cout << "Vertice de maior impacto: " << verticeMaxImpacto << " / " << maxImpacto << endl;                    /* { DEBUG } */
+        conjuntoSolucao[tamanhoSolucao++] = verticeMaxImpacto;
+
+        // Marcar as arestas conectadas ao vértice de maior impacto como cobertas
+        NoAresta* atual = listaAdjVertices->getVertice(verticeMaxImpacto)->getArestas()->getCabeca();
+        while (atual != nullptr) {
+            if(!(arestasCobertas[atual->getIdAresta()])){
+                arestasCobertas[atual->getIdAresta()] = true;
+                qtdArestasCobertasVertice[atual->getOrigem()]++;
+                cout << "Aresta (" << atual->getIdAresta() << ") coberta por vertice (" << atual->getOrigem() << ")" << endl;  /* { DEBUG } */
+                if(!direcionado){
+                    NoAresta* atualContraria = listaAdjVertices->getVertice(atual->getDestino())->getArestas()->getCabeca();
+                    while(atualContraria != nullptr){
+                        if(atualContraria->getDestino() == verticeMaxImpacto && !arestasCobertas[atualContraria->getIdAresta()]){
+                            if(!arestasCobertas[atualContraria->getIdAresta()]){
+                                arestasCobertas[atualContraria->getIdAresta()] = true;
+                                qtdArestasCobertasVertice[atualContraria->getDestino()]++;
+                                cout << "Aresta (" << atualContraria->getIdAresta() << ") coberta por vertice (" << atualContraria->getDestino() << ")" << endl;  /* { DEBUG } */
+                            }
+                            break;
+                        }
+                        atualContraria = atualContraria->getProximo();
+                    }
+                }
+            }
+            atual = atual->getProximo();
+        }
+    }
+
+    // Imprimir o conjunto de cobertura (solução)
+    cout << "Conjunto de cobertura (solucao): ";
+    int totalArestasCobertas = 0;
+    for (int i = 0; i < tamanhoSolucao; i++) {
+        cout << conjuntoSolucao[i] << "(" << qtdArestasCobertasVertice[conjuntoSolucao[i]] << ") " << "  ";
+        totalArestasCobertas += qtdArestasCobertasVertice[conjuntoSolucao[i]];
+    }
+    cout << endl;
+
+    // Imprimir a quantidade de vértices selecionados
+    cout << "Quantidade de vertices selecionados: " << tamanhoSolucao << endl;
+    cout << "Total de arestas cobertas: " << totalArestasCobertas << endl;
+    cout << "Total arestas do grafo: " << numArestasGrafo << endl;
+
+    delete[] arestasCobertas;
+    delete[] impacto;
+    delete[] conjuntoSolucao;
+}

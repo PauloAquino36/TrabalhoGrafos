@@ -20,10 +20,10 @@ int main(int argc, char* argv[]) {
         cout << endl << "============================== MATRIZ ==============================" << endl << endl;
         GrafoMatriz grafoMatriz(0, false, false, false);
         grafoMatriz.carrega_grafo(&grafoMatriz, arquivo);
-        cout << "Excluindo Noh 1..." << endl;
-        grafoMatriz.remover_vertice(1);
-        cout << "Excluindo primeira aresta do Noh 2..." << endl;
-        grafoMatriz.remover_primeira_aresta(2);
+        //cout << "Excluindo Noh 1..." << endl;
+        //grafoMatriz.remover_vertice(1);
+        //cout << "Excluindo primeira aresta do Noh 2..." << endl;
+        //grafoMatriz.remover_primeira_aresta(2);
         grafoMatriz.imprimeGrafoMatriz();
         //grafoMatriz.calcula_maior_menor_dist();
         cout << "Quantidade de Arestas no grafo: " << grafoMatriz.get_num_arestas_grafo() << endl;
@@ -32,13 +32,14 @@ int main(int argc, char* argv[]) {
         cout << endl << "============================== LISTA ==============================" << endl << endl;
         GrafoLista grafoLista(0, false, false, false);
         grafoLista.carrega_grafo(&grafoLista, arquivo);
-        cout << "Excluindo Noh 1..." << endl;
-        grafoLista.remover_vertice(1);
-        cout << "Excluindo primeira aresta do Noh 2..." << endl ;
-        grafoLista.remover_primeira_aresta(2);
+        //cout << "Excluindo Noh 1..." << endl;
+        //grafoLista.remover_vertice(1);
+        //cout << "Excluindo primeira aresta do Noh 2..." << endl ;
+        //grafoLista.remover_primeira_aresta(2);
         grafoLista.imprimeGrafoLista();
         //grafoLista.calcula_maior_menor_dist();
-        cout << "Quantidade de Arestas no grafo: " << grafoLista.get_num_arestas_grafo() << endl;
+        //cout << "Quantidade de Arestas no grafo: " << grafoLista.get_num_arestas_grafo() << endl;
+        grafoLista.alg_guloso_cobertura_vertice();
         cout << endl << "============================== FIM LISTA ==============================" << endl << endl;
     } else {
         cerr << "Use ./main -d -m grafo.txt  ou ./main -d -l grafo.txt" << endl;
