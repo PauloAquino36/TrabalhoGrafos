@@ -185,47 +185,45 @@ void GrafoLista::imprimeGrafoLista(){
 
 
 void GrafoLista::alg_guloso_cobertura_vertice() {
-    bool verticeEscolhido[numVertices + 1] = {false};
-    bool arestaCoberta[numArestasGrafo] = {false};  // Marcar arestas cobertas
-    int graus[numVertices + 1] = {0};
-    int somaVizinhos[numVertices + 1] = {0};  // Soma dos graus dos vizinhos
-    int arestasCobertas = 0;
+    bool verticeEscolhido[numVertices + 1] = {false};   // Marcar vertices escolhidos
+    bool arestaCoberta[numArestasGrafo] = {false};      // Marcar arestas cobertas
+    int graus[numVertices + 1] = {0};                   // Armazena o grau de cada vertice
+    int somaVizinhos[numVertices + 1] = {0};            // Armazena a soma dos graus dos vizinhos de cada vertice
+    int arestasCobertas = 0;                            // Contador de arestas cobertas
 
     // Inicializa graus e soma dos vizinhos
     for (int i = 1; i <= numVertices; i++) {
         NoAresta* arestaAtual = listaAdjVertices->getVertice(i)->getArestas()->getCabeca();
+        graus[i] = listaAdjVertices->getVertice(i)->getNumVizinhos();
         while (arestaAtual != nullptr) {
-            graus[i]++;
-            somaVizinhos[i] += graus[arestaAtual->getDestino()];
+            somaVizinhos[i] += listaAdjVertices->getVertice(arestaAtual->getDestino())->getNumVizinhos();
             arestaAtual = arestaAtual->getProximo();
         }
     }
 
-    // Algoritmo guloso otimizado
+    // Algoritmo guloso
     while (arestasCobertas < numArestasGrafo) {
         int melhorVertice = -1;
         int melhorSoma = -1;
         int melhorGrau = -1;
 
-        // Escolhe o melhor vértice sem usar bibliotecas externas
+        // Escolhe o melhor vértice
         for (int i = 1; i <= numVertices; i++) {
             if (!verticeEscolhido[i]) {
                 int somaAtual = somaVizinhos[i];
                 int grauAtual = graus[i];
-
+                
                 // Critério de desempate
-                if (somaAtual > melhorSoma || 
-                   (somaAtual == melhorSoma && grauAtual > melhorGrau) ||
-                   (somaAtual == melhorSoma && grauAtual == melhorGrau && i < melhorVertice)) {
+                if ( (somaAtual > melhorSoma) || (somaAtual == melhorSoma && grauAtual > melhorGrau) || (somaAtual == melhorSoma && grauAtual == melhorGrau && i < melhorVertice) ) {
                     melhorSoma = somaAtual;
                     melhorGrau = grauAtual;
                     melhorVertice = i;
-                }
+                } 
             }
         }
 
+        // Se nao houver mais vértices para escolher
         if (melhorVertice == -1) break;
-
         verticeEscolhido[melhorVertice] = true;
 
         // Atualiza graus e arestas cobertas
@@ -233,11 +231,9 @@ void GrafoLista::alg_guloso_cobertura_vertice() {
         while (arestaAtual != nullptr) {
             int destino = arestaAtual->getDestino();
             int idAresta = arestaAtual->getIdAresta();
-
             if (!arestaCoberta[idAresta]) {
                 arestaCoberta[idAresta] = true;
                 arestasCobertas++;
-
                 if (!direcionado) {
                     // Marcar a aresta reversa como coberta
                     NoAresta* reversa = listaAdjVertices->getVertice(destino)->getArestas()->getCabeca();
@@ -245,22 +241,21 @@ void GrafoLista::alg_guloso_cobertura_vertice() {
                         if (reversa->getDestino() == melhorVertice) {
                             arestaCoberta[reversa->getIdAresta()] = true;
                             arestasCobertas++;
+                            graus[destino]--;
+                            somaVizinhos[destino] -= graus[melhorVertice];  // Atualiza soma dos vizinhos
                             break;
                         }
                         reversa = reversa->getProximo();
                     }
-                }
-
-                graus[destino]--;
-                somaVizinhos[destino] -= graus[melhorVertice];  // Atualiza soma dos vizinhos
+                }   
             }
-
             arestaAtual = arestaAtual->getProximo();
         }
     }
 
-    // Imprime o conjunto solução
-    cout << "Cobertura de Vertices: ";
+    // Imprime o conjunto solucao
+    cout << endl << "*** Algoritmo Guloso para Cobertura de Vertices ***" << endl;
+    cout << "Conjunto solucao: { ";
     int qtdVerticesSolucao = 0;
     for (int i = 1; i <= numVertices; i++) {
         if (verticeEscolhido[i]) {
@@ -268,5 +263,7 @@ void GrafoLista::alg_guloso_cobertura_vertice() {
             cout << i << " ";
         }
     }
-    cout << endl << "Quantidade de Vertices na solucao: " << qtdVerticesSolucao << endl;
+    cout << " }" << endl;
+    cout << "Quantidade de Vertices na solucao: " << qtdVerticesSolucao << endl;
+    cout << "Quantidade de Arestas cobertas: " << arestasCobertas << endl;
 }
