@@ -33,8 +33,9 @@ public:
     void imprimeGrafoMatriz();                                                      // Imprime os atributos do grafo
     void coberturaVerticesGulosa();
     void alg_randomizado_cobertura_vertice();
-    int contarArestasCobertas(bool *verticeEscolhido);
-    void listarArestasNaoCobertas(bool* verticeEscolhido);
+    void alg_reativo_cobertura_vertice();
+    //int contarArestasCobertas(bool *verticeEscolhido);
+    //void listarArestasNaoCobertas(bool* verticeEscolhido);
     
 };
 

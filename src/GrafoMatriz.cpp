@@ -484,12 +484,15 @@ void GrafoMatriz::coberturaVerticesGulosa() {
     for (int i = 1; i <= numVertices; i++) {
         if (verticeEscolhido[i]) {
             qtdVerticesSolucao++;
-            cout << i << " ";
+            //cout << i << " ";        // Mostra conjunto solução
         }
     }
+    cout << "Esta comentado no codigo pesquise por 'cout << i << " ";' e descomente";
     cout << "}" << endl;
+    cout << "Alg guloso" << endl;
     cout << "Quantidade de vertices na solucao: " << qtdVerticesSolucao << endl;
     cout << "Quantidade de arestas cobertas: " << arestasCobertas << endl;
+    cout << "Quantidade de Arestas do grafo: " << numArestasGrafo << endl;
 
     // Libera a memória alocada
     for (int i = 1; i <= numVertices; i++) {
@@ -504,31 +507,35 @@ void GrafoMatriz::coberturaVerticesGulosa() {
     delete[] contVizinhos;
 }
 
-// Algoritmo guloso randomizado para cobertura de vertices
 void GrafoMatriz::alg_randomizado_cobertura_vertice() {
-    bool verticeEscolhido[numVertices + 1] = {false};
-    bool arestaCoberta[numVertices + 1][numVertices + 1] = {{false}};
-    int graus[numVertices + 1] = {0};
-    int somaVizinhos[numVertices + 1] = {0};  // Soma dos graus dos vizinhos
+    bool* verticeEscolhido = new bool[numVertices + 1]();  // Inicializa com 'false'
+    bool** arestaCoberta = new bool*[numVertices + 1];  // Aloca um vetor de ponteiros
+    for (int i = 0; i <= numVertices; i++) {
+        arestaCoberta[i] = new bool[numVertices + 1]();  // Inicializa cada linha com 'false'
+    }
+
+    int* graus = new int[numVertices + 1]();  // Inicializa com '0'
+    int* somaVizinhos = new int[numVertices + 1]();  // Inicializa com '0'
     int arestasCobertas = 0;
 
     // Inicializa graus e soma dos vizinhos
     for (int i = 1; i <= numVertices; i++) {
         for (int j = 1; j <= numVertices; j++) {
-            if (matrizAdj[i][j] == 1) {
+            if (matrizAdj[i][j] != 0) {
                 graus[i]++;
                 somaVizinhos[i] += graus[j];
             }
         }
     }
+    cout << "Debug" << endl;
 
     // Algoritmo guloso randomizado
     while (arestasCobertas < numArestasGrafo) {
-        vector<int> candidatos;
         int melhorSoma = 0;
         int melhorGrau = 0;
+        int melhorVertice = -1;
 
-        // Coleta os vértices com o maior valor de soma dos vizinhos
+        // Coleta o vértice com o maior valor de soma dos vizinhos
         for (int i = 1; i <= numVertices; i++) {
             if (!verticeEscolhido[i]) {
                 int somaAtual = somaVizinhos[i];
@@ -537,27 +544,23 @@ void GrafoMatriz::alg_randomizado_cobertura_vertice() {
                 if ((somaAtual > melhorSoma) || (somaAtual == melhorSoma && grauAtual > melhorGrau)) {
                     melhorSoma = somaAtual;
                     melhorGrau = grauAtual;
-                    candidatos.clear();
-                    candidatos.push_back(i);
-                } else if (somaAtual == melhorSoma && grauAtual == melhorGrau) {
-                    candidatos.push_back(i);
+                    melhorVertice = i;
                 }
             }
         }
 
-        if (candidatos.empty()) break;
+        if (melhorVertice == -1) break;  // Se não houver mais vértices para escolher, sai
 
-        // Escolhe aleatoriamente um vértice entre os candidatos
-        int escolhido = candidatos[rand() % candidatos.size()];
-        verticeEscolhido[escolhido] = true;
+        // Marca o vértice escolhido
+        verticeEscolhido[melhorVertice] = true;
 
         // Atualiza graus e arestas cobertas
         for (int j = 1; j <= numVertices; j++) {
-            if (matrizAdj[escolhido][j] == 1 && !arestaCoberta[escolhido][j]) {
-                arestaCoberta[escolhido][j] = arestaCoberta[j][escolhido] = true;
+            if (matrizAdj[melhorVertice][j] != 0 && !arestaCoberta[melhorVertice][j]) {
+                arestaCoberta[melhorVertice][j] = arestaCoberta[j][melhorVertice] = true;
                 arestasCobertas++;
                 graus[j]--;
-                somaVizinhos[j] -= graus[escolhido];
+                somaVizinhos[j] -= graus[melhorVertice];
             }
         }
     }
@@ -569,13 +572,123 @@ void GrafoMatriz::alg_randomizado_cobertura_vertice() {
     for (int i = 1; i <= numVertices; i++) {
         if (verticeEscolhido[i]) {
             qtdVerticesSolucao++;
-            cout << i << " ";
+            //cout << i << " ";        // Mostra conjunto solução
         }
     }
+    cout << "Esta comentado no codigo pesquise por 'cout << i << " ";' e descomente";
     cout << "}" << endl;
+    cout << "Alg randomizado" << endl;
     cout << "Quantidade de Vertices na solucao: " << qtdVerticesSolucao << endl;
     cout << "Quantidade de Arestas cobertas: " << arestasCobertas << endl;
     cout << "Quantidade de Arestas do grafo: " << numArestasGrafo << endl;
+
+    // Libera a memória alocada
+    delete[] verticeEscolhido;
+    delete[] graus;
+    delete[] somaVizinhos;
+    for (int i = 0; i <= numVertices; i++) {
+        delete[] arestaCoberta[i];
+    }
+    delete[] arestaCoberta;
+}
+
+void GrafoMatriz::alg_reativo_cobertura_vertice() {
+    bool* verticeEscolhido = new bool[numVertices + 1]();
+    
+    // Aloca matriz dinamicamente
+    bool** arestaCoberta = new bool*[numVertices + 1];
+    for (int i = 0; i <= numVertices; i++) {
+        arestaCoberta[i] = new bool[numVertices + 1](); // Inicializa com false
+    }
+
+    int* graus = new int[numVertices + 1]();
+    int* somaVizinhos = new int[numVertices + 1]();
+    int arestasCobertas = 0;
+    double fatorAleatoriedade = 0.5;
+
+    // Inicializa graus e soma dos vizinhos
+    for (int i = 1; i <= numVertices; i++) {
+        for (int j = 1; j <= numVertices; j++) {
+            if (matrizAdj[i][j] != 0) {
+                graus[i]++;
+                somaVizinhos[i] += graus[j];
+            }
+        }
+    }
+
+    while (arestasCobertas < numArestasGrafo) {
+        int candidatos[numVertices + 1];
+        int qtdCandidatos = 0;
+        int melhorSoma = 0;
+        int melhorGrau = 0;
+
+        for (int i = 1; i <= numVertices; i++) {
+            if (!verticeEscolhido[i]) {
+                int somaAtual = somaVizinhos[i];
+                int grauAtual = graus[i];
+
+                if ((somaAtual > melhorSoma) || (somaAtual == melhorSoma && grauAtual > melhorGrau)) {
+                    melhorSoma = somaAtual;
+                    melhorGrau = grauAtual;
+                    qtdCandidatos = 0;
+                    candidatos[qtdCandidatos++] = i;
+                } else if (somaAtual == melhorSoma && grauAtual == melhorGrau) {
+                    candidatos[qtdCandidatos++] = i;
+                }
+            }
+        }
+
+        if (qtdCandidatos == 0) break;
+
+        int escolhido;
+        if ((double)rand() / RAND_MAX < fatorAleatoriedade) {
+            escolhido = candidatos[rand() % qtdCandidatos];
+        } else {
+            escolhido = candidatos[0]; // Escolha gulosa
+        }
+
+        verticeEscolhido[escolhido] = true;
+
+        // Atualiza graus e arestas cobertas
+        for (int j = 1; j <= numVertices; j++) {
+            if (matrizAdj[escolhido][j] != 0 && !arestaCoberta[escolhido][j]) {
+                arestaCoberta[escolhido][j] = arestaCoberta[j][escolhido] = true;
+                arestasCobertas++;
+                graus[j]--;
+                somaVizinhos[j] -= graus[escolhido];
+            }
+        }
+
+        // Ajusta fator de aleatoriedade dinamicamente
+        fatorAleatoriedade = 1.0 - ((double)arestasCobertas / numArestasGrafo);
+    }
+
+    // Imprime o conjunto solução
+    cout << endl << "*** Algoritmo Reativo para Cobertura de Vertices ***" << endl;
+    cout << "Conjunto solucao: { ";
+    int qtdVerticesSolucao = 0;
+    
+    for (int i = 1; i <= numVertices; i++) {
+        if (verticeEscolhido[i]) {
+            qtdVerticesSolucao++;
+            //cout << i << " ";        // Mostra conjunto solução
+        }
+    }
+    cout << "Esta comentado no codigo pesquise por 'cout << i << " ";' e descomente";
+    cout << "}" << endl;
+    cout << "Alg reativo" << endl;
+    cout << "Quantidade de Vertices na solucao: " << qtdVerticesSolucao << endl;
+    cout << "Quantidade de Arestas cobertas: " << arestasCobertas << endl;
+    cout << "Quantidade de Arestas do grafo: " << numArestasGrafo << endl;
+
+    // Libera memória alocada
+    delete[] verticeEscolhido;
+    delete[] graus;
+    delete[] somaVizinhos;
+    for (int i = 0; i <= numVertices; i++) {
+        delete[] arestaCoberta[i];
+    }
+    delete[] arestaCoberta;
 }
 
 // #endregion

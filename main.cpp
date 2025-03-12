@@ -23,6 +23,7 @@ int main(int argc, char* argv[]) {
         grafoMatriz.imprimeGrafoMatriz();
         grafoMatriz.coberturaVerticesGulosa();
         grafoMatriz.alg_randomizado_cobertura_vertice();
+        grafoMatriz.alg_reativo_cobertura_vertice();
         cout << endl << "============================== FIM MATRIZ ==============================" << endl << endl;
     } else if (modo == "-l") {
         cout << endl << "============================== LISTA ==============================" << endl << endl;
