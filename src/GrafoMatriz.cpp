@@ -507,6 +507,7 @@ void GrafoMatriz::coberturaVerticesGulosa() {
     delete[] contVizinhos;
 }
 
+
 void GrafoMatriz::alg_randomizado_cobertura_vertice() {
     bool* verticeEscolhido = new bool[numVertices + 1]();  // Inicializa com 'false'
     bool** arestaCoberta = new bool*[numVertices + 1];  // Aloca um vetor de ponteiros
