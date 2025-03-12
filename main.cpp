@@ -32,7 +32,6 @@ int main(int argc, char* argv[]) {
         grafoLista.alg_guloso_cobertura_vertice();
         grafoLista.alg_randomizado_cobertura_vertice();
         grafoLista.alg_reativo_cobertura_vertice();
-        cout << "Quantidade de Arestas no grafo: " << grafoLista.get_num_arestas_grafo() << endl;
         cout << endl << "============================== FIM LISTA ==============================" << endl << endl;
     } else {
         cerr << "Use ./main -d -m grafo.txt  ou ./main -d -l grafo.txt" << endl;

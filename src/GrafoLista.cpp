@@ -184,10 +184,11 @@ void GrafoLista::imprimeGrafoLista(){
 }
 // #endregion
 
-
+// #region Algoritmos gulosos
+// Algoritmo guloso para cobertura de vertices
 void GrafoLista::alg_guloso_cobertura_vertice() {
     bool verticeEscolhido[numVertices + 1] = {false};   // Marcar vertices escolhidos
-    bool arestaCoberta[numArestasGrafo] = {false};      // Marcar arestas cobertas
+    bool arestaCoberta[numArestasGrafo + 1] = {false};  // Marcar arestas cobertas
     int graus[numVertices + 1] = {0};                   // Armazena o grau de cada vertice
     int somaVizinhos[numVertices + 1] = {0};            // Armazena a soma dos graus dos vizinhos de cada vertice
     int arestasCobertas = 0;                            // Contador de arestas cobertas
@@ -223,8 +224,10 @@ void GrafoLista::alg_guloso_cobertura_vertice() {
             }
         }
 
-        // Se nao houver mais vértices para escolher
+        // Se nao houver mais vértices para escolher, encerra o algoritmo
         if (melhorVertice == -1) break;
+
+        // Marca o vértice escolhido
         verticeEscolhido[melhorVertice] = true;
 
         // Atualiza graus e arestas cobertas
@@ -264,25 +267,26 @@ void GrafoLista::alg_guloso_cobertura_vertice() {
             cout << i << " ";
         }
     }
-    cout << " }" << endl;
+    cout << "}" << endl;
     cout << "Quantidade de Vertices na solucao: " << qtdVerticesSolucao << endl;
     cout << "Quantidade de Arestas cobertas: " << arestasCobertas << endl;
+    cout << "Quantidade de Arestas do grafo: " << numArestasGrafo << endl;
 }
 
-// Adicionar função randomizada
+// Algoritmo guloso randomizado para cobertura de vertices
 void GrafoLista::alg_randomizado_cobertura_vertice() {
     bool verticeEscolhido[numVertices + 1] = {false};
-    bool arestaCoberta[numArestasGrafo] = {false};  // Marcar arestas cobertas
+    bool arestaCoberta[numArestasGrafo + 1] = {false};  // Marcar arestas cobertas
     int graus[numVertices + 1] = {0};
     int somaVizinhos[numVertices + 1] = {0};  // Soma dos graus dos vizinhos
     int arestasCobertas = 0;
 
     // Inicializa graus e soma dos vizinhos
     for (int i = 1; i <= numVertices; i++) {
+        graus[i] = listaAdjVertices->getVertice(i)->getNumVizinhos();
         NoAresta* arestaAtual = listaAdjVertices->getVertice(i)->getArestas()->getCabeca();
         while (arestaAtual != nullptr) {
-            graus[i]++;
-            somaVizinhos[i] += graus[arestaAtual->getDestino()];
+            somaVizinhos[i] += listaAdjVertices->getVertice(arestaAtual->getDestino())->getNumVizinhos();
             arestaAtual = arestaAtual->getProximo();
         }
     }
@@ -291,20 +295,23 @@ void GrafoLista::alg_randomizado_cobertura_vertice() {
     while (arestasCobertas < numArestasGrafo) {
         int candidatos[numVertices + 1];  // Array para armazenar vértices candidatos
         int numCandidatos = 0;
-        int melhorSoma = -1;
+        int melhorSoma = 0;
+        int melhorGrau = 0;
 
         // Coleta os vértices com o maior valor de soma dos vizinhos
         for (int i = 1; i <= numVertices; i++) {
             if (!verticeEscolhido[i]) {
                 int somaAtual = somaVizinhos[i];
+                int grauAtual = graus[i];
 
                 // Atualiza os candidatos
-                if (somaAtual > melhorSoma) {
+                if ( (somaAtual > melhorSoma) || (somaAtual == melhorSoma && grauAtual > melhorGrau) ) {
                     melhorSoma = somaAtual;
+                    melhorGrau = grauAtual;
                     numCandidatos = 0;  // Limpa a lista de candidatos
                     candidatos[numCandidatos++] = i;
                 }
-                else if (somaAtual == melhorSoma) {
+                else if (somaAtual == melhorSoma && grauAtual == melhorGrau) {
                     candidatos[numCandidatos++] = i;
                 }
             }
@@ -335,22 +342,22 @@ void GrafoLista::alg_randomizado_cobertura_vertice() {
                         if (reversa->getDestino() == escolhido) {
                             arestaCoberta[reversa->getIdAresta()] = true;
                             arestasCobertas++;
+                            graus[destino]--;
+                            somaVizinhos[destino] -= graus[escolhido];  // Atualiza soma dos vizinhos
                             break;
                         }
                         reversa = reversa->getProximo();
                     }
                 }
-
-                graus[destino]--;
-                somaVizinhos[destino] -= graus[escolhido];  // Atualiza soma dos vizinhos
             }
 
             arestaAtual = arestaAtual->getProximo();
         }
     }
 
-    // Imprime o conjunto solução
-    cout << "Cobertura de Vertices Randomizada: ";
+    // Imprime o conjunto solucao
+    cout << endl << "*** Algoritmo Guloso Randomizado para Cobertura de Vertices ***" << endl;
+    cout << "Conjunto solucao: { ";
     int qtdVerticesSolucao = 0;
     for (int i = 1; i <= numVertices; i++) {
         if (verticeEscolhido[i]) {
@@ -358,9 +365,13 @@ void GrafoLista::alg_randomizado_cobertura_vertice() {
             cout << i << " ";
         }
     }
-    cout << endl << "Quantidade de Vertices na solucao randomizada: " << qtdVerticesSolucao << endl;
+    cout << "}" << endl;
+    cout << "Quantidade de Vertices na solucao: " << qtdVerticesSolucao << endl;
+    cout << "Quantidade de Arestas cobertas: " << arestasCobertas << endl;
+    cout << "Quantidade de Arestas do grafo: " << numArestasGrafo << endl;
 }
 
+// Algortimo guloso reativo para cobertura de vertices
 void GrafoLista::alg_reativo_cobertura_vertice() {
     srand(42); // Inicializa a semente do gerador de números aleatórios
 
@@ -369,6 +380,7 @@ void GrafoLista::alg_reativo_cobertura_vertice() {
     float probabilidades[numAlphas] = {1.0 / numAlphas, 1.0 / numAlphas, 1.0 / numAlphas};
     float desempenho[numAlphas] = {0};
     int escolhaAlpha = 0;
+    int arestasCobertas = 0;
 
     if (numVertices <= 0 || numArestasGrafo <= 0) {
         cout << "Erro: O grafo deve conter vértices e arestas válidas." << endl;
@@ -381,17 +393,16 @@ void GrafoLista::alg_reativo_cobertura_vertice() {
 
     for (int iteracaoGlobal = 0; iteracaoGlobal < 10; iteracaoGlobal++) {
         bool* verticeEscolhido = new bool[numVertices + 1]();
-        bool* arestaCoberta = new bool[numArestasGrafo]();
+        bool* arestaCoberta = new bool[numArestasGrafo + 1]();
         int* graus = new int[numVertices + 1]();
-        int* somaVizinhos = new int[numVertices + 1]();
-        int arestasCobertas = 0;
+        int* somaVizinhos = new int[numVertices + 1]();        
 
         // Inicializa graus e soma dos vizinhos
         for (int i = 1; i <= numVertices; i++) {
+            graus[i] = listaAdjVertices->getVertice(i)->getNumVizinhos();
             NoAresta* arestaAtual = listaAdjVertices->getVertice(i)->getArestas()->getCabeca();
             while (arestaAtual != nullptr) {
-                graus[i]++;
-                somaVizinhos[i] += graus[arestaAtual->getDestino()];
+                somaVizinhos[i] += listaAdjVertices->getVertice(arestaAtual->getDestino())->getNumVizinhos();
                 arestaAtual = arestaAtual->getProximo();
             }
         }
@@ -425,14 +436,17 @@ void GrafoLista::alg_reativo_cobertura_vertice() {
             float alfa = alphas[escolhaAlpha];
             int* candidatos = new int[numVertices + 1];
             int numCandidatos = 0;
-            int melhorSoma = -1;
+            int melhorSoma = 0;
+            int melhorGrau = 0;
 
             // Seleciona vértices candidatos com base no alpha escolhido
             for (int i = 1; i <= numVertices; i++) {
                 if (!verticeEscolhido[i]) {
                     int somaAtual = somaVizinhos[i];
-                    if (somaAtual > melhorSoma) {
+                    int grauAtual = graus[i];
+                    if ( (somaAtual > melhorSoma) || (somaAtual == melhorSoma && grauAtual > melhorGrau) ) {
                         melhorSoma = somaAtual;
+                        melhorGrau = grauAtual;
                         numCandidatos = 0;
                         candidatos[numCandidatos++] = i;
                     } else if (somaAtual == melhorSoma) {
@@ -498,14 +512,18 @@ void GrafoLista::alg_reativo_cobertura_vertice() {
     }
 
     // Imprime a melhor solução encontrada
-    cout << "Melhor Cobertura de Vertices Reativa: ";
+    cout << endl << "*** Algoritmo Guloso Reativo para Cobertura de Vertices ***" << endl;
+    cout << "Conjunto solucao: { ";
     for (int i = 1; i <= numVertices; i++) {
         if (melhorVerticeEscolhido[i]) {
             cout << i << " ";
         }
     }
-    cout << endl << "Quantidade de Vertices na melhor solucao reativa: " << melhorQtdVerticesSolucao << endl;
+    cout << "}" << endl;
+    cout << "Quantidade de Vertices na solucao reativa: " << melhorQtdVerticesSolucao << endl;
+    cout << "Quantidade de Arestas cobertas: " << arestasCobertas << endl;
+    cout << "Quantidade de Arestas do grafo: " << numArestasGrafo << endl;
 
     delete[] melhorVerticeEscolhido;
 }
-
+// #endregion
