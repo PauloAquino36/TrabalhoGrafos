@@ -196,6 +196,16 @@ void GrafoMatriz::adicionar_aresta(int origem, int destino, float peso)
         cout << "Erro: indices de origem ou destino invalidos.\n";
         return;
     }
+    if( origem == destino){
+        cout << "Erro: origem e destino iguais.\n";
+        return;
+    }
+
+    if(matrizAdj[origem][destino] != 0){
+        cout << "Erro: aresta ja existe.\n";
+        return;
+    }
+
 
     if (ponderadoArestas)
     {
@@ -367,15 +377,15 @@ void GrafoMatriz::coberturaVerticesGulosa() {
     bool *verticeEscolhido = new bool[numVertices];
     bool **arestaCoberta = new bool*[numVertices];
     int *graus = new int[numVertices];
+    int arestasCobertas = 0;                            // Contador de arestas cobertas
 
     // Inicializa estruturas
     for (int i = 0; i < numVertices; i++) {
         verticeEscolhido[i] = false;
         arestaCoberta[i] = new bool[numVertices];
-        graus[i] = 0;
+        graus[i] = get_num_vizinhos(i);
         for (int j = 0; j < numVertices; j++) {
             arestaCoberta[i][j] = false;
-            if (matrizAdj[i][j] != 0) graus[i]++;
         }
     }
 
@@ -422,8 +432,10 @@ void GrafoMatriz::coberturaVerticesGulosa() {
             if (matrizAdj[melhorVertice][j] != 0) {
                 if (!arestaCoberta[melhorVertice][j]) {
                     arestaCoberta[melhorVertice][j] = true;
+                    arestasCobertas++;
                     if (!direcionado){
                         arestaCoberta[j][melhorVertice] = true;
+                        arestasCobertas++;
                     }
                     graus[j]--;
                 }
@@ -442,16 +454,19 @@ void GrafoMatriz::coberturaVerticesGulosa() {
         if (todasCobertas) break;
     }
 
-    // Imprime o conjunto solução
+    // Imprime o conjunto solucao
+    cout << endl << "*** Algoritmo Guloso para Cobertura de Vertices ***" << endl;
+    cout << "Conjunto solucao: { ";
     int qtdVerticesSolucao = 0;
-    cout << "Cobertura de Vertices: ";
     for (int i = 1; i <= numVertices; i++) {
         if (verticeEscolhido[i]) {
             qtdVerticesSolucao++;
             cout << i << " ";
         }
     }
-    cout << endl << "Quantidade de Vertices na solucao: " << qtdVerticesSolucao;
+    cout << " }" << endl;
+    cout << "Quantidade de Vertices na solucao: " << qtdVerticesSolucao << endl;
+    cout << "Quantidade de Arestas cobertas: " << arestasCobertas << endl;
 
     // Limpeza de memória
     for (int i = 0; i < numVertices; i++) {

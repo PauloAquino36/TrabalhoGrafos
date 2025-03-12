@@ -129,6 +129,7 @@ void Grafo::decrementa_num_vertices_grafo()
 // Imprime os atributos do grafo
 void Grafo::imprime()
 {
+    cout << "*** Descricao do Grafo ***" << endl;
     cout << "Grau: " << get_grau() << endl;
     cout << "Ordem: " << numVertices << endl;
     cout << "Direcionado: " << (eh_direcionado() ? "Sim" : "Nao") << endl;
