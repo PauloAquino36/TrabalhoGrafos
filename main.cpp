@@ -22,7 +22,7 @@ int main(int argc, char* argv[]) {
         grafoMatriz.carrega_grafo(&grafoMatriz, arquivo);
         grafoMatriz.imprimeGrafoMatriz();
         grafoMatriz.coberturaVerticesGulosa();
-        cout << "Quantidade de Arestas no grafo: " << grafoMatriz.get_num_arestas_grafo() << endl;
+        grafoMatriz.alg_randomizado_cobertura_vertice();
         cout << endl << "============================== FIM MATRIZ ==============================" << endl << endl;
     } else if (modo == "-l") {
         cout << endl << "============================== LISTA ==============================" << endl << endl;
