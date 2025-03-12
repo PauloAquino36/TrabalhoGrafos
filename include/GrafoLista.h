@@ -32,6 +32,7 @@ public:
     void imprimeListaAdj();                                                     // Imprime a lista de adjacencia
     void alg_guloso_cobertura_vertice();                                        // Algoritmo guloso para cobertura de vertices
     void alg_randomizado_cobertura_vertice();                                   // Algoritmo randomizado para cobertura de vertices
+    void alg_reativo_cobertura_vertice();                                       // Algoritmo reativo para cobertura de vertices
 };
 
 #endif // GRAFOLISTA_H
