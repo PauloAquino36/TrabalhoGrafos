@@ -374,17 +374,17 @@ void GrafoMatriz::imprimeGrafoMatriz()
 }
 
 void GrafoMatriz::coberturaVerticesGulosa() {
-    bool *verticeEscolhido = new bool[numVertices];
-    bool **arestaCoberta = new bool*[numVertices];
-    int *graus = new int[numVertices];
-    int arestasCobertas = 0;                            // Contador de arestas cobertas
+    bool *verticeEscolhido = new bool[numVertices + 1];     // Marcar vertices escolhidos
+    bool **arestaCoberta = new bool*[numVertices + 1];      // Marcar arestas cobertas
+    int *graus = new int[numVertices + 1];                  // Armazena o grau de cada vertice
+    int arestasCobertas = 0;                                // Contador de arestas cobertas
 
     // Inicializa estruturas
-    for (int i = 0; i < numVertices; i++) {
+    for (int i = 1; i <= numVertices; i++) {
         verticeEscolhido[i] = false;
-        arestaCoberta[i] = new bool[numVertices];
+        arestaCoberta[i] = new bool[numVertices + 1];
         graus[i] = get_num_vizinhos(i);
-        for (int j = 0; j < numVertices; j++) {
+        for (int j = 1; j <= numVertices; j++) {
             arestaCoberta[i][j] = false;
         }
     }
@@ -392,7 +392,7 @@ void GrafoMatriz::coberturaVerticesGulosa() {
     // Função para calcular soma dos graus dos vizinhos não cobertos
     auto calcularSomaVizinhos = [&](int v) {
         int soma = 0;
-        for (int u = 1; u < numVertices; u++) {
+        for (int u = 1; u <= numVertices ; u++) {
             if (matrizAdj[v][u] != 0 && !verticeEscolhido[u] && !arestaCoberta[v][u]) {
                 soma += graus[u];
             }
@@ -406,7 +406,7 @@ void GrafoMatriz::coberturaVerticesGulosa() {
         int melhorSoma = -1;
         int melhorGrau = -1;
 
-        for (int i = 1; i < numVertices; i++) {
+        for (int i = 1; i <= numVertices; i++) {
             if (!verticeEscolhido[i]) {
                 int somaAtual = calcularSomaVizinhos(i);
                 int grauAtual = graus[i];
@@ -428,15 +428,13 @@ void GrafoMatriz::coberturaVerticesGulosa() {
         //cout << "Vertice " << melhorVertice << " escolhido." << endl;
 
         // Atualiza graus e arestas cobertas
-        for (int j = 1; j < numVertices; j++) {
-            if (matrizAdj[melhorVertice][j] != 0) {
-                if (!arestaCoberta[melhorVertice][j]) {
-                    arestaCoberta[melhorVertice][j] = true;
+        for (int j = 1; j <= numVertices; j++) {
+            if (matrizAdj[melhorVertice][j] != 0 && !arestaCoberta[melhorVertice][j]) {
+                arestaCoberta[melhorVertice][j] = true;
+                arestasCobertas++;
+                if (!direcionado){
+                    arestaCoberta[j][melhorVertice] = true;
                     arestasCobertas++;
-                    if (!direcionado){
-                        arestaCoberta[j][melhorVertice] = true;
-                        arestasCobertas++;
-                    }
                     graus[j]--;
                 }
             }
@@ -444,8 +442,8 @@ void GrafoMatriz::coberturaVerticesGulosa() {
 
         // Verifica se todas as arestas estão cobertas
         bool todasCobertas = true;
-        for (int i = 0; i < numVertices && todasCobertas; i++) {
-            for (int j = 0; j < numVertices && todasCobertas; j++) {
+        for (int i = 1; i <= numVertices && todasCobertas; i++) {
+            for (int j = 1; j <= numVertices && todasCobertas; j++) {
                 if (matrizAdj[i][j] != 0 && !arestaCoberta[i][j]) {
                     todasCobertas = false;
                 }
@@ -464,7 +462,7 @@ void GrafoMatriz::coberturaVerticesGulosa() {
             cout << i << " ";
         }
     }
-    cout << " }" << endl;
+    cout << "}" << endl;
     cout << "Quantidade de Vertices na solucao: " << qtdVerticesSolucao << endl;
     cout << "Quantidade de Arestas cobertas: " << arestasCobertas << endl;
 
