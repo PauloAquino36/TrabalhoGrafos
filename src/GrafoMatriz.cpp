@@ -3,8 +3,8 @@
 #include <iostream>
 #include <cmath>
 #include <string>
-#include <iomanip> // Biblioteca necessaria para setw()
-
+#include <iomanip>  // Biblioteca necessaria para setw()
+#include <ctime>    // Biblioteca necessaria para time()
 
 using namespace std;
 
@@ -374,6 +374,9 @@ void GrafoMatriz::imprimeGrafoMatriz()
 }
 
 void GrafoMatriz::coberturaVerticesGulosa() {
+    // Inicializa o tempo de execução
+    clock_t start = clock();
+
     // Aloca estruturas básicas
     bool *verticeEscolhido = new bool[numVertices + 1];
     bool **arestaCoberta = new bool*[numVertices + 1];
@@ -505,10 +508,17 @@ void GrafoMatriz::coberturaVerticesGulosa() {
     delete[] graus;
     delete[] vizinhos;
     delete[] contVizinhos;
+
+    // Calcula e imprime o tempo de execução
+    clock_t end = clock();
+    double duration = double(end - start) / CLOCKS_PER_SEC;
+    cout << "Tempo de execucao de coberturaVerticesGulosa: " << duration << " segundos" << endl;
 }
 
-
 void GrafoMatriz::alg_randomizado_cobertura_vertice() {
+    // Inicializa o tempo de execução
+    clock_t start = clock();
+
     bool* verticeEscolhido = new bool[numVertices + 1]();  // Inicializa com 'false'
     bool** arestaCoberta = new bool*[numVertices + 1];  // Aloca um vetor de ponteiros
     for (int i = 0; i <= numVertices; i++) {
@@ -591,9 +601,17 @@ void GrafoMatriz::alg_randomizado_cobertura_vertice() {
         delete[] arestaCoberta[i];
     }
     delete[] arestaCoberta;
+
+    // Calcula e imprime o tempo de execução
+    clock_t end = clock();
+    double duration = double(end - start) / CLOCKS_PER_SEC;
+    cout << "Tempo de execucao de alg_randomizado_cobertura_vertice: " << duration << " segundos" << endl;
 }
 
 void GrafoMatriz::alg_reativo_cobertura_vertice() {
+    // Inicializa o tempo de execução
+    clock_t start = clock();
+
     bool* verticeEscolhido = new bool[numVertices + 1]();
     
     // Aloca matriz dinamicamente
@@ -690,6 +708,11 @@ void GrafoMatriz::alg_reativo_cobertura_vertice() {
         delete[] arestaCoberta[i];
     }
     delete[] arestaCoberta;
+
+    // Calcula e imprime o tempo de execução
+    clock_t end = clock();
+    double duration = double(end - start) / CLOCKS_PER_SEC;
+    cout << "Tempo de execucao de alg_reativo_cobertura_vertice: " << duration << " segundos" << endl;
 }
 
 // #endregion
