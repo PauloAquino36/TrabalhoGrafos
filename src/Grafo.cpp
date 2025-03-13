@@ -127,7 +127,7 @@ void Grafo::decrementa_num_vertices_grafo()
 }
 
 // Imprime os atributos do grafo
-void Grafo::imprime()
+void Grafo::imprimir_descricao()
 {
     cout << "*** Descricao do Grafo ***" << endl;
     cout << "Grau: " << get_grau() << endl;
@@ -137,6 +137,14 @@ void Grafo::imprime()
     cout << "Vertices ponderados: " << (vertice_ponderado() ? "Sim" : "Nao") << endl;
     cout << "Arestas ponderadas: " << (aresta_ponderada() ? "Sim" : "Nao") << endl;
     cout << "Completo: " << (eh_completo() ? "Sim" : "Nao") << endl;
+}
+
+// Imprime algoritmos gulosos para cobertura de vertices
+void Grafo::imprimir_algoritmos_cobertura_vertice(Grafo* grafo)
+{
+    grafo->alg_guloso_cobertura_vertice();
+    grafo->alg_randomizado_cobertura_vertice();
+    grafo->alg_reativo_cobertura_vertice();
 }
 
 // Carrega o grafo a partir de um arquivo txt

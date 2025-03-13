@@ -181,7 +181,7 @@ void GrafoLista::imprimeGrafoLista(){
     cout << endl << "--- Grafo Lista ---" << endl;
     cout << "__________________________________________________________________" << endl << endl;
     // Imprime as informacoes do grafo
-    imprime();                                                      
+    imprimir_descricao();                                                      
 }
 // #endregion
 

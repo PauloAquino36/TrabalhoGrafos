@@ -33,29 +33,36 @@ public:
     static void carrega_grafo(Grafo* grafo, const string& nomeArquivo);             // Gera um grafo a partir do arquivo grafo.txt
    
     // Funcao imprime
-    void imprime();                     // Imprime os atributos do grafo
+    void imprimir_descricao();                     // Imprime os atributos do grafo
+    void imprimir_algoritmos_cobertura_vertice(Grafo* grafo);  // Imprime algoritmos gulosos para cobertura de vertices
 
-    // Funcoes auxiliares abstratas que serao implementadas nas classes filhas
+    // Funcoes auxiliares abstratas que estao implementadas nas classes filhas
     virtual ListaAdjAresta* get_vizinhos(int id) { return nullptr; };               // Retorna os vertices vizinhos de um vertice     
     virtual int get_num_vizinhos(int id) { return 0; };                             // Retorna o numero de vizinhos de um vertice
     virtual void dfs(int v, bool* visitado){};                                      // Realiza a busca em profundidade
     virtual bool existe_vertice(int id)=0;                                          // Verifica se um vertice existe
     int get_num_arestas_grafo();                                                    // Retorna o numero de arestas do grafo
-    void incrementa_num_vertices_grafo();                                          // Incrementa o numero de vertices do grafo
-    void decrementa_num_vertices_grafo();                                          // Decrementa o numero de vertices do grafo
+    void incrementa_num_vertices_grafo();                                           // Incrementa o numero de vertices do grafo
+    void decrementa_num_vertices_grafo();                                           // Decrementa o numero de vertices do grafo
     void incrementa_num_arestas_grafos();                                           // Incrementa o numero de arestas do grafo
     void decrementa_num_arestas_grafos();                                           // Decrementa o numero de arestas do grafo
     void diminui_num_arestas_grafos(int valor);                                     // Diminui o numero de arestas do grafo
 
-    // Funcoes de manipulacao de vertices e arestas abstratas que serao implementadas nas classes filhas
+    // Funcoes de manipulacao de vertices e arestas abstratas que estao implementadas nas classes filhas
     virtual void adicionar_vertice(int id, float peso = 0.0){};                     // Adiciona um vertice no grafo
     virtual void adicionar_aresta(int origem, int destino, float peso = 1.0){};     // Adiciona uma aresta no grafo
     virtual void remover_primeira_aresta(int id){};                                 // Remove a primeira aresta de um vertice
     virtual void remover_vertice(int id){};                                         // Remove um vertice do grafo
     virtual void remover_aresta(int origem, int destino){};                         // Remove uma aresta do grafo
 
+    // Funcoes de calculo de menor distancia abstratas que estao implementadas nas classes filhas
     virtual int calcula_menor_dist(int origem, int destino)=0;                      // Calcula a menor distancia entre dois vertices
     virtual int calcula_maior_menor_dist();                                         // Calcula a maior menor distancia entre dois vertices
+
+    // Funcoes da solucao de cobertura de vertice que estao implementadas nas classes filhas
+    virtual void alg_guloso_cobertura_vertice(){};                                  // Algoritmo guloso para cobertura de vertices
+    virtual void alg_randomizado_cobertura_vertice(){};                             // Algoritmo randomizado para cobertura de vertices
+    virtual void alg_reativo_cobertura_vertice(){};                                 // Algoritmo reativo para cobertura de vertices
 };
 
 #endif

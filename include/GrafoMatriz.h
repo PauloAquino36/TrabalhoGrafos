@@ -31,12 +31,11 @@ public:
     // Funcoes imprime
     void imprimirMatrizAdj();                                                       // Imprime a matriz de adjacencia
     void imprimeGrafoMatriz();                                                      // Imprime os atributos do grafo
-    void coberturaVerticesGulosa();
-    void alg_randomizado_cobertura_vertice();
-    void alg_reativo_cobertura_vertice();
-    //int contarArestasCobertas(bool *verticeEscolhido);
-    //void listarArestasNaoCobertas(bool* verticeEscolhido);
-    
+
+    // Algoritmos Gulosos para cobertura de vertices
+    void alg_guloso_cobertura_vertice() override;                                        // Algoritmo guloso para cobertura de vertices
+    void alg_randomizado_cobertura_vertice() override;                                   // Algoritmo randomizado para cobertura de vertices
+    void alg_reativo_cobertura_vertice() override;                                       // Algoritmo reativo para cobertura de vertices
 };
 
 #endif // GRAFOMATRIZ_H
