@@ -38,7 +38,7 @@ GrafoMatriz::~GrafoMatriz()
 {
     if (matrizAdj != nullptr)
     { // Verifica se ha memoria alocada
-        for (int i = 0; i < numVertices; i++)
+        for (int i = 0; i < tamanhoMatriz; i++)
         {
             delete[] matrizAdj[i];
         }
