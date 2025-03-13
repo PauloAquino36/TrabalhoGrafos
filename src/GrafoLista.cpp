@@ -453,7 +453,6 @@ void GrafoLista::alg_reativo_cobertura_vertice() {
                 }
             }
 
-            float alfa = alphas[escolhaAlpha];
             int* candidatos = new int[numVertices + 1];
             int numCandidatos = 0;
             int melhorSoma = 0;
