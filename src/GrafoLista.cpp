@@ -3,6 +3,7 @@
 #include <iostream>
 #include <fstream>
 #include <cstdlib>  // Para a função rand()
+#include <ctime>    // Para a função time()
 
 using namespace std;
 
@@ -187,6 +188,9 @@ void GrafoLista::imprimeGrafoLista(){
 // #region Algoritmos gulosos
 // Algoritmo guloso para cobertura de vertices
 void GrafoLista::alg_guloso_cobertura_vertice() {
+    // Inicializa o tempo de execução
+    clock_t start = clock();
+
     bool verticeEscolhido[numVertices + 1] = {false};   // Marcar vertices escolhidos
     bool arestaCoberta[numArestasGrafo + 1] = {false};  // Marcar arestas cobertas
     int graus[numVertices + 1] = {0};                   // Armazena o grau de cada vertice
@@ -271,10 +275,18 @@ void GrafoLista::alg_guloso_cobertura_vertice() {
     cout << "Quantidade de Vertices na solucao: " << qtdVerticesSolucao << endl;
     cout << "Quantidade de Arestas cobertas: " << arestasCobertas << endl;
     cout << "Quantidade de Arestas do grafo: " << numArestasGrafo << endl;
+
+    // Calcula e imprime o tempo de execução
+    clock_t end = clock();
+    double duration = double(end - start) / CLOCKS_PER_SEC;
+    cout << "Tempo de execucao de alg_guloso_cobertura_vertices: " << duration << " segundos" << endl;
 }
 
 // Algoritmo guloso randomizado para cobertura de vertices
 void GrafoLista::alg_randomizado_cobertura_vertice() {
+    // Inicializa o tempo de execução
+    clock_t start = clock();
+
     bool verticeEscolhido[numVertices + 1] = {false};
     bool arestaCoberta[numArestasGrafo + 1] = {false};  // Marcar arestas cobertas
     int graus[numVertices + 1] = {0};
@@ -369,10 +381,18 @@ void GrafoLista::alg_randomizado_cobertura_vertice() {
     cout << "Quantidade de Vertices na solucao: " << qtdVerticesSolucao << endl;
     cout << "Quantidade de Arestas cobertas: " << arestasCobertas << endl;
     cout << "Quantidade de Arestas do grafo: " << numArestasGrafo << endl;
+
+    // Calcula e imprime o tempo de execução
+    clock_t end = clock();
+    double duration = double(end - start) / CLOCKS_PER_SEC;
+    cout << "Tempo de execucao de alg_randomizado_cobertura_vertices: " << duration << " segundos" << endl;
 }
 
 // Algortimo guloso reativo para cobertura de vertices
 void GrafoLista::alg_reativo_cobertura_vertice() {
+    // Inicializa o tempo de execução
+    clock_t start = clock();
+
     srand(42); // Inicializa a semente do gerador de números aleatórios
 
     const int numAlphas = 3;
@@ -525,5 +545,10 @@ void GrafoLista::alg_reativo_cobertura_vertice() {
     cout << "Quantidade de Arestas do grafo: " << numArestasGrafo << endl;
 
     delete[] melhorVerticeEscolhido;
+
+    // Calcula e imprime o tempo de execução
+    clock_t end = clock();
+    double duration = double(end - start) / CLOCKS_PER_SEC;
+    cout << "Tempo de execucao de alg_guloso_cobertura_vertices: " << duration << " segundos" << endl;
 }
 // #endregion
