@@ -196,6 +196,7 @@ void GrafoLista::alg_guloso_cobertura_vertice() {
     int graus[numVertices + 1] = {0};                   // Armazena o grau de cada vertice
     int somaVizinhos[numVertices + 1] = {0};            // Armazena a soma dos graus dos vizinhos de cada vertice
     int arestasCobertas = 0;                            // Contador de arestas cobertas
+    int qtdVerticesSolucao = 0;                         // Contador de vertices na solucao
 
     // Inicializa graus e soma dos vizinhos
     for (int i = 1; i <= numVertices; i++) {
@@ -233,6 +234,7 @@ void GrafoLista::alg_guloso_cobertura_vertice() {
 
         // Marca o vértice escolhido
         verticeEscolhido[melhorVertice] = true;
+        qtdVerticesSolucao++;
 
         // Atualiza graus e arestas cobertas
         NoAresta* arestaAtual = listaAdjVertices->getVertice(melhorVertice)->getArestas()->getCabeca();
@@ -261,20 +263,21 @@ void GrafoLista::alg_guloso_cobertura_vertice() {
         }
     }
 
-    // Imprime o conjunto solucao
+    // Imprime a solucao do problema de cobertura de vertices
     cout << endl << "*** Algoritmo Guloso para Cobertura de Vertices ***" << endl;
+    cout << "Quantidade de Vertices na solucao: " << qtdVerticesSolucao << endl;
+    
+    /* Comentando a impressão do conjunto solução para evitar que o console trave
     cout << "Conjunto solucao: { ";
-    int qtdVerticesSolucao = 0;
     for (int i = 1; i <= numVertices; i++) {
         if (verticeEscolhido[i]) {
-            qtdVerticesSolucao++;
             cout << i << " ";
         }
     }
     cout << "}" << endl;
-    cout << "Quantidade de Vertices na solucao: " << qtdVerticesSolucao << endl;
     cout << "Quantidade de Arestas cobertas: " << arestasCobertas << endl;
     cout << "Quantidade de Arestas do grafo: " << numArestasGrafo << endl;
+    */
 
     // Calcula e imprime o tempo de execução
     clock_t end = clock();
@@ -287,11 +290,12 @@ void GrafoLista::alg_randomizado_cobertura_vertice() {
     // Inicializa o tempo de execução
     clock_t start = clock();
 
-    bool verticeEscolhido[numVertices + 1] = {false};
-    bool arestaCoberta[numArestasGrafo + 1] = {false};  // Marcar arestas cobertas
-    int graus[numVertices + 1] = {0};
-    int somaVizinhos[numVertices + 1] = {0};  // Soma dos graus dos vizinhos
-    int arestasCobertas = 0;
+    bool verticeEscolhido[numVertices + 1] = {false};       // Marcar vertices escolhidos
+    bool arestaCoberta[numArestasGrafo + 1] = {false};      // Marcar arestas cobertas
+    int graus[numVertices + 1] = {0};                       // Armazena o grau de cada vertice
+    int somaVizinhos[numVertices + 1] = {0};                // Armazena a soma dos graus dos vizinhos de cada vertice
+    int arestasCobertas = 0;                                // Contador de arestas cobertas    
+    int qtdVerticesSolucao = 0;                             // Contador de vertices na solucao
 
     // Inicializa graus e soma dos vizinhos
     for (int i = 1; i <= numVertices; i++) {
@@ -336,6 +340,7 @@ void GrafoLista::alg_randomizado_cobertura_vertice() {
         int escolhido = candidatos[rand() % numCandidatos];
 
         verticeEscolhido[escolhido] = true;
+        qtdVerticesSolucao++;
 
         // Atualiza graus e arestas cobertas
         NoAresta* arestaAtual = listaAdjVertices->getVertice(escolhido)->getArestas()->getCabeca();
@@ -367,20 +372,21 @@ void GrafoLista::alg_randomizado_cobertura_vertice() {
         }
     }
 
-    // Imprime o conjunto solucao
+    // Imprime a solucao do problema de cobertura de vertices
     cout << endl << "*** Algoritmo Guloso Randomizado para Cobertura de Vertices ***" << endl;
+    cout << "Quantidade de Vertices na solucao: " << qtdVerticesSolucao << endl;
+
+    /* Comentando a impressão do conjunto solução para evitar que o console trave
     cout << "Conjunto solucao: { ";
-    int qtdVerticesSolucao = 0;
     for (int i = 1; i <= numVertices; i++) {
         if (verticeEscolhido[i]) {
-            qtdVerticesSolucao++;
             cout << i << " ";
         }
     }
     cout << "}" << endl;
-    cout << "Quantidade de Vertices na solucao: " << qtdVerticesSolucao << endl;
     cout << "Quantidade de Arestas cobertas: " << arestasCobertas << endl;
     cout << "Quantidade de Arestas do grafo: " << numArestasGrafo << endl;
+    */
 
     // Calcula e imprime o tempo de execução
     clock_t end = clock();
@@ -531,17 +537,21 @@ void GrafoLista::alg_reativo_cobertura_vertice() {
 
     // Imprime a melhor solução encontrada
     cout << endl << "*** Algoritmo Guloso Reativo para Cobertura de Vertices ***" << endl;
+    cout << "Quantidade de Vertices na solucao reativa: " << melhorQtdVerticesSolucao << endl;
+
+    /*  Comentando a impressão do conjunto solução para evitar que o console trave
     cout << "Conjunto solucao: { ";
     for (int i = 1; i <= numVertices; i++) {
         if (melhorVerticeEscolhido[i]) {
-            cout << i << " ";
+            cout << i << " ";           // Imprime todos os vertices da solucao
         }
     }
     cout << "}" << endl;
-    cout << "Quantidade de Vertices na solucao reativa: " << melhorQtdVerticesSolucao << endl;
     cout << "Quantidade de Arestas cobertas: " << arestasCobertas << endl;
     cout << "Quantidade de Arestas do grafo: " << numArestasGrafo << endl;
+    */
 
+    // Libera a memória alocada
     delete[] melhorVerticeEscolhido;
 
     // Calcula e imprime o tempo de execução
