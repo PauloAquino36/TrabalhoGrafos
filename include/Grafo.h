@@ -35,6 +35,7 @@ public:
     // Funcao imprime
     void imprimir_descricao();                     // Imprime os atributos do grafo
     void imprimir_algoritmos_cobertura_vertice(Grafo* grafo);  // Imprime algoritmos gulosos para cobertura de vertices
+    void analise_algoritmos_cobertura_vertice(Grafo* grafo, int numVezes);  // Analisa algoritmos gulosos para cobertura de vertices
 
     // Funcoes auxiliares abstratas que estao implementadas nas classes filhas
     virtual ListaAdjAresta* get_vizinhos(int id) { return nullptr; };               // Retorna os vertices vizinhos de um vertice     

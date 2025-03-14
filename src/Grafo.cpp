@@ -147,6 +147,16 @@ void Grafo::imprimir_algoritmos_cobertura_vertice(Grafo* grafo)
     grafo->alg_reativo_cobertura_vertice();
 }
 
+void Grafo::analise_algoritmos_cobertura_vertice(Grafo* grafo, int numVezes)
+{
+    for(int i = 0; i < numVezes; i++) {
+        cout << endl << "-----------------------------------" << "Execucao " << i+1 << "-----------------------------------" << endl;
+        grafo->alg_guloso_cobertura_vertice();
+        grafo->alg_randomizado_cobertura_vertice();
+        grafo->alg_reativo_cobertura_vertice();
+    }
+}
+
 // Carrega o grafo a partir de um arquivo txt
 void Grafo::carrega_grafo(Grafo* grafo, const string& nomeArquivo) {
     ifstream arquivo(nomeArquivo);
