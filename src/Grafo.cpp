@@ -150,9 +150,10 @@ void Grafo::imprimir_algoritmos_cobertura_vertice(Grafo* grafo)
 void Grafo::analise_algoritmos_cobertura_vertice(Grafo* grafo, int numVezes)
 {
     for(int i = 0; i < numVezes; i++) {
-    grafo->alg_guloso_cobertura_vertice();
-    grafo->alg_randomizado_cobertura_vertice();
-    grafo->alg_reativo_cobertura_vertice();
+        cout << endl << "-----------------------------------" << "Execucao " << i+1 << "-----------------------------------" << endl;
+        grafo->alg_guloso_cobertura_vertice();
+        grafo->alg_randomizado_cobertura_vertice();
+        grafo->alg_reativo_cobertura_vertice();
     }
 }
 
