@@ -4,6 +4,7 @@
 #include <fstream>
 #include <cmath>
 #include <string>
+#include <ctime>
 
 using namespace std;
 
@@ -147,15 +148,50 @@ void Grafo::imprimir_algoritmos_cobertura_vertice(Grafo* grafo)
     grafo->alg_reativo_cobertura_vertice();
 }
 
+#include <iostream>
+#include <ctime>
+
+using namespace std;
+
 void Grafo::analise_algoritmos_cobertura_vertice(Grafo* grafo, int numVezes)
 {
+    double tempoGulosoTotal = 0.0, tempoRandomizadoTotal = 0.0, tempoReativoTotal = 0.0;
+
+    clock_t startFor = clock();
     for(int i = 0; i < numVezes; i++) {
         cout << endl << "-----------------------------------" << "Execucao " << i+1 << "-----------------------------------" << endl;
+        
+        // Mede o tempo do algoritmo guloso
+        clock_t start = clock();
         grafo->alg_guloso_cobertura_vertice();
+        clock_t end = clock();
+        double tempoGuloso = double(end - start) / CLOCKS_PER_SEC;
+        tempoGulosoTotal += tempoGuloso;
+
+        // Mede o tempo do algoritmo randomizado
+        start = clock();
         grafo->alg_randomizado_cobertura_vertice();
+        end = clock();
+        double tempoRandomizado = double(end - start) / CLOCKS_PER_SEC;
+        tempoRandomizadoTotal += tempoRandomizado;
+
+        // Mede o tempo do algoritmo reativo
+        start = clock();
         grafo->alg_reativo_cobertura_vertice();
+        end = clock();
+        double tempoReativo = double(end - start) / CLOCKS_PER_SEC;
+        tempoReativoTotal += tempoReativo;
     }
+    clock_t endFor = clock();
+    double durationFor = double(endFor - startFor) / CLOCKS_PER_SEC;
+
+    cout << endl << "-----------------------------------------Analises----------------------------------------------" << endl;
+    cout << "Tempo de execucao Total das " << numVezes << " execucoes: " << durationFor << " segundos" << endl;
+cout << "Tempo Total Algoritmo Guloso: " << tempoGulosoTotal << " segundos             | Media: " << (tempoGulosoTotal / numVezes) << " segundos" << endl;
+    cout << "Tempo Total Algoritmo Randomizado: " << tempoRandomizadoTotal << " segundos        | Media: " << (tempoRandomizadoTotal / numVezes) << " segundos" << endl;
+cout << "Tempo Total Algoritmo Reativo: " << tempoReativoTotal << " segundos            | Media: " << (tempoReativoTotal / numVezes) << " segundos" << endl;
 }
+
 
 // Carrega o grafo a partir de um arquivo txt
 void Grafo::carrega_grafo(Grafo* grafo, const string& nomeArquivo) {
