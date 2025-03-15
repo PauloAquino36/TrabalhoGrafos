@@ -149,11 +149,6 @@ void Grafo::imprimir_algoritmos_cobertura_vertice(Grafo* grafo)
     grafo->alg_reativo_cobertura_vertice();
 }
 
-#include <iostream>
-#include <ctime>
-
-using namespace std;
-
 void Grafo::analise_algoritmos_cobertura_vertice(Grafo* grafo, int numVezes)
 {
     double tempoGulosoTotal = 0.0, tempoRandomizadoTotal = 0.0, tempoReativoTotal = 0.0;
