@@ -187,7 +187,7 @@ void GrafoLista::imprimeGrafoLista(){
 
 // #region Algoritmos gulosos
 // Algoritmo guloso para cobertura de vertices
-void GrafoLista::alg_guloso_cobertura_vertice() {
+int GrafoLista::alg_guloso_cobertura_vertice() {
     // Inicializa o tempo de execução
     clock_t start = clock();
 
@@ -283,10 +283,11 @@ void GrafoLista::alg_guloso_cobertura_vertice() {
     clock_t end = clock();
     double duration = double(end - start) / CLOCKS_PER_SEC;
     cout << "Tempo de execucao de alg_guloso_cobertura_vertices: " << duration << " segundos" << endl;
+    return qtdVerticesSolucao;
 }
 
 // Algoritmo guloso randomizado para cobertura de vertices
-void GrafoLista::alg_randomizado_cobertura_vertice() {
+int GrafoLista::alg_randomizado_cobertura_vertice() {
     // Inicializa o tempo de execução
     clock_t start = clock();
 
@@ -392,10 +393,11 @@ void GrafoLista::alg_randomizado_cobertura_vertice() {
     clock_t end = clock();
     double duration = double(end - start) / CLOCKS_PER_SEC;
     cout << "Tempo de execucao de alg_randomizado_cobertura_vertices: " << duration << " segundos" << endl;
+    return qtdVerticesSolucao;
 }
 
 // Algortimo guloso reativo para cobertura de vertices
-void GrafoLista::alg_reativo_cobertura_vertice() {
+int GrafoLista::alg_reativo_cobertura_vertice() {
     // Inicializa o tempo de execução
     clock_t start = clock();
 
@@ -409,7 +411,7 @@ void GrafoLista::alg_reativo_cobertura_vertice() {
 
     if (numVertices <= 0 || numArestasGrafo <= 0) {
         cout << "Erro: O grafo deve conter vértices e arestas válidas." << endl;
-        return;
+        return 0;
     }
 
     bool* melhorVerticeEscolhido = new bool[numVertices + 1]();
@@ -558,5 +560,6 @@ void GrafoLista::alg_reativo_cobertura_vertice() {
     clock_t end = clock();
     double duration = double(end - start) / CLOCKS_PER_SEC;
     cout << "Tempo de execucao de alg_guloso_cobertura_vertices: " << duration << " segundos" << endl;
+    return melhorQtdVerticesSolucao;
 }
 // #endregion

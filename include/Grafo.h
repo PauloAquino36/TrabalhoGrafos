@@ -61,9 +61,9 @@ public:
     virtual int calcula_maior_menor_dist();                                         // Calcula a maior menor distancia entre dois vertices
 
     // Funcoes da solucao de cobertura de vertice que estao implementadas nas classes filhas
-    virtual void alg_guloso_cobertura_vertice(){};                                  // Algoritmo guloso para cobertura de vertices
-    virtual void alg_randomizado_cobertura_vertice(){};                             // Algoritmo randomizado para cobertura de vertices
-    virtual void alg_reativo_cobertura_vertice(){};                                 // Algoritmo reativo para cobertura de vertices
+    virtual int alg_guloso_cobertura_vertice() = 0;                                  // Algoritmo guloso para cobertura de vertices
+    virtual int alg_randomizado_cobertura_vertice() = 0;                             // Algoritmo randomizado para cobertura de vertices
+    virtual int alg_reativo_cobertura_vertice() = 0;                                 // Algoritmo reativo para cobertura de vertices
 };
 
 #endif

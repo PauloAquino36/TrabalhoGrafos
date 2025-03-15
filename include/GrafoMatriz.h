@@ -33,9 +33,9 @@ public:
     void imprimeGrafoMatriz();                                                      // Imprime os atributos do grafo
 
     // Algoritmos Gulosos para cobertura de vertices
-    void alg_guloso_cobertura_vertice() override;                                        // Algoritmo guloso para cobertura de vertices
-    void alg_randomizado_cobertura_vertice() override;                                   // Algoritmo randomizado para cobertura de vertices
-    void alg_reativo_cobertura_vertice() override;                                       // Algoritmo reativo para cobertura de vertices
+    int alg_guloso_cobertura_vertice() override;                                        // Algoritmo guloso para cobertura de vertices
+    int alg_randomizado_cobertura_vertice() override;                                   // Algoritmo randomizado para cobertura de vertices
+    int alg_reativo_cobertura_vertice() override;                                       // Algoritmo reativo para cobertura de vertices
 };
 
 #endif // GRAFOMATRIZ_H
