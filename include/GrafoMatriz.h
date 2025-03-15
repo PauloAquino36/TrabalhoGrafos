@@ -35,7 +35,8 @@ public:
     // Algoritmos Gulosos para cobertura de vertices
     int alg_guloso_cobertura_vertice() override;                                        // Algoritmo guloso para cobertura de vertices
     int alg_randomizado_cobertura_vertice() override;                                   // Algoritmo randomizado para cobertura de vertices
-    int alg_reativo_cobertura_vertice() override;                                       // Algoritmo reativo para cobertura de vertices
+    int alg_reativo_cobertura_vertice() override;
+    int alg_randomizado_cobertura_vertice_com_alpha(double alpha);                                     // Algoritmo reativo para cobertura de vertices
 };
 
 #endif // GRAFOMATRIZ_H
