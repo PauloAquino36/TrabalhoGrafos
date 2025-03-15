@@ -4,6 +4,7 @@
 #include <fstream>
 #include <cstdlib>  // Para a função rand()
 #include <ctime>    // Para a função time()
+#include <unistd.h> // Para a função getpid()
 
 using namespace std;
 
@@ -291,8 +292,10 @@ int GrafoLista::alg_guloso_cobertura_vertice() {
         }
     }
     // Imprime a solucao do problema de cobertura de vertices
-    cout << endl << "*** Algoritmo Guloso Randomizado para Cobertura de Vertices ***" << endl;
+    cout << endl << "*** Algoritmo Guloso para Cobertura de Vertices ***" << endl;
     cout << "Quantidade de Vertices na solucao: " << qtdVerticesSolucao << endl;
+    cout << "Arestas cobertas: " << arestasCobertas << endl;
+    cout << "Número de arestas no grafo: " << numArestasGrafo << endl;
 
     /* Comentando a impressão do conjunto solução para evitar que o console trave
     cout << "Conjunto solucao: { ";
@@ -406,6 +409,8 @@ int GrafoLista::alg_randomizado_cobertura_vertice() {
     // Imprime a solucao do problema de cobertura de vertices
     cout << endl << "*** Algoritmo Guloso Randomizado para Cobertura de Vertices ***" << endl;
     cout << "Quantidade de Vertices na solucao: " << qtdVerticesSolucao << endl;
+    cout << "Arestas cobertas: " << arestasCobertas << endl;
+    cout << "Número de arestas no grafo: " << numArestasGrafo << endl;
 
     /* Comentando a impressão do conjunto solução para evitar que o console trave
     cout << "Conjunto solucao: { ";
@@ -431,7 +436,10 @@ int GrafoLista::alg_reativo_cobertura_vertice() {
     // Inicializa o tempo de execução
     clock_t start = clock();
 
-    srand(42); // Inicializa a semente do gerador de números aleatórios
+    unsigned seed = time(0);
+
+    srand(seed);
+    cout<<1+rand()%10<<endl;
 
     const int numAlphas = 3;
     float probabilidades[numAlphas] = {1.0 / numAlphas, 1.0 / numAlphas, 1.0 / numAlphas};
@@ -465,7 +473,7 @@ int GrafoLista::alg_reativo_cobertura_vertice() {
         iteracao++;
 
         // Ajusta as probabilidades dos alphas a cada 5 iterações
-        if (iteracao % 5 == 0) {
+        if (iteracao % 10 == 0) {
             float somaDesempenho = 0;
             for (int i = 0; i < numAlphas; i++) {
                 somaDesempenho += desempenho[i] + 0.0001;
@@ -476,7 +484,7 @@ int GrafoLista::alg_reativo_cobertura_vertice() {
         }
 
         // Escolhe um alpha com base nas probabilidades ajustadas
-        float r = (float)rand() / RAND_MAX;
+        float r = (float)1+rand()%100 / RAND_MAX;
         float acumulado = 0;
         for (int i = 0; i < numAlphas; i++) {
             acumulado += probabilidades[i];
@@ -512,7 +520,8 @@ int GrafoLista::alg_reativo_cobertura_vertice() {
             break;
         }
 
-        int escolhido = candidatos[rand() % numCandidatos];
+        int janela = max(1, numCandidatos / 2); // Define o tamanho da janela como metade dos candidatos
+        int escolhido = candidatos[rand() % janela]; 
         delete[] candidatos;
 
         verticeEscolhido[escolhido] = true;
@@ -549,6 +558,8 @@ int GrafoLista::alg_reativo_cobertura_vertice() {
     // Imprime a melhor solução encontrada
     cout << endl << "*** Algoritmo Guloso Reativo para Cobertura de Vertices ***" << endl;
     cout << "Quantidade de Vertices na solucao reativa: " << qtdVerticesSolucao << endl;
+    cout << "Arestas cobertas: " << arestasCobertas << endl;
+    cout << "Número de arestas no grafo: " << numArestasGrafo << endl;
 
     /*  Comentando a impressão do conjunto solução para evitar que o console trave
     cout << "Conjunto solucao: { ";

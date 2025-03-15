@@ -160,7 +160,7 @@ int ListaAdjVertice::getIDAresta(int origem, int destino) {
         cout << "Erro: Vertice de origem nao existe!" << endl;
         return -1;
     }
-    getVertice(origem)->getIdAresta(destino);
+    return getVertice(origem)->getIdAresta(destino);
 }
 
 // Imprime a lista de adjacencia
