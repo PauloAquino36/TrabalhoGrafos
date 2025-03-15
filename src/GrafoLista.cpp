@@ -543,5 +543,5 @@ int GrafoLista::alg_reativo_cobertura_vertice() {
     clock_t end = clock();
     double duration = double(end - start) / CLOCKS_PER_SEC;
     cout << "Tempo de execucao de alg_guloso_cobertura_vertices: " << duration << " segundos" << endl;
-    return melhorQtdVerticesSolucao;
+    return qtdVerticesSolucao;
 }
