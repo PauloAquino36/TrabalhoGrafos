@@ -155,6 +155,14 @@ void ListaAdjVertice::remover_vertice(int id) {
 
 }
 
+int ListaAdjVertice::getIDAresta(int origem, int destino) {
+    if(this->getVertice(origem) == nullptr) {
+        cout << "Erro: Vertice de origem nao existe!" << endl;
+        return -1;
+    }
+    getVertice(origem)->getIdAresta(destino);
+}
+
 // Imprime a lista de adjacencia
 void ListaAdjVertice::imprimir() {
     // Imprime a lista de adjacencia

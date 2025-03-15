@@ -101,3 +101,14 @@ int ListaAdjAresta::getNumVerticesVizinhos() {
     }
     return tamanho;
 }
+
+int ListaAdjAresta::getIdAresta(int destino) {
+    NoAresta* atual = this->cabeca;
+    while (atual != nullptr) {
+        if (atual->getDestino() == destino) {
+            return atual->getIdAresta();
+        }
+        atual = atual->getProximo();
+    }
+    return -1;
+}

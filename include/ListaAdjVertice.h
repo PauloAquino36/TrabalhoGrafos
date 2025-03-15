@@ -22,6 +22,7 @@ public:
     void remover_aresta(int origem, int destino);                   // Remove uma aresta do vertice
     void remover_primeira_aresta(int id);                           // Remove a primeira aresta do vertice
     void remover_vertice(int id);                                   // Remove um vertice da lista
+    int getIDAresta(int origem, int destino);                       // Retorna o ID da aresta
 
     // Funcoes imprime
     void imprimir();                                                // Imprime a Lista de adjacencia

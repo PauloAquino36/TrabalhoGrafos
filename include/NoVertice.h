@@ -34,6 +34,7 @@ public:
     void adicionar_aresta(int id, float peso);              // Adiciona uma aresta ao vertice
     void remover_aresta(int destino);                       // Remove uma aresta do vertice
     void remover_primeira_aresta();                         // Remove a primeira aresta do vertice
+    int getIdAresta(int destino);                           // Retorna o ID da aresta
 };
 
 #endif // NO_H

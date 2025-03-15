@@ -18,6 +18,7 @@ public:
     void adicionar_aresta(int origem, int destino, float peso);         // Adiciona uma aresta à lista
     void remover_aresta(int origem, int destino);                       // Remove uma aresta da lista
     void remover_primeira_aresta();                                     // Remove a primeira aresta da lista
+    int getIdAresta(int destino);                                       // Retorna o ID da aresta
 };
 
 #endif // LISTA_ADJ_ARESTA_H
