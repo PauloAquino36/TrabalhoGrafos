@@ -4,6 +4,8 @@
 #include <fstream>
 #include <cmath>
 #include <string>
+#include <ctime>
+#include <iomanip>
 
 using namespace std;
 
@@ -147,15 +149,91 @@ void Grafo::imprimir_algoritmos_cobertura_vertice(Grafo* grafo)
     grafo->alg_reativo_cobertura_vertice();
 }
 
+#include <iostream>
+#include <ctime>
+
+using namespace std;
+
 void Grafo::analise_algoritmos_cobertura_vertice(Grafo* grafo, int numVezes)
 {
+    double tempoGulosoTotal = 0.0, tempoRandomizadoTotal = 0.0, tempoReativoTotal = 0.0;
+    int verticesSolucaoGuloso[numVezes], verticesSolucaoRandomizado[numVezes], verticesSolucaoReativo[numVezes];
+
+    clock_t startFor = clock();
     for(int i = 0; i < numVezes; i++) {
         cout << endl << "-----------------------------------" << "Execucao " << i+1 << "-----------------------------------" << endl;
-        grafo->alg_guloso_cobertura_vertice();
-        grafo->alg_randomizado_cobertura_vertice();
-        grafo->alg_reativo_cobertura_vertice();
+        
+        // Mede o tempo do algoritmo guloso
+        clock_t start = clock();
+        verticesSolucaoGuloso[i] = grafo->alg_guloso_cobertura_vertice();
+        clock_t end = clock();
+        double tempoGuloso = double(end - start) / CLOCKS_PER_SEC;
+        tempoGulosoTotal += tempoGuloso;
+
+        // Mede o tempo do algoritmo randomizado
+        start = clock();
+        verticesSolucaoRandomizado[i] = grafo->alg_randomizado_cobertura_vertice();
+        end = clock();
+        double tempoRandomizado = double(end - start) / CLOCKS_PER_SEC;
+        tempoRandomizadoTotal += tempoRandomizado;
+
+        // Mede o tempo do algoritmo reativo
+        start = clock();
+        verticesSolucaoReativo[i] = grafo->alg_reativo_cobertura_vertice();
+        end = clock();
+        double tempoReativo = double(end - start) / CLOCKS_PER_SEC;
+        tempoReativoTotal += tempoReativo;
     }
+    clock_t endFor = clock();
+    double durationFor = double(endFor - startFor) / CLOCKS_PER_SEC;
+
+    int melhorGuloso = verticesSolucaoGuloso[0], melhorRandomizado = verticesSolucaoRandomizado[0], melhorReativo = verticesSolucaoReativo[0];
+    int indiceMelhorGuloso = 0, indiceMelhorRandomizado = 0, indiceMelhorReativo = 0;
+    int somaVerticesGuloso = 0, somaVerticesRandomizado = 0, somaVerticesReativo = 0;
+
+    for(int i = 0; i < numVezes; i++) {
+        if(verticesSolucaoGuloso[i] < melhorGuloso) {
+            melhorGuloso = verticesSolucaoGuloso[i];
+            indiceMelhorGuloso = i;
+        }
+        if(verticesSolucaoRandomizado[i] < melhorRandomizado) {
+            melhorRandomizado = verticesSolucaoRandomizado[i];
+            indiceMelhorRandomizado = i;
+        }
+        if(verticesSolucaoReativo[i] < melhorReativo) {
+            melhorReativo = verticesSolucaoReativo[i];
+            indiceMelhorReativo = i;
+        }
+        somaVerticesGuloso += verticesSolucaoGuloso[i];
+        somaVerticesRandomizado += verticesSolucaoRandomizado[i];
+        somaVerticesReativo += verticesSolucaoReativo[i];
+    }
+
+    cout << endl << "-----------------------------------------Analises----------------------------------------------" << endl;
+    cout << "Tempo de execucao Total das " << numVezes << " execucoes: " << durationFor << " segundos" << endl;
+
+    cout << left << setw(40) << "Tempo Total Algoritmo Guloso:" 
+         << setw(10) << tempoGulosoTotal << " segundos | "
+         << "Media: " << setw(10) << (tempoGulosoTotal / numVezes) << " segundos | "
+         << "Media de vertices: " << setw(10) << (somaVerticesGuloso / numVezes) << " | "
+         << "Melhor Solucao: " << setw(5) << melhorGuloso << " | "
+         << "Execucao: " << indiceMelhorGuloso << endl;
+
+    cout << left << setw(40) << "Tempo Total Algoritmo Randomizado:" 
+         << setw(10) << tempoRandomizadoTotal << " segundos | "
+         << "Media: " << setw(10) << (tempoRandomizadoTotal / numVezes) << " segundos | "
+         << "Media de vertices: " << setw(10) << (somaVerticesRandomizado / numVezes) << " | "
+         << "Melhor Solucao: " << setw(5) << melhorRandomizado << " | "
+         << "Execucao: " << indiceMelhorRandomizado << endl;
+
+    cout << left << setw(40) << "Tempo Total Algoritmo Reativo:" 
+         << setw(10) << tempoReativoTotal << " segundos | "
+         << "Media: " << setw(10) << (tempoReativoTotal / numVezes) << " segundos | "
+         << "Media de vertices: " << setw(10) << (somaVerticesReativo / numVezes) << " | "
+         << "Melhor Solucao: " << setw(5) << melhorReativo << " | "
+         << "Execucao: " << indiceMelhorReativo << endl;
 }
+
 
 // Carrega o grafo a partir de um arquivo txt
 void Grafo::carrega_grafo(Grafo* grafo, const string& nomeArquivo) {
@@ -222,3 +300,4 @@ int Grafo::calcula_maior_menor_dist() {
 
     return maiorMenorDist;
 }
+

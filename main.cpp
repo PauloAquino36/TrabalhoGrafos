@@ -60,6 +60,8 @@ int main(int argc, char* argv[]) {
             grafoLista.imprimir_descricao();
         } else if (string(argv[1]) == "-p") {
             grafoLista.imprimir_algoritmos_cobertura_vertice(&grafoLista);
+        } else if(string(argv[1]) == "-a"){
+            grafoLista.analise_algoritmos_cobertura_vertice(&grafoLista, 100);
         } else{
             comando_invalido();
             return 1;

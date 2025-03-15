@@ -376,7 +376,7 @@ void GrafoMatriz::imprimeGrafoMatriz()
 
 // #region Algoritmos Gulosos para cobertura de vertices
 // Algoritmo guloso para cobertura de vertices
-void GrafoMatriz::alg_guloso_cobertura_vertice() {
+int GrafoMatriz::alg_guloso_cobertura_vertice() {
     // Inicializa o tempo de execução
     clock_t start = clock();
 
@@ -517,10 +517,11 @@ void GrafoMatriz::alg_guloso_cobertura_vertice() {
     clock_t end = clock();
     double duration = double(end - start) / CLOCKS_PER_SEC;
     cout << "Tempo de execucao de alg_guloso_cobertura_vertice: " << duration << " segundos" << endl;
+    return qtdVerticesSolucao;
 }
 
 // Algoritmo guloso randomizado para cobertura de vertices
-void GrafoMatriz::alg_randomizado_cobertura_vertice() {
+int GrafoMatriz::alg_randomizado_cobertura_vertice() {
     // Inicializa o tempo de execução
     clock_t start = clock();
 
@@ -612,10 +613,11 @@ void GrafoMatriz::alg_randomizado_cobertura_vertice() {
     clock_t end = clock();
     double duration = double(end - start) / CLOCKS_PER_SEC;
     cout << "Tempo de execucao de alg_randomizado_cobertura_vertice: " << duration << " segundos" << endl;
+    return qtdVerticesSolucao;
 }
 
 // Algoritmo guloso reativo para cobertura de vertices
-void GrafoMatriz::alg_reativo_cobertura_vertice() {
+int GrafoMatriz::alg_reativo_cobertura_vertice() {
     // Inicializa o tempo de execução
     clock_t start = clock();
 
@@ -721,5 +723,6 @@ void GrafoMatriz::alg_reativo_cobertura_vertice() {
     clock_t end = clock();
     double duration = double(end - start) / CLOCKS_PER_SEC;
     cout << "Tempo de execucao de alg_reativo_cobertura_vertice: " << duration << " segundos" << endl;
+    return qtdVerticesSolucao;
 }
 // #endregion
