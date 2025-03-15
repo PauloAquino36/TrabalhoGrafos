@@ -398,7 +398,6 @@ int GrafoLista::alg_reativo_cobertura_vertice() {
     srand(42); // Inicializa a semente do gerador de números aleatórios
 
     const int numAlphas = 3;
-    float alphas[numAlphas] = {0.3, 0.5, 0.8};
     float probabilidades[numAlphas] = {1.0 / numAlphas, 1.0 / numAlphas, 1.0 / numAlphas};
     float desempenho[numAlphas] = {0};
     int escolhaAlpha = 0;
