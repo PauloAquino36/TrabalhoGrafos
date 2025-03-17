@@ -9,14 +9,23 @@ Este projeto implementa um sistema de manipulacao de grafos utilizando duas repr
 	settings.json
 	tasks.json
 docs/
-	apresentacao_parte1.pdf
-	contribuidores_parte1.pdf
-	contribuidores_parte2.pdf
-	descricao_parte1.pdf
-	descricao_parte2.pdf
+	contribuidores.pdf
+	descricao.pdf
+	documentacao.pdf
+	relatorio.pdf
 entradas/
 	descricao.txt
 	grafo.txt
+	instancia1.txt
+	instancia2.txt
+	instancia3.txt
+	instancia4.txt
+	instancia5.txt
+	instancia6.txt
+	instancia7.txt
+	instancia8.txt
+	instancia9.txt
+	instancia10.txt
 include/
 	Grafo.h
 	GrafoLista.h
@@ -26,7 +35,6 @@ include/
 	NoAresta.h
 	NoVertice.h
 main.cpp
-main.exe
 src/
 	Grafo.cpp
 	GrafoLista.cpp
@@ -80,21 +88,23 @@ Classe para representar uma aresta em uma lista de adjacencia.
 
 Para compilar o projeto, voce pode usar o comando de compilacao configurado no Visual Studio Code:
 
-1. Pressione `CTRL+SHIFT+B` para compilar o projeto.
-
-Ou use o comando `g++` no terminal:
+1. Use o comando `g++` no terminal para compilar o projeto:
 
 ```
-g++ -o main main.cpp src/Grafo.cpp src/GrafoMatriz.cpp src/GrafoLista.cpp src/ListaAdjAresta.cpp src/ListaAdjVertice.cpp src/NoAresta.cpp src/NoVertice.cpp
+g++ -o main main.cpp src/*.cpp
 ```
 
 ### Execucao
 
-Para executar o programa, use o comando:
+Para executar o programa, use os comandos:
 
 ```
-./main -d -m entradas/grafo.txt  # Para matriz de adjacência
-./main -d -l entradas/grafo.txt  # Para lista de adjacência
+./main -d -m entradas/grafo.txt  # Para imprimir a descricao do Grafo Matriz
+./main -d -l entradas/grafo.txt  # Para imprimir a descricao do Grafo Lista
+./main -p -m entradas/grafo.txt  # Para imprimir a solucao de cobertura de vertices do Grafo Matriz
+./main -p -l entradas/grafo.txt  # Para imprimir a solucao de cobertura de vertices do Grafo Lista
+./main -a -m entradas/grafo.txt  # Para executar a analise de algoritmos no Grafo Matriz
+./main -a -l entradas/grafo.txt  # Para executar a analise de algoritmos no Grafo Lista
 ```
 
 ### Consideracoes
