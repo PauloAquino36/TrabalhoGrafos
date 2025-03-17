@@ -3,8 +3,9 @@
 #include <iostream>
 #include <cmath>
 #include <string>
-#include <iomanip> // Biblioteca necessaria para setw()
-
+#include <cstdlib> // Para srand() e rand()
+#include <iomanip>  // Biblioteca necessaria para setw()
+#include <ctime>    // Biblioteca necessaria para time()
 
 using namespace std;
 
@@ -38,7 +39,7 @@ GrafoMatriz::~GrafoMatriz()
 {
     if (matrizAdj != nullptr)
     { // Verifica se ha memoria alocada
-        for (int i = 0; i < numVertices; i++)
+        for (int i = 0; i < tamanhoMatriz; i++)
         {
             delete[] matrizAdj[i];
         }
@@ -95,7 +96,22 @@ void GrafoMatriz::remover_vertice(int id)
         cout << "Erro: indice de vertice invalido.\n";
         return;
     }
-
+    // Atualiza o contador de arestas
+    for (int i = 0; i < numVertices; i++)
+    {
+        if (matrizAdj[id][i] != 0)
+        {
+            decrementa_num_arestas_grafos();
+            if (!direcionado)
+            {
+                decrementa_num_arestas_grafos();
+            }
+        }
+        if (matrizAdj[i][id] != 0 && i != id)
+        {
+            decrementa_num_arestas_grafos();
+        }
+    }
     int novoNumVertices = numVertices - 1;
     int **novaMatriz = new int *[tamanhoMatriz];
 
@@ -141,9 +157,11 @@ void GrafoMatriz::remover_aresta(int origem, int destino)
     }
 
     matrizAdj[origem][destino] = 0;
+    decrementa_num_arestas_grafos();
     if (!direcionado)
     {
         matrizAdj[destino][origem] = 0;
+        decrementa_num_arestas_grafos();
     }
 }
 
@@ -161,9 +179,11 @@ void GrafoMatriz::remover_primeira_aresta(int id)
         if (matrizAdj[id][i] != 0)
         {
             matrizAdj[id][i] = 0;
+            decrementa_num_arestas_grafos();
             if (!direcionado)
             {
                 matrizAdj[i][id] = 0;
+                decrementa_num_arestas_grafos();
             }
             return;
         }
@@ -177,21 +197,35 @@ void GrafoMatriz::adicionar_aresta(int origem, int destino, float peso)
         cout << "Erro: indices de origem ou destino invalidos.\n";
         return;
     }
+    if( origem == destino){
+        cout << "Erro: origem e destino iguais.\n";
+        return;
+    }
+
+    if(matrizAdj[origem][destino] != 0){
+        cout << "Erro: aresta ja existe.\n";
+        return;
+    }
+
 
     if (ponderadoArestas)
     {
         matrizAdj[origem][destino] = peso;
+        incrementa_num_arestas_grafos();
         if (!direcionado)
         {
             matrizAdj[destino][origem] = peso;
+            incrementa_num_arestas_grafos();
         }
     }
     else
     {
         matrizAdj[origem][destino] = 1;
+        incrementa_num_arestas_grafos();
         if (!direcionado)
         {
             matrizAdj[destino][origem] = 1;
+            incrementa_num_arestas_grafos();
         }
     }
 }
@@ -337,6 +371,501 @@ void GrafoMatriz::imprimeGrafoMatriz()
          << "--- Grafo Matriz ---" << endl;
     cout << "__________________________________________________________________" << endl
          << endl;
-    imprime();
+    imprimir_descricao();
 }
+// #endregion
+
+// #region Algoritmos Gulosos para cobertura de vertices
+// Algoritmo guloso para cobertura de vertices
+int GrafoMatriz::alg_guloso_cobertura_vertice() {
+    // Inicializa o tempo de execução
+    clock_t start = clock();
+
+    // Aloca estruturas básicas
+    bool *verticeEscolhido = new bool[numVertices + 1];
+    bool **arestaCoberta = new bool*[numVertices + 1];
+    int *graus = new int[numVertices + 1];
+    int qtdVerticesSolucao = 0;
+
+    // Aloca estruturas para listas de vizinhos
+    int **vizinhos = new int*[numVertices + 1];
+    int *contVizinhos = new int[numVertices + 1];  // Quantos vizinhos foram armazenados para cada vértice
+
+    // Inicializa estruturas
+    for (int i = 1; i <= numVertices; i++) {
+        verticeEscolhido[i] = false;
+        arestaCoberta[i] = new bool[numVertices + 1];
+        for (int j = 1; j <= numVertices; j++) {
+            arestaCoberta[i][j] = false;
+        }
+        graus[i] = get_num_vizinhos(i);
+        contVizinhos[i] = 0;
+        // Aloca espaço para a lista de vizinhos com tamanho igual ao grau inicial
+        if (graus[i] > 0)
+            vizinhos[i] = new int[graus[i]];
+        else
+            vizinhos[i] = nullptr;
+    }
+
+    // Preenche as listas de vizinhos com base na matriz de adjacência
+    for (int i = 1; i <= numVertices; i++) {
+        for (int j = 1; j <= numVertices; j++) {
+            if (matrizAdj[i][j] != 0) {
+                vizinhos[i][contVizinhos[i]++] = j;
+            }
+        }
+    }
+
+    // Calcula o total de "entradas de arestas" (para grafos não direcionados, cada aresta aparece duas vezes)
+    int totalEdges = numArestasGrafo;
+
+    int arestasCobertas = 0;
+
+    // Função lambda que calcula a soma dos graus dos vizinhos não cobertos de v
+    auto calcularSomaVizinhos = [&](int v) {
+        int soma = 0;
+        for (int k = 0; k < contVizinhos[v]; k++) {
+            int u = vizinhos[v][k];
+            if (!verticeEscolhido[u] && !arestaCoberta[v][u])
+                soma += graus[u];
+        }
+        return soma;
+    };
+
+    // Loop principal do algoritmo guloso
+    while (true) {
+        int melhorVertice = -1;
+        int melhorSoma = -1;
+        int melhorGrau = -1;
+
+        for (int i = 1; i <= numVertices; i++) {
+            if (!verticeEscolhido[i]) {
+                int somaAtual = calcularSomaVizinhos(i);
+                int grauAtual = graus[i];
+                // Critério de desempate: maior soma, depois maior grau e, por fim, menor índice
+                if (somaAtual > melhorSoma ||
+                   (somaAtual == melhorSoma && grauAtual > melhorGrau) ||
+                   (somaAtual == melhorSoma && grauAtual == melhorGrau && (melhorVertice == -1 || i < melhorVertice))) {
+                    melhorSoma = somaAtual;
+                    melhorGrau = grauAtual;
+                    melhorVertice = i;
+                }
+            }
+        }
+
+        if (melhorVertice == -1)
+            break;
+
+        verticeEscolhido[melhorVertice] = true;
+        qtdVerticesSolucao++;
+        // Atualiza cobertura das arestas a partir do vértice escolhido, iterando somente sobre seus vizinhos
+        for (int k = 0; k < contVizinhos[melhorVertice]; k++) {
+            int j = vizinhos[melhorVertice][k];
+            if (!arestaCoberta[melhorVertice][j]) {
+                arestaCoberta[melhorVertice][j] = true;
+                arestasCobertas++;
+                if (!direcionado) {
+                    if (!arestaCoberta[j][melhorVertice]) {
+                        arestaCoberta[j][melhorVertice] = true;
+                        arestasCobertas++;
+                    }
+                    // Atualiza o grau do vizinho
+                    graus[j]--;
+                }
+            }
+        }
+
+        // Se todas as arestas estiverem cobertas, encerra o loop
+        if (arestasCobertas == totalEdges)
+            break;
+    }
+
+    // Imprime o conjunto solução
+    cout << endl << "*** Algoritmo Guloso para Cobertura de Vertices ***" << endl;
+    cout << "Quantidade de vertices na solucao: " << qtdVerticesSolucao << endl;
+
+    /* Comentando a impressão do conjunto solução para evitar que o console trave
+    cout << "Conjunto solucao: { ";
+    for (int i = 1; i <= numVertices; i++) {
+        if (verticeEscolhido[i]) {
+            cout << i << " ";        // Imprime todos os vertices da solucao
+        }
+    }
+    cout << "}" << endl;
+    cout << "Quantidade de arestas cobertas: " << arestasCobertas << endl;
+    cout << "Quantidade de Arestas do grafo: " << numArestasGrafo << endl;
+    */
+
+    // Libera a memória alocada
+    for (int i = 1; i <= numVertices; i++) {
+        delete[] arestaCoberta[i];
+        if (vizinhos[i] != nullptr)
+            delete[] vizinhos[i];
+    }
+    delete[] arestaCoberta;
+    delete[] verticeEscolhido;
+    delete[] graus;
+    delete[] vizinhos;
+    delete[] contVizinhos;
+
+    // Calcula e imprime o tempo de execução
+    clock_t end = clock();
+    double duration = double(end - start) / CLOCKS_PER_SEC;
+    cout << "Tempo de execucao de alg_guloso_cobertura_vertice: " << duration << " segundos" << endl;
+    return qtdVerticesSolucao;
+}
+
+// Algoritmo guloso randomizado para cobertura de vertices
+int GrafoMatriz::alg_randomizado_cobertura_vertice() {
+    clock_t start = clock();
+
+    double alpha = 0.3 + (rand() % 40) / 100.0; // Define um alpha aleatório entre 0.3 e 0.7
+    srand(time(nullptr)); // Garante que a escolha aleatória seja diferente a cada execução
+
+    bool *verticeEscolhido = new bool[numVertices + 1];
+    bool **arestaCoberta = new bool*[numVertices + 1];
+    int *graus = new int[numVertices + 1];
+    int qtdVerticesSolucao = 0;
+    int **vizinhos = new int*[numVertices + 1];
+    int *contVizinhos = new int[numVertices + 1];
+
+    for (int i = 1; i <= numVertices; i++) {
+        verticeEscolhido[i] = false;
+        arestaCoberta[i] = new bool[numVertices + 1];
+        for (int j = 1; j <= numVertices; j++) {
+            arestaCoberta[i][j] = false;
+        }
+        graus[i] = get_num_vizinhos(i);
+        contVizinhos[i] = 0;
+        vizinhos[i] = (graus[i] > 0) ? new int[graus[i]] : nullptr;
+    }
+
+    for (int i = 1; i <= numVertices; i++) {
+        for (int j = 1; j <= numVertices; j++) {
+            if (matrizAdj[i][j] != 0) {
+                vizinhos[i][contVizinhos[i]++] = j;
+            }
+        }
+    }
+
+    int totalEdges = numArestasGrafo;
+    int arestasCobertas = 0;
+
+    auto calcularSomaVizinhos = [&](int v) {
+        int soma = 0;
+        for (int k = 0; k < contVizinhos[v]; k++) {
+            int u = vizinhos[v][k];
+            if (!verticeEscolhido[u] && !arestaCoberta[v][u])
+                soma += graus[u];
+        }
+        return soma;
+    };
+
+    while (arestasCobertas < totalEdges) {
+        int *candidatos = new int[numVertices];
+        int *somas = new int[numVertices];
+        int numCandidatos = 0;
+        int melhorSoma = -1;
+
+        for (int i = 1; i <= numVertices; i++) {
+            if (!verticeEscolhido[i]) {
+                int somaAtual = calcularSomaVizinhos(i);
+                if (somaAtual > melhorSoma)
+                    melhorSoma = somaAtual;
+                candidatos[numCandidatos] = i;
+                somas[numCandidatos] = somaAtual;
+                numCandidatos++;
+            }
+        }
+
+        int *listaRestrita = new int[numCandidatos];
+        int numRestritos = 0;
+        for (int i = 0; i < numCandidatos; i++) {
+            if (somas[i] >= melhorSoma * alpha) {
+                listaRestrita[numRestritos++] = candidatos[i];
+            }
+        }
+
+        delete[] candidatos;
+        delete[] somas;
+
+        if (numRestritos == 0) {
+            delete[] listaRestrita;
+            break;
+        }
+
+        int escolhido = listaRestrita[rand() % numRestritos];
+        delete[] listaRestrita;
+
+        verticeEscolhido[escolhido] = true;
+        qtdVerticesSolucao++;
+
+        for (int k = 0; k < contVizinhos[escolhido]; k++) {
+            int j = vizinhos[escolhido][k];
+            if (!arestaCoberta[escolhido][j]) {
+                arestaCoberta[escolhido][j] = true;
+                arestasCobertas++;
+                if (!direcionado) {
+                    if (!arestaCoberta[j][escolhido]) {
+                        arestaCoberta[j][escolhido] = true;
+                        arestasCobertas++;
+                    }
+                    graus[j]--;
+                }
+            }
+        }
+    }
+
+    cout << endl << "*** Algoritmo Guloso Randomizado para Cobertura de Vertices ***" << endl;
+    cout << "Quantidade de vertices na solucao: " << qtdVerticesSolucao << endl;
+
+    for (int i = 1; i <= numVertices; i++) {
+        delete[] arestaCoberta[i];
+        if (vizinhos[i] != nullptr)
+            delete[] vizinhos[i];
+    }
+    delete[] arestaCoberta;
+    delete[] verticeEscolhido;
+    delete[] graus;
+    delete[] vizinhos;
+    delete[] contVizinhos;
+
+    clock_t end = clock();
+    double duration = double(end - start) / CLOCKS_PER_SEC;
+    cout << "Tempo de execucao de alg_randomizado_cobertura_vertice: " << duration << " segundos" << endl;
+    return qtdVerticesSolucao;
+}
+// Algoritmo guloso reativo para cobertura de vertices
+
+int GrafoMatriz::alg_reativo_cobertura_vertice() {
+    clock_t start = clock();
+
+    // Parâmetros internos
+    const int numAlphas = 5; // Reduzido de 10 para 5
+    const int maxIteracoes = 10; // Mantido em 10 iterações
+    const int blocoIteracoes = 5; // Ajuste a cada 5 iterações
+
+    // Valores de alpha (variando de 0.1 a 0.9)
+    double alphas[numAlphas];
+    for (int i = 0; i < numAlphas; i++) {
+        alphas[i] = 0.1 + (0.8 * i) / (numAlphas - 1);
+    }
+
+    // Probabilidades iniciais (uniforme)
+    double probabilidades[numAlphas];
+    for (int i = 0; i < numAlphas; i++) {
+        probabilidades[i] = 1.0 / numAlphas;
+    }
+
+    // Estruturas para armazenar o desempenho de cada alpha
+    double somaQualidade[numAlphas] = {0};
+    int contagemAlpha[numAlphas] = {0};
+
+    // Melhor solução encontrada
+    int qtdVerticesSolucao = numVertices; // Substitui INT_MAX
+    int melhorIteracao = -1;
+
+    // Loop principal do algoritmo reativo
+    for (int iteracao = 1; iteracao <= maxIteracoes; iteracao++) {
+        // Escolhe um alpha com base nas probabilidades atuais
+        double r = (double)rand() / RAND_MAX;
+        double somaProbabilidades = 0;
+        int alphaEscolhido = 0;
+        for (int i = 0; i < numAlphas; i++) {
+            somaProbabilidades += probabilidades[i];
+            if (r <= somaProbabilidades) {
+                alphaEscolhido = i;
+                break;
+            }
+        }
+
+        // Executa o algoritmo guloso randomizado com o alpha escolhido
+        int qtdVerticesAtual = alg_randomizado_cobertura_vertice_com_alpha(alphas[alphaEscolhido]);
+
+        // Atualiza o desempenho do alpha escolhido
+        somaQualidade[alphaEscolhido] += qtdVerticesAtual;
+        contagemAlpha[alphaEscolhido]++;
+
+        // Atualiza a melhor solução encontrada
+        if (qtdVerticesAtual < qtdVerticesSolucao) {
+            qtdVerticesSolucao = qtdVerticesAtual;
+            melhorIteracao = iteracao;
+        }
+
+        // Ajusta as probabilidades após cada bloco de iterações
+        if (iteracao % blocoIteracoes == 0) {
+            double mediaQualidade[numAlphas];
+            for (int i = 0; i < numAlphas; i++) {
+                if (contagemAlpha[i] > 0) {
+                    mediaQualidade[i] = somaQualidade[i] / contagemAlpha[i];
+                } else {
+                    mediaQualidade[i] = numVertices; // Penaliza alphas não utilizados
+                }
+            }
+
+            // Calcula a qualidade relativa de cada alpha
+            double somaInversos = 0;
+            for (int i = 0; i < numAlphas; i++) {
+                somaInversos += 1.0 / mediaQualidade[i];
+            }
+
+            // Atualiza as probabilidades
+            for (int i = 0; i < numAlphas; i++) {
+                probabilidades[i] = (1.0 / mediaQualidade[i]) / somaInversos;
+            }
+
+            // Reinicia as estruturas de desempenho
+            for (int i = 0; i < numAlphas; i++) {
+                somaQualidade[i] = 0;
+                contagemAlpha[i] = 0;
+            }
+        }
+    }
+
+    // Imprime a melhor solução encontrada
+    cout << endl << "*** Algoritmo Guloso Reativo para Cobertura de Vertices ***" << endl;
+    cout << "Quantidade de vertices na solucao: " << qtdVerticesSolucao << endl;
+    cout << "Melhor solucao encontrada na iteracao: " << melhorIteracao << endl;
+
+    // Calcula e imprime o tempo de execução
+    clock_t end = clock();
+    double duration = double(end - start) / CLOCKS_PER_SEC;
+    cout << "Tempo de execucao de alg_reativo_cobertura_vertice: " << duration << " segundos" << endl;
+
+    return qtdVerticesSolucao;
+}
+
+int GrafoMatriz::alg_randomizado_cobertura_vertice_com_alpha(double alpha) {
+    // Aloca e inicializa estruturas
+    bool *verticeEscolhido = new bool[numVertices + 1];
+    bool **arestaCoberta = new bool*[numVertices + 1];
+    int *graus = new int[numVertices + 1];
+    int qtdVerticesSolucao = 0;
+    int **vizinhos = new int*[numVertices + 1];
+    int *contVizinhos = new int[numVertices + 1];
+
+    // Inicializa as estruturas
+    for (int i = 1; i <= numVertices; i++) {
+        verticeEscolhido[i] = false;
+        arestaCoberta[i] = new bool[numVertices + 1];
+        for (int j = 1; j <= numVertices; j++) {
+            arestaCoberta[i][j] = false;
+        }
+        graus[i] = get_num_vizinhos(i); // Obtém o grau do vértice i
+        contVizinhos[i] = 0;
+        if (graus[i] > 0) {
+            vizinhos[i] = new int[graus[i]]; // Aloca espaço para os vizinhos
+        } else {
+            vizinhos[i] = nullptr;
+        }
+    }
+
+    // Preenche as listas de vizinhos com base na matriz de adjacência
+    for (int i = 1; i <= numVertices; i++) {
+        for (int j = 1; j <= numVertices; j++) {
+            if (matrizAdj[i][j] != 0) {
+                vizinhos[i][contVizinhos[i]++] = j;
+            }
+        }
+    }
+
+    // Calcula o total de arestas no grafo
+    int totalEdges = numArestasGrafo;
+    int arestasCobertas = 0;
+
+    // Função lambda para calcular a soma dos graus dos vizinhos não cobertos
+    auto calcularSomaVizinhos = [&](int v) {
+        int soma = 0;
+        for (int k = 0; k < contVizinhos[v]; k++) {
+            int u = vizinhos[v][k];
+            if (!verticeEscolhido[u] && !arestaCoberta[v][u]) {
+                soma += graus[u];
+            }
+        }
+        return soma;
+    };
+
+    // Loop principal do algoritmo guloso randomizado
+    while (arestasCobertas < totalEdges) {
+        // Cria lista de candidatos e suas somas de vizinhos
+        int *candidatos = new int[numVertices];
+        int *somas = new int[numVertices];
+        int numCandidatos = 0;
+        int melhorSoma = -1;
+
+        // Encontra todos os vértices não escolhidos e calcula suas somas
+        for (int i = 1; i <= numVertices; i++) {
+            if (!verticeEscolhido[i]) {
+                int somaAtual = calcularSomaVizinhos(i);
+                if (somaAtual > melhorSoma) {
+                    melhorSoma = somaAtual;
+                }
+                candidatos[numCandidatos] = i;
+                somas[numCandidatos] = somaAtual;
+                numCandidatos++;
+            }
+        }
+
+        // Cria a lista restrita de candidatos com base no alpha
+        int *listaRestrita = new int[numCandidatos];
+        int numRestritos = 0;
+        for (int i = 0; i < numCandidatos; i++) {
+            if (somas[i] >= melhorSoma * alpha) {
+                listaRestrita[numRestritos++] = candidatos[i];
+            }
+        }
+
+        // Libera a memória dos arrays temporários
+        delete[] candidatos;
+        delete[] somas;
+
+        // Se não houver candidatos, encerra o loop
+        if (numRestritos == 0) {
+            delete[] listaRestrita;
+            break;
+        }
+
+        // Escolhe um vértice aleatório da lista restrita
+        int escolhido = listaRestrita[rand() % numRestritos];
+        delete[] listaRestrita;
+
+        // Marca o vértice escolhido como parte da solução
+        verticeEscolhido[escolhido] = true;
+        qtdVerticesSolucao++;
+
+        // Cobre as arestas incidentes ao vértice escolhido
+        for (int k = 0; k < contVizinhos[escolhido]; k++) {
+            int j = vizinhos[escolhido][k];
+            if (!arestaCoberta[escolhido][j]) {
+                arestaCoberta[escolhido][j] = true;
+                arestasCobertas++;
+                if (!direcionado) {
+                    if (!arestaCoberta[j][escolhido]) {
+                        arestaCoberta[j][escolhido] = true;
+                        arestasCobertas++;
+                    }
+                    // Atualiza o grau do vizinho
+                    graus[j]--;
+                }
+            }
+        }
+    }
+
+    // Libera a memória alocada
+    for (int i = 1; i <= numVertices; i++) {
+        delete[] arestaCoberta[i];
+        if (vizinhos[i] != nullptr) {
+            delete[] vizinhos[i];
+        }
+    }
+    delete[] arestaCoberta;
+    delete[] verticeEscolhido;
+    delete[] graus;
+    delete[] vizinhos;
+    delete[] contVizinhos;
+
+    // Retorna o número de vértices na solução
+    return qtdVerticesSolucao;
+}
+
 // #endregion

@@ -4,7 +4,8 @@
 using namespace std;
 
 // #region Construtor e Destrutor
-NoAresta::NoAresta(int idVerticeOrigem, int idVerticeDestino, float peso) {
+NoAresta::NoAresta(int idVerticeOrigem, int idVerticeDestino, float peso, int idAresta) {
+    this-> idAresta = idAresta;
     this->idVerticeOrigem = idVerticeOrigem;
     this->idVerticeDestino = idVerticeDestino;
     this->peso = peso;
@@ -15,6 +16,11 @@ NoAresta::~NoAresta() {
 
 }
 // #endregion
+
+// Retorna o id da aresta
+int NoAresta::getIdAresta() {
+    return idAresta;
+}
 
 // Retorna o vertice de origem da aresta
 int NoAresta::getOrigem() {

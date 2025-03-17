@@ -1,11 +1,13 @@
 #include "../include/ListaAdjVertice.h"
 #include "../include/NoVertice.h"
+#include "../include/GrafoLista.h"
 #include <iostream>
 
 using namespace std;
 
 // #region Construtor e Destrutor
-ListaAdjVertice::ListaAdjVertice() {
+ListaAdjVertice::ListaAdjVertice(GrafoLista* grafo) {
+    this->grafo = grafo;
     this->cabeca = nullptr;
 }
 
@@ -50,9 +52,10 @@ NoVertice* ListaAdjVertice::getVertice(int id) {
 
 // Adiciona um vertice a lista
 void ListaAdjVertice::adicionar_vertice(int id, float peso) {
-    NoVertice* novoNo = new NoVertice(id, peso);
+    NoVertice* novoNo = new NoVertice(id, peso, grafo);
     novoNo->setProximo(this->cabeca);
     this->cabeca = novoNo;
+    grafo->incrementa_num_vertices_grafo();
 
     //cout << "Adicionado Vertice " << novoNo->getIdVertice() << endl;                    /* { DEBUG } */
 }
@@ -110,8 +113,22 @@ void ListaAdjVertice::remover_vertice(int id) {
         anterior = atual;
         atual = atual->getProximo();
     }
+
+    // Atualiza o contador de arestas
+    if (remover != nullptr) {
+        NoAresta* arestaAtual = remover->getArestas()->getCabeca();
+        while (arestaAtual != nullptr) {
+            grafo->decrementa_num_arestas_grafos();
+            if (!grafo->eh_direcionado()) {
+                grafo->decrementa_num_arestas_grafos();
+            }
+            arestaAtual = arestaAtual->getProximo();
+        }
+    }
+
     // Remove o vertice
     //cout << "Removendo vertice " << remover->getIdVertice() << endl;            /* { DEBUG } */
+    grafo->decrementa_num_vertices_grafo();
     delete remover;
     
     // Recalculando ID dos vertices
@@ -136,6 +153,14 @@ void ListaAdjVertice::remover_vertice(int id) {
         atual = atual->getProximo();
     }
 
+}
+
+int ListaAdjVertice::getIDAresta(int origem, int destino) {
+    if(this->getVertice(origem) == nullptr) {
+        cout << "Erro: Vertice de origem nao existe!" << endl;
+        return -1;
+    }
+    return getVertice(origem)->getIdAresta(destino);
 }
 
 // Imprime a lista de adjacencia
